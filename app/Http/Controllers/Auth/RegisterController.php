@@ -49,8 +49,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'name' => 'required|string|regex:/^[a-zA-Z0-9_-]+$/|max:255|unique:users',
+            'icon_char' => 'nullable|string|size:1',
+            'icon_color' => 'nullable|integer',
+            'email' => 'nullable|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -63,9 +65,27 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $icon_char = null;
+        $icon_color = null;
+        
+        // Use first letter of $data['name'] if $data['icon_char'] is empty
+        if ($data['icon_char'] == "") {
+            $icon_char = $data['name'][0];
+        } else {
+            $icon_char = $data['icon_char'];
+        }
+        
+        // Use random color if $data['icon_color'] is empty
+        if ($data['icon_color'] == "") {
+            $icon_color = 111;  // TODO
+        } else {
+            $icon_color = $data['icon_color'];
+        }
+        
         return User::create([
             'name' => $data['name'],
-            'email' => $data['email'],
+            'icon_char' => $icon_char,
+            'icon_color' => $icon_color,
             'password' => Hash::make($data['password']),
         ]);
     }

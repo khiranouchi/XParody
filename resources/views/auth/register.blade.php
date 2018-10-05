@@ -26,14 +26,28 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="icon_char" class="col-md-4 col-form-label text-md-right">{{ __('Icon Character') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                                <input id="icon_char" type="text" class="form-control{{ $errors->has('icon_char') ? ' is-invalid' : '' }}" name="icon_char" value="{{ old('icon_char') }}" autofocus>
 
-                                @if ($errors->has('email'))
+                                @if ($errors->has('icon_char'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('icon_char') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="icon_color" class="col-md-4 col-form-label text-md-right">{{ __('Icon Color') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="icon_color" type="text" class="form-control{{ $errors->has('icon_color') ? ' is-invalid' : '' }}" name="icon_color" value="{{ old('icon_color') }}" autofocus>
+
+                                @if ($errors->has('icon_color'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('icon_color') }}</strong>
                                     </span>
                                 @endif
                             </div>

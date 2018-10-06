@@ -18,7 +18,7 @@ class CreateLyricsBoxLinesTable extends Migration
             $table->unsignedInteger('box_id');
             $table->unsignedInteger('line_idx');
             $table->text('lyrics_new');
-            $table->integer('level');
+            $table->tinyInteger('level');
             $table->unsignedInteger('user_id')->nullable();
             $table->index('box_id');
             $table->foreign('box_id')->references('id')->on('lyrics_boxes')->onDelete('cascade');

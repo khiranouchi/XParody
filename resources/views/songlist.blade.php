@@ -5,8 +5,8 @@
 @endsection
 
 @section('head')
-<script src="{{ asset('../resources/js/jquery/jquery.tablesorter.js') }}"></script>
-<script src="{{ asset('../resources/js/jquery/jquery.metatext.js') }}"></script>
+<script src="{{ url('../resources/js/jquery/jquery.tablesorter.js') }}"></script>
+<script src="{{ url('../resources/js/jquery/jquery.metatext.js') }}"></script>
 @endsection
 
 @section('content')

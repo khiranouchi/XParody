@@ -26,7 +26,7 @@ class SongController extends Controller
      */
     public function create()
     {
-        abort(404);
+        return view('song_create');
     }
 
     /**
@@ -37,7 +37,13 @@ class SongController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $song = new Song;
+        $song->name_old = $request->name_old;
+        $song->name_old_ruby = $request->name_old_ruby;
+        $song->name_new = $request->name_new;
+        $song->name_new_ruby = $request->name_new_ruby;
+        $song->save();
+        return redirect()->route('songs.show', ['id' => $song]);
     }
 
     /**

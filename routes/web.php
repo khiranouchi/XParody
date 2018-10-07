@@ -18,3 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('songs', 'Database\\SongController');
+Route::resource('lyrics_boxs', 'Database\\LyricsBoxController');
+Route::resource('lyrics_box_lines', 'Database\\LyricsBoxLineController');

@@ -5,8 +5,8 @@
 @endsection
 
 @section('head')
-<script src="{{ url('../resources/js/jquery/jquery.tablesorter.js') }}"></script>
-<script src="{{ url('../resources/js/jquery/jquery.metatext.js') }}"></script>
+<script src="{{ asset('js/jquery.tablesorter.js') }}"></script>
+<script src="{{ asset('js/jquery.metatext.js') }}"></script>
 @endsection
 
 @section('content')
@@ -35,9 +35,10 @@
     </div>
 </div>
 
-<div class="button_add" style="position:fixed; bottom:10px; right:10px">
-	<button onclick="window.location.href='{{ route('songs.create') }}'" 
-			class="btn btn-circle btn-primary" style="border-radius:25px">+</button>
+<div class="button_add">
+	<button onclick="window.location.href='{{ route('songs.create') }}'" class="btn btn-circle btn-primary">
+		+
+	</button>
 </div>
 
 <script>

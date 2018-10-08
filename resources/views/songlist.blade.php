@@ -23,7 +23,7 @@
                 </thead>
                 <tbody>
                 	@foreach ($songs as $song)
-                	<tr>
+                	<tr onclick="window.location.href='{{ route('songs.show', ['id' => $song]) }}'">
                 		<td class="{sortValue: '{{ $song->name_old_ruby }}' }">{{ $song->name_old }}</td>
                 		<td class="{sortValue: '{{ $song->name_new_ruby }}' }">{{ $song->name_new }}</td>
                 		<td class="{sortValue:{{ $song->updated_at }}}">{{ $song->getUpdatedAtDate() }}</td>
@@ -33,6 +33,11 @@
             </table>
         </div>
     </div>
+</div>
+
+<div class="button_add" style="position:fixed; bottom:10px; right:10px">
+	<button onclick="window.location.href='{{ route('songs.create') }}'" 
+			class="btn btn-circle btn-primary" style="border-radius:25px">+</button>
 </div>
 
 <script>

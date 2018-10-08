@@ -16,8 +16,8 @@ return [
     /*
      * Form labels
      */
-    'song_name_old' => 'Default song name',
-    'song_name_old_ruby' => '-- Ruby (Hiragana)',
-    'song_name_new' => 'Parody song name',
-    'song_name_new_ruby' => '-- Ruby (Hiragana)',
+    'form_song_name_old' => 'Default song name',
+    'form_song_name_old_ruby' => '-- Ruby (Hiragana)',
+    'form_song_name_new' => 'Parody song name',
+    'form_song_name_new_ruby' => '-- Ruby (Hiragana)',
 ];

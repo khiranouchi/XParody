@@ -13,22 +13,22 @@
 <div class="container">
     <div class="row">
         <div class="table-responsive">
-	        <table id="table_song_list" class="table table-bordered table-hover">
+            <table id="table_song_list" class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                    	<th class="{sorter:'metatext'}">{{ __('labels.song_name_old') }}</th>
-                    	<th class="{sorter:'metatext'}">{{ __('labels.song_name_new') }}</th>
-                    	<th class="{sorter:'metadata'}">{{ __('labels.song_updated_time') }}</th>
+                        <th class="{sorter:'metatext'}">{{ __('labels.song_name_old') }}</th>
+                        <th class="{sorter:'metatext'}">{{ __('labels.song_name_new') }}</th>
+                        <th class="{sorter:'metadata'}">{{ __('labels.song_updated_time') }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                	@foreach ($songs as $song)
-                	<tr onclick="window.location.href='{{ route('songs.show', ['id' => $song]) }}'">
-                		<td class="{sortValue: '{{ $song->name_old_ruby }}' }">{{ $song->name_old }}</td>
-                		<td class="{sortValue: '{{ $song->name_new_ruby }}' }">{{ $song->name_new }}</td>
-                		<td class="{sortValue:{{ $song->updated_at }}}">{{ $song->getUpdatedAtDate() }}</td>
-                	</tr>
-                	@endforeach
+                    @foreach ($songs as $song)
+                    <tr onclick="window.location.href='{{ route('songs.show', ['id' => $song]) }}'">
+                        <td class="{sortValue: '{{ $song->name_old_ruby }}' }">{{ $song->name_old }}</td>
+                        <td class="{sortValue: '{{ $song->name_new_ruby }}' }">{{ $song->name_new }}</td>
+                        <td class="{sortValue:{{ $song->updated_at }}}">{{ $song->getUpdatedAtDate() }}</td>
+                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -36,9 +36,9 @@
 </div>
 
 <div class="button_add">
-	<button onclick="window.location.href='{{ route('songs.create') }}'" class="btn btn-circle btn-primary">
-		+
-	</button>
+    <button onclick="window.location.href='{{ route('songs.create') }}'" class="btn btn-circle btn-primary">
+        +
+    </button>
 </div>
 
 <script>

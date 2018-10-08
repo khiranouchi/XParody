@@ -11,8 +11,8 @@
 @section('content')
 <div class="container">
 	<!-- Song info -->
-    <div class="x-part row">
-		<div class="col-lg-12">
+	<div class="x-part row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="card">
 				<div class="card-body">
 					<dl class="row">
@@ -30,21 +30,28 @@
 	
 	<!-- Song editor -->
 	<div class="x-part row">
-		<div class="col-lg-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<!-- Each lyrics-box --> <!-- TODO -->
 			<div class="x-lyrics-box">
 				<!-- lyrics-old -->
-				<div class="x-lyrics-old">Old lyrics goes like this...</div>
-				<!-- lyrics-new -->
-				<div class="x-lyrics-new">New lyrics 1</div>
-				<div class="x-lyrics-new">New lyrics 2</div>
+				<div class="x-lyrics-old">
+					<div class="x-lyrics-text">Old lyrics goes like this...</div>
+				</div>
+				<div class="x-lyrics-new x-row-margin-reset row">
+					<div class="x-lyrics-text">New lyrics 1</div>
+					<div class="x-lyrics-level">5</div>
+					<div class="x-lyrics-user d-flex align-items-center"><span>G</span></div>
+				</div>
 				<div class="x-lyrics-new">(+new)</div>
 			</div>
 			<!-- Each lyrics-box --> <!-- TODO -->
 			<div class="x-lyrics-box">
 				<!-- lyrics-old -->
-				<div class="x-lyrics-old">Old lyrics goes like this...</div>
+				<div class="x-lyrics-old">
+					<div class="x-lyrics-text">Old lyrics goes like this...</div>
+				</div>
 				<!-- lyrics-new -->
+				<div class="x-lyrics-new">(+new)</div>
 			</div>
 		</div>
 	</div>

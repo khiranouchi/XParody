@@ -13,3 +13,8 @@
 	vertical-align: middle;
 	padding: 0;
 }
+
+.x-row-margin-reset {
+	margin-left: 0px;
+	margin-right: 0px;
+}

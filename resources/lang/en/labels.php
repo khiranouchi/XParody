@@ -25,6 +25,7 @@ return [
      * Button labels
      */
     'btn_delete_song' => 'Delete this song',
+    'btn_import_and_export' => 'Import and Export',
     
     /*
      * Messages

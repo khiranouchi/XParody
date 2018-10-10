@@ -58,16 +58,22 @@
     </div>
     
     <!-- Buttons -->
-    <div class="x-part">
+    <div class="x-part x-button-row">
         <!-- Delete song -->
         <form action="{{ route('songs.destroy', ['id' => $song]) }}" method="post"
-              onsubmit="ShowCheckDialog(event, '{{ __('labels.dialog_delete_song') }}')">
+              onsubmit="ShowCheckDialog(event, '{{ __('labels.dialog_delete_song') }}')"
+              class="x-inline-form">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-outline-danger">
                 {{ __('labels.btn_delete_song') }}
             </button>
         </form>
+        <!-- Import and Export -->
+        <button onclick="location.href='{{ route('songio', ['id' => $song]) }}'"
+                class="btn btn-outline-primary">
+            {{ __('labels.btn_import_and_export') }}
+        </button>
     </div>
 </div>
 @endsection

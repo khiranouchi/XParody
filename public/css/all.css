@@ -18,3 +18,11 @@
     margin-left: 0px;
     margin-right: 0px;
 }
+
+.x-inline-form {
+    display: inline;
+}
+
+.x-button-row button {
+	margin-bottom: 2px;
+}

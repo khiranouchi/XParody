@@ -22,3 +22,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('songs', 'Database\\SongController');
 Route::resource('lyrics_boxs', 'Database\\LyricsBoxController');
 Route::resource('lyrics_box_lines', 'Database\\LyricsBoxLineController');
+
+Route::get('songs/{id}/io', 'SongIoController@index')->name('songio');

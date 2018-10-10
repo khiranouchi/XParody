@@ -35,12 +35,13 @@ class SongIoController extends Controller
      */
     public function storeAllLyricsOld(Request $request, Song $song)
     {
-        // delete all old/new lyrics
-        // TODO
+        $song_id = $song->id;
+        
+        // delete all existing lines with specified song_id in LyricsBox (lines in LyricsBoxLine is cascade)
+        LyricsBox::where('song_id', $song_id)->delete();
 
         // store to table LyricsBox
         $list_lyrics_old = preg_split("/\R/", $request['data']);
-        $song_id = $song->id;
         $box_idx = 0;
         foreach ($list_lyrics_old as $lyrics_old) {
             $lyrics_box = new LyricsBox;

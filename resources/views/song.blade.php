@@ -46,7 +46,9 @@
             <div class="x-lyrics-box">
                 <!-- lyrics-old -->
                 <div class="x-lyrics-old">
-                    <div class="x-lyrics-text">{{ $lyrics_box->lyrics_old }}</div>
+                    <div class="x-lyrics-text"
+                         onclick="SwitchInputMode(this, '{{ route('lyrics_boxs.update', ['id' => $lyrics_box]) }}', 'lyrics_old')"
+                    >{{ $lyrics_box->lyrics_old }}</div>
                 </div>
                 <!-- lyrics-new --> <!-- TODO -->
                 <div class="x-lyrics-new x-row-margin-reset row">

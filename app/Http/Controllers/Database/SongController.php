@@ -96,6 +96,7 @@ class SongController extends Controller
      */
     public function destroy(Song $song)
     {
-        //
+        $song->delete();
+        return redirect()->route('songs.index');
     }
 }

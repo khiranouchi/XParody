@@ -20,4 +20,14 @@ return [
     'form_song_name_old_ruby' => '-- Ruby (Hiragana)',
     'form_song_name_new' => 'Parody song name',
     'form_song_name_new_ruby' => '-- Ruby (Hiragana)',
+    
+    /*
+     * Button labels
+     */
+    'btn_delete_song' => 'Delete this song',
+    
+    /*
+     * Messages
+     */
+    'dialog_delete_song' => 'Really delete this song?',
 ];

@@ -6,6 +6,7 @@
 
 @section('head')
 <link href="{{ asset('css/song.css') }}" rel="stylesheet">
+<script src="{{ asset('js/all.js') }}"></script>
 @endsection
 
 @section('content')
@@ -54,6 +55,19 @@
                 <div class="x-lyrics-new">(+new)</div>
             </div>
         </div>
+    </div>
+    
+    <!-- Buttons -->
+    <div class="x-part">
+        <!-- Delete song -->
+        <form action="{{ route('songs.destroy', ['id' => $song]) }}" method="post"
+              onsubmit="ShowCheckDialog(event, '{{ __('labels.dialog_delete_song') }}')">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-outline-danger">
+                {{ __('labels.btn_delete_song') }}
+            </button>
+        </form>
     </div>
 </div>
 @endsection

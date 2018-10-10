@@ -1,3 +1,31 @@
+/*************************************************
+ ** page layout **********************************
+ *************************************************/
+
+.x-row-margin-reset {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.x-part {
+	margin-bottom: 1rem;
+}
+.x-part:last-child {
+	margin-bottom: 0;
+}
+
+.x-subpart {
+	margin-bottom: 0.5rem;
+}
+.x-subpart:last-child {
+	margin-bottom: 0;
+}
+
+
+/*************************************************
+ ** others ***************************************
+ *************************************************/
+
 .button_add {
     position: fixed;
     bottom: 10px;
@@ -12,11 +40,6 @@
     text-align: center;
     vertical-align: middle;
     padding: 0;
-}
-
-.x-row-margin-reset {
-    margin-left: 0px;
-    margin-right: 0px;
 }
 
 .x-inline-form {

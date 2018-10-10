@@ -26,6 +26,13 @@ return [
      */
     'btn_delete_song' => 'Delete this song',
     'btn_import_and_export' => 'Import and Export',
+    'btn_import' => 'Import',
+    'btn_export' => 'Export',
+    'btn_io_lyrics_old' => 'Base',
+    'btn_io_lyrics_new' => 'Parody',
+    'btn_io_lyrics_both' => 'Base and Parody',
+    'btn_import_submit' => 'Import',
+    'btn_export_copy' => 'Copy to clipboard',
     
     /*
      * Messages

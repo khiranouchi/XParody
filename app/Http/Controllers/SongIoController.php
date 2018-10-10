@@ -22,7 +22,7 @@ class SongIoController extends Controller
      */
     public function index(Song $song)
     {
-        return view('songio');
+        return view('songio', ['song' => $song]);
     }
     
 }

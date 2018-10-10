@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Database;
 use App\Http\Controllers\Controller;
 use App\Models\Song;
 use Illuminate\Http\Request;
+use App\Models\LyricsBox;
 
 class SongController extends Controller
 {
@@ -62,7 +63,11 @@ class SongController extends Controller
      */
     public function show(Song $song)
     {
-        return view('song', ['song' => $song]);
+        // get lines of LyricsBox ordered by box_idx
+        $song_id = $song->id;
+        $lyrics_boxes = LyricsBox::where('song_id', $song_id)->orderBy('box_idx')->get();
+
+        return view('song', ['song' => $song, 'lyrics_boxes' => $lyrics_boxes]);
     }
 
     /**

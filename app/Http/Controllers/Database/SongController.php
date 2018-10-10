@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 class SongController extends Controller
 {
     /**
+     * Middlewares which executes before each action.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

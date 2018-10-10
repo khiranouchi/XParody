@@ -32,7 +32,7 @@
                             >{{ $song->name_old_ruby }}</span>)
                         </dd>
                         <dt class="col-sm-2">{{ __('labels.song_updated_time') }}</dt>
-                        <dd class="col-sm-10">{{ $song->getUpdatedAtDate() }}</dd>
+                        <dd class="col-sm-10">{{ $song->getUpdatedAtDateTime() }}</dd>
                     </dl>
                 </div>
             </div>

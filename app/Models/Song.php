@@ -15,4 +15,8 @@ class Song extends Model
     {
         return $this->updated_at->format('Y/m/d');
     }
+    public function getUpdatedAtDateTime()
+    {
+        return $this->updated_at->format('Y/m/d H:i:s');
+    }
 }

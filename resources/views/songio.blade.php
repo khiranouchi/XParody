@@ -6,6 +6,7 @@
 
 @section('head')
 <link href="{{ asset('css/songio.css') }}" rel="stylesheet">
+<script src="{{ asset('js/songio.js') }}"></script>
 @endsection
 
 @section('content')
@@ -14,23 +15,37 @@
     <div class="x-part">
         <div class="x-subpart">
             <div class="btn-group">
-                <button class="btn btn-outline-secondary">{{ __('labels.btn_import') }}</button>
-                <button class="btn btn-outline-secondary">{{ __('labels.btn_export') }}</button>
+                <button id="io_import" name="z-import" class="btn btn-outline-secondary"
+                        onclick="SwitchMode(this)"
+                >{{ __('labels.btn_import') }}</button>
+                <button id="io_export" name="z-export" class="btn btn-outline-secondary"
+                        onclick="SwitchMode(this)"
+                >{{ __('labels.btn_export') }}</button>
             </div>
         </div>
         <div class="x-subpart">
             <div class="btn-group">
-                <button class="btn btn-outline-secondary">{{ __('labels.btn_io_lyrics_old') }}</button>
-                <button class="btn btn-outline-secondary">{{ __('labels.btn_io_lyrics_both') }}</button>
-                <button class="btn btn-outline-secondary">{{ __('labels.btn_io_lyrics_new') }}</button>
+                <button id="fmt_old" name="z-lyrics-old" class="btn btn-outline-secondary"
+                        onclick="SwitchMode(this)"
+                >{{ __('labels.btn_io_lyrics_old') }}</button>
+                <button id="fmt_both" name="z-lyrics-both" class="btn btn-outline-secondary"
+                        onclick="SwitchMode(this)"
+                >{{ __('labels.btn_io_lyrics_both') }}</button>
+                <button id="fmt_new" name="z-lyrics-new" class="btn btn-outline-secondary"
+                        onclick="SwitchMode(this)"
+                >{{ __('labels.btn_io_lyrics_new') }}</button>
             </div>
         </div>
     </div>
 
     <!-- Text area -->
     <div class="x-part">
-        <textarea id="textarea_import" class="z-import-old z-import-both z-import-new"></textarea>
-        <textarea id="textarea_export" class="z-export-old z-export-both z-export-new" readonly></textarea>
+        <textarea id="textarea_import" class="z-import"></textarea>
+        <div class="z-export">
+	        <textarea id="textarea_export" class="z-lyrics-old" readonly></textarea>
+	        <textarea id="textarea_export" class="z-lyrics-both" readonly></textarea>
+	        <textarea id="textarea_export" class="z-lyrics-new" readonly></textarea>
+        </div>
 	</div>
     
     <!-- Example -->
@@ -41,18 +56,30 @@
     
     <!-- Submit/Copy button -->
     <div class="x-part">
-        <button class="z-import-old btn btn-outline-primary"
-        >{{ __('labels.btn_import_submit') }}</button>
-        <button class="z-import-both btn btn-outline-primary"
-        >{{ __('labels.btn_import_submit') }}</button>
-        <button class="z-import-new btn btn-outline-primary"
-        >{{ __('labels.btn_import_submit') }}</button>
-        <button class="z-export-old btn btn-outline-primary"
-        >{{ __('labels.btn_export_copy') }}</button>
-        <button class="z-export-both btn btn-outline-primary"
-        >{{ __('labels.btn_export_copy') }}</button>
-        <button class="z-export-new btn btn-outline-primary"
-        >{{ __('labels.btn_export_copy') }}</button>        
+    	<div class="z-import">
+            <button class="z-lyrics-old btn btn-outline-primary"
+            >{{ __('labels.btn_import_submit') }}</button>
+            <button class="z-lyrics-both btn btn-outline-primary"
+            >{{ __('labels.btn_import_submit') }}</button>
+            <button class="z-lyrics-new btn btn-outline-primary"
+            >{{ __('labels.btn_import_submit') }}</button>
+        </div>
+        <div class="z-export">
+            <button class="z-lyrics-old btn btn-outline-primary"
+            >{{ __('labels.btn_export_copy') }}</button>
+            <button class="z-lyrics-both btn btn-outline-primary"
+            >{{ __('labels.btn_export_copy') }}</button>
+            <button class="z-lyrics-new btn btn-outline-primary"
+            >{{ __('labels.btn_export_copy') }}</button>
+        </div>        
     </div>
 </div>
+
+<script>
+// initialize selection (select io_import and fmt_old/fmt_new)
+$(document).ready(function(){
+    SwitchMode($('#io_export').get());
+    SwitchMode($('#fmt_new').get());
+});
+</script>
 @endsection

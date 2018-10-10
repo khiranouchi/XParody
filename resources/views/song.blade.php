@@ -18,9 +18,19 @@
                 <div class="card-body">
                     <dl class="row">
                         <dt class="col-sm-2">{{ __('labels.song_name_new') }}</dt>
-                        <dd class="col-sm-10">{{ $song->name_new }} ({{ $song->name_new_ruby }})</dd>
+                        <dd class="col-sm-10">
+                            <span onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_new', false)"
+                            >{{ $song->name_new }}</span>
+                            (<span onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_new_ruby', false)"
+                            >{{ $song->name_new_ruby }}</span>)
+                        </dd>
                         <dt class="col-sm-2">{{ __('labels.song_name_old') }}</dt>
-                        <dd class="col-sm-10">{{ $song->name_old }} ({{ $song->name_old_ruby }})</dd>
+                        <dd class="col-sm-10">
+                            <span onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_old', false)"
+                            >{{ $song->name_old }}</span>
+                            (<span onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_old_ruby', false)"
+                            >{{ $song->name_old_ruby }}</span>)
+                        </dd>
                         <dt class="col-sm-2">{{ __('labels.song_updated_time') }}</dt>
                         <dd class="col-sm-10">{{ $song->getUpdatedAtDate() }}</dd>
                     </dl>

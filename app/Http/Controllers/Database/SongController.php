@@ -85,7 +85,17 @@ class SongController extends Controller
      */
     public function update(Request $request, Song $song)
     {
-        //
+        if ($request->isMethod('PATCH')) {
+            foreach ($song->getAllColumnNames() as $fields) {
+                if ($request->filled($fields)) {
+                    $song->$fields = $request->$fields;
+                }
+            }
+            $song->save();
+            return response(null, 204);
+        }else{
+            return abort(501);
+        }
     }
 
     /**

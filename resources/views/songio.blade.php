@@ -59,6 +59,7 @@
     <div class="x-part">
     	<div class="z-import">
             <button class="z-lyrics-old btn btn-outline-primary"
+                    onclick="SaveImportLyricsOld('textarea_import', '{{ route('songio', ['id' => $song]) }}')"
             >{{ __('labels.btn_import_submit') }}</button>
             <button class="z-lyrics-both btn btn-outline-primary"
             >{{ __('labels.btn_import_submit') }}</button>

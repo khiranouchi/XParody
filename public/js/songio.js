@@ -13,3 +13,23 @@ function SwitchMode(obj) {
     $('.' + activeClass).siblings().hide();
     $('.' + activeClass).show();
 }
+
+/**
+ * POST multiple old lyrics from imported comma-separated text.
+ * @param {String} textareaId - id of the import textarea
+ * @param {String} path - url path to POST
+ */
+function SaveImportLyricsOld(textareaId, path) {
+    var message = "Really import? (Existing all lyrics are deleted)";
+    if (!confirm(message)) {
+        return false;
+    }
+    $.ajax({
+        type: 'POST',
+        url: path,
+        data: { 'data': $('#' + textareaId).val() },
+        async: true
+    }).done(function(content){
+        location.href = content['url'];
+    });
+}

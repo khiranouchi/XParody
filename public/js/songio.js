@@ -3,13 +3,13 @@
  * Also change activeness of the specified obj.
  * @param {Object} obj - object of the switch-button into whose mode you want to be switched
  */
-function SwitchMode(obj){
+function SwitchMode(obj) {
     var activeId = $(obj).attr('id');
     var activeClass = $(obj).attr('name');
     // change active button
     $('#' + activeId).siblings().removeClass('active');
     $('#' + activeId).addClass('active');
     // change visible textarea and submit/copy button
-    $('.' + activeClass).siblings().css('display', 'none');//.hide();
-    $('.' + activeClass).css('display', '');//.show();
+    $('.' + activeClass).siblings().hide();
+    $('.' + activeClass).show();
 }

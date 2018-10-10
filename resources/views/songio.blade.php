@@ -6,6 +6,7 @@
 
 @section('head')
 <link href="{{ asset('css/songio.css') }}" rel="stylesheet">
+<script src="{{ asset('js/jquery.autosize.js') }}"></script>
 <script src="{{ asset('js/songio.js') }}"></script>
 @endsection
 
@@ -76,8 +77,10 @@
 </div>
 
 <script>
-// initialize selection (select io_import and fmt_old/fmt_new)
 $(document).ready(function(){
+    //activate autosize
+    autosize($('textarea'));
+    // initialize selection (select io_import and fmt_old/fmt_new)
     SwitchMode($('#io_export').get());
     SwitchMode($('#fmt_new').get());
 });

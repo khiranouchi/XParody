@@ -104,6 +104,15 @@ class LyricsBoxLineController extends Controller
      */
     public function update(Request $request, LyricsBoxLine $lyricsBoxLine)
     {
+        // only creator can update
+        if ($request->filled('lyrics_new')) {
+            if ($lyricsBoxLine->user_id === null) {
+                $lyricsBoxLine->user_id = $request->user()->id;
+            } elseif ($request->user()->id != $lyricsBoxLine->user_id) {
+                return response(null, 400);
+            }
+        }
+        
         if ($request->isMethod('PATCH')) {
             foreach ($lyricsBoxLine->getAllColumnNames() as $fields) {
                 if ($request->filled($fields)) {
@@ -120,11 +129,17 @@ class LyricsBoxLineController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\LyricsBoxLine  $lyricsBoxLine
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LyricsBoxLine $lyricsBoxLine)
+    public function destroy(Request $request, LyricsBoxLine $lyricsBoxLine)
     {
+        // only creator can destroy
+        if ($lyricsBoxLine->user_id !== null and $request->user()->id != $lyricsBoxLine->user_id) {
+            return response(null, 400);
+        }
+        
         // decrement line_idx of every existing table line, if its line_idx > deleted line_idx.
         // eg. [a(1), b(2), c(3), d(4), e(5)] - c(3) --> [a(1), b(2), d(3), e(4)]
         $box_id = $lyricsBoxLine->box_id;

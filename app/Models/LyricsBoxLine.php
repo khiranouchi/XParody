@@ -23,6 +23,10 @@ class LyricsBoxLine extends Model
         return ['line_idx', 'lyrics_new', 'level', 'user_id'];
     }
 
+    public static function getLevels()
+    {
+        return [1, 2, 3, 4, 5];
+    }
     public static function getMaxLevel()
     {
         return 5;

@@ -1,9 +1,11 @@
 @foreach ($lyrics_box_lines as $lyrics_box_line)
 <div id="z_box_line_{{ $lyrics_box_line->id }}" class="x-lyrics-new x-row-margin-reset row">
+    <div class="x-lyrics-text"
+         onclick="SwitchInputMode(this, '{{ route('lyrics_box_lines.update', ['id' => $lyrics_box_line]) }}', 'lyrics_new', false)"
     @if ($lyrics_box_line->lyrics_new === "")
-    <div class="x-lyrics-text">(new_line)</div> <!-- TODO -->
+    >(new_line)</div> <!-- TODO -->
     @else
-    <div class="x-lyrics-text">{{ $lyrics_box_line->lyrics_new }}</div>
+    >{{ $lyrics_box_line->lyrics_new }}</div>
     @endif
 
     <div class="x-lyrics-level">{{ $lyrics_box_line->level }}</div>

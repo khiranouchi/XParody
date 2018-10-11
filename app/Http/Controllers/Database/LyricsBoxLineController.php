@@ -100,7 +100,17 @@ class LyricsBoxLineController extends Controller
      */
     public function update(Request $request, LyricsBoxLine $lyricsBoxLine)
     {
-        //
+        if ($request->isMethod('PATCH')) {
+            foreach ($lyricsBoxLine->getAllColumnNames() as $fields) {
+                if ($request->filled($fields)) {
+                    $lyricsBoxLine->$fields = $request->$fields;
+                }
+            }
+            $lyricsBoxLine->save();
+            return response(null, 204);
+        }else{
+            return abort(501);
+        }
     }
 
     /**

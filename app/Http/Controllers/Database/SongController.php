@@ -71,7 +71,7 @@ class SongController extends Controller
 
         // get lines of LyricsBoxLine ordered by line_idx of each box
         $dict_lyrics_box_lines = array(); //associative array of array
-        $box_ids = $ln_lyrics_boxes->pluck('box_idx');
+        $box_ids = $ln_lyrics_boxes->pluck('id');
         foreach ($box_ids as $box_id) {
             $dict_lyrics_box_lines[$box_id] = LyricsBoxLine::where('box_id', $box_id)->orderBy('line_idx')->get();
         }

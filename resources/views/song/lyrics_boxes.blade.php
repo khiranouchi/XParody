@@ -7,7 +7,7 @@
         >{{ $lyrics_box->lyrics_old }}</div>
     </div>
     <!-- lyrics-new -->
-    @include('song.lyrics_box_lines', ['lyrics_box_lines' => $dict_lyrics_box_lines[$lyrics_box->box_idx]])
+    @include('song.lyrics_box_lines', ['lyrics_box_lines' => $dict_lyrics_box_lines[$lyrics_box->id]])
     <div class="x-lyrics-new">(+new)</div>
 </div>
 @endforeach

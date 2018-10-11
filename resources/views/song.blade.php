@@ -7,6 +7,7 @@
 @section('head')
 <link href="{{ asset('css/song.css') }}" rel="stylesheet">
 <script src="{{ asset('js/all.js') }}"></script>
+<script src="{{ asset('js/song.js') }}"></script>
 @endsection
 
 @section('content')

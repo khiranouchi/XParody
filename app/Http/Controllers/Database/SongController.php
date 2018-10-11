@@ -59,10 +59,11 @@ class SongController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Song  $song
      * @return \Illuminate\Http\Response
      */
-    public function show(Song $song)
+    public function show(Request $request, Song $song)
     {
         // get lines of LyricsBox ordered by box_idx
         $song_id = $song->id;
@@ -80,7 +81,8 @@ class SongController extends Controller
             'song' => $song,
             'lyrics_boxes' => $lyrics_boxes,
             'dict_lyrics_box_lines' => $dict_lyrics_box_lines,
-            'list_box_lines_levels' => implode(',', LyricsBoxLine::getLevels())
+            'list_box_lines_levels' => implode(',', LyricsBoxLine::getLevels()),
+            'request_user_id' => $request->user()->id
         ]);
     }
 

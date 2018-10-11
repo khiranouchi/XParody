@@ -28,6 +28,10 @@ function InsertBoxLine(curId, path, boxId, curLineIdx) {
  * @param {String} path - url path to DELETE
  */
 function DeleteBoxLine(obj, path) {
+    var message = "Really delete this lyrics?";
+    if (!confirm(message)) {
+        return false;
+    }
     // delete data in database
     $.ajax({
         type: 'DELETE',

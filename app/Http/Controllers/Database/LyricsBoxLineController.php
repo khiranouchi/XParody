@@ -68,7 +68,8 @@ class LyricsBoxLineController extends Controller
         
         return view('song.lyrics_box_lines', [
             'lyrics_box_lines' => [$lyrics_box_line],
-            'list_box_lines_levels' => implode(',', LyricsBoxLine::getLevels())
+            'list_box_lines_levels' => implode(',', LyricsBoxLine::getLevels()),
+            'request_user_id' => $request->user()->id
         ]);
     }
 

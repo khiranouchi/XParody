@@ -2,7 +2,9 @@
 <div id="z_box_line_{{ $lyrics_box_line->id }}" class="x-lyrics-new x-row-margin-reset row">
     <!-- new-lyrics -->
     <div class="x-lyrics-text"
+         @if (!isset($lyrics_box_line->user) or $request_user_id === $lyrics_box_line->user->id)
          onclick="SwitchInputMode(this, '{{ route('lyrics_box_lines.update', ['id' => $lyrics_box_line]) }}', 'lyrics_new', false)"
+         @endif
     @if ($lyrics_box_line->lyrics_new === "")
     >(new_line)</div> <!-- TODO -->
     @else
@@ -23,9 +25,11 @@
     @endif
 
     <!-- Delete button -->
+    @if (!isset($lyrics_box_line->user) or $request_user_id === $lyrics_box_line->user->id)
     <div class="x-lyrics-delete"
          onclick="DeleteBoxLine(this, '{{ route('lyrics_box_lines.destroy', ['id' => $lyrics_box_line]) }}')"
     >[-]</div>
+    @endif
 
     <!-- Insert button -->
     <div class="x-lyrics-insert"

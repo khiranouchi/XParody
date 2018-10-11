@@ -39,12 +39,31 @@ class LyricsBoxLineController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $lyrics_box_line = new LyricsBoxLine;
+
+        $lyrics_box_line->user_id = $request->user()->id;
+        $lyrics_box_line->lyrics_new = $request->lyrics_new;
+
+        $box_id = $request->box_id;
+        $line_idx = $request->line_idx;
+        $lyrics_box_line->box_id = $box_id;
+        $lyrics_box_line->line_idx = $line_idx;
+        LyricsBoxLine::where('box_id', $box_id)->where('line_idx', '>=', $line_idx)->increment('line_idx');
+
+        if (LyricsBoxLine::where('box_id', $box_id)->where('level', 5)->exists()) {
+            $lyrics_box_line->level = LyricsBoxLine::getMaxLevel() - 1;
+        } else {
+            $lyrics_box_line->level = LyricsBoxLine::getMaxLevel();
+        }
+
+        $lyrics_box_line->save();
+        
+        return view('song.lyrics_box_lines', ['lyrics_box_lines' => [$lyrics_box_line]]);
     }
 
     /**

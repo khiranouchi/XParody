@@ -42,30 +42,7 @@
     <!-- Song editor -->
     <div class="x-part row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            @foreach ($lyrics_boxes as $lyrics_box)
-            <div class="x-lyrics-box">
-                <!-- lyrics-old -->
-                <div class="x-lyrics-old">
-                    <div class="x-lyrics-text"
-                         onclick="SwitchInputMode(this, '{{ route('lyrics_boxs.update', ['id' => $lyrics_box]) }}', 'lyrics_old')"
-                    >{{ $lyrics_box->lyrics_old }}</div>
-                </div>
-                <!-- lyrics-new -->
-                @foreach ($dict_lyrics_box_lines[$lyrics_box->box_idx] as $lyrics_box_line)
-                <div class="x-lyrics-new x-row-margin-reset row">
-                    <div class="x-lyrics-text">{{ $lyrics_box_line->lyrics_new }}</div>
-                    <div class="x-lyrics-level">{{ $lyrics_box_line->level }}</div>
-                    @if (isset($lyrics_box_line->user))
-                    <div class="x-lyrics-user d-flex align-items-center"
-                         style="background-color:{{ $lyrics_box_line->user->getIconColorRgbString() }}">
-                         <span>{{ $lyrics_box_line->user->icon_char }}</span>
-                    </div>
-                    @endif
-                </div>
-                @endforeach
-                <div class="x-lyrics-new">(+new)</div>
-            </div>
-            @endforeach
+        	@include('song.lyrics_boxes')
         </div>
     </div>
     

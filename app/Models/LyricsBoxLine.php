@@ -17,4 +17,9 @@ class LyricsBoxLine extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public static function getMaxLevel()
+    {
+        return 5;
+    }
 }

@@ -3,8 +3,12 @@
     <!-- lyrics-old -->
     <div id="z_box_line_old_{{ $lyrics_box->id }}" class="x-lyrics-old x-row-margin-reset row">
         <div class="x-lyrics-text"
-             onclick="SwitchInputMode(this, '{{ route('lyrics_boxs.update', ['id' => $lyrics_box]) }}', 'lyrics_old')"
+             onclick="SwitchInputMode(this, '{{ route('lyrics_boxs.update', ['id' => $lyrics_box]) }}', 'lyrics_old', false)"
+        @if ($lyrics_box->lyrics_old === "")
+        >(empty)</div>
+        @else
         >{{ $lyrics_box->lyrics_old }}</div>
+        @endif
         <div class="x-lyrics-insert"
              onclick="InsertBoxLine('z_box_line_old_{{ $lyrics_box->id }}', '{{ route('lyrics_box_lines.store') }}', '{{ $lyrics_box->id }}', '-1')"
         >[+]</div>

@@ -109,6 +109,6 @@
     margin-bottom: -0.22rem; /* 0.2+0.02 */
 }
 
-.x-lyrics-insert {
+.x-lyrics-delete, .x-lyrics-insert {
     margin-left: 10px;
 }

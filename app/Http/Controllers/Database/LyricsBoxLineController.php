@@ -53,6 +53,9 @@ class LyricsBoxLineController extends Controller
         $line_idx = $request->line_idx;
         $lyrics_box_line->box_id = $box_id;
         $lyrics_box_line->line_idx = $line_idx;
+
+        // increment line_idx of every existing table line, if its line_idx >= new line_idx.
+        // eg. [a(1), b(2), c(3), d(4)] + f(3) --> [a(1), b(2), f(3), c(4), d(5)]
         LyricsBoxLine::where('box_id', $box_id)->where('line_idx', '>=', $line_idx)->increment('line_idx');
 
         if (LyricsBoxLine::where('box_id', $box_id)->where('level', 5)->exists()) {
@@ -108,6 +111,14 @@ class LyricsBoxLineController extends Controller
      */
     public function destroy(LyricsBoxLine $lyricsBoxLine)
     {
-        //
+        // decrement line_idx of every existing table line, if its line_idx > deleted line_idx.
+        // eg. [a(1), b(2), c(3), d(4), e(5)] - c(3) --> [a(1), b(2), d(3), e(4)]
+        $box_id = $lyricsBoxLine->box_id;
+        $line_idx = $lyricsBoxLine->line_idx;
+        LyricsBoxLine::where('box_id', $box_id)->where('line_idx', '>', $line_idx)->decrement('line_idx');
+
+        $lyricsBoxLine->delete();
+
+        return response(null, 204);
     }
 }

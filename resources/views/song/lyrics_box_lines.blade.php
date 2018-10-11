@@ -15,6 +15,12 @@
     </div>
     @endif
 
+    <!-- Delete button -->
+    <div class="x-lyrics-delete"
+         onclick="DeleteBoxLine(this, '{{ route('lyrics_box_lines.destroy', ['id' => $lyrics_box_line]) }}')"
+    >[-]</div>
+
+    <!-- Insert button -->
     <div class="x-lyrics-insert"
          onclick="InsertBoxLine('z_box_line_{{ $lyrics_box_line->id }}', '{{ route('lyrics_box_lines.store') }}', '{{ $lyrics_box_line->box_id }}', '{{ $lyrics_box_line->line_idx }}')"
     >[+]</div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Song;
 use Illuminate\Http\Request;
 use App\Models\LyricsBox;
+use App\Models\LyricsBoxLine;
 
 class SongController extends Controller
 {
@@ -65,9 +66,21 @@ class SongController extends Controller
     {
         // get lines of LyricsBox ordered by box_idx
         $song_id = $song->id;
-        $lyrics_boxes = LyricsBox::where('song_id', $song_id)->orderBy('box_idx')->get();
+        $ln_lyrics_boxes = LyricsBox::where('song_id', $song_id)->orderBy('box_idx');
+        $lyrics_boxes = $ln_lyrics_boxes->get();
 
-        return view('song', ['song' => $song, 'lyrics_boxes' => $lyrics_boxes]);
+        // get lines of LyricsBoxLine ordered by line_idx of each box
+        $dict_lyrics_box_lines = array(); //associative array of array
+        $box_ids = $ln_lyrics_boxes->pluck('box_idx');
+        foreach ($box_ids as $box_id) {
+            $dict_lyrics_box_lines[$box_id] = LyricsBoxLine::where('box_id', $box_id)->orderBy('line_idx')->get();
+        }
+
+        return view('song', [
+            'song' => $song,
+            'lyrics_boxes' => $lyrics_boxes,
+            'dict_lyrics_box_lines' => $dict_lyrics_box_lines
+        ]);
     }
 
     /**

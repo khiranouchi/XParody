@@ -50,12 +50,14 @@
                          onclick="SwitchInputMode(this, '{{ route('lyrics_boxs.update', ['id' => $lyrics_box]) }}', 'lyrics_old')"
                     >{{ $lyrics_box->lyrics_old }}</div>
                 </div>
-                <!-- lyrics-new --> <!-- TODO -->
+                <!-- lyrics-new -->
+                @foreach ($dict_lyrics_box_lines[$lyrics_box->box_idx] as $lyrics_box_line)
                 <div class="x-lyrics-new x-row-margin-reset row">
-                    <div class="x-lyrics-text">New lyrics 1</div>
-                    <div class="x-lyrics-level">5</div>
-                    <div class="x-lyrics-user d-flex align-items-center"><span>G</span></div>
+                    <div class="x-lyrics-text">{{ $lyrics_box_line->lyrics_new }}</div>
+                    <div class="x-lyrics-level">{{ $lyrics_box_line->level }}</div>
+                    <div class="x-lyrics-user d-flex align-items-center"><span>{{ $lyrics_box_line->user_id }}</span></div>
                 </div>
+                @endforeach
                 <div class="x-lyrics-new">(+new)</div>
             </div>
             @endforeach

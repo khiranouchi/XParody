@@ -1,4 +1,25 @@
 /**
+ * Delete one box.
+ * @param {Object} obj - child object of the box which you want to delete
+ * @param {String} path - url path to DELETE
+ */
+function DeleteBox(obj, path) {
+    var message = "Really delete this base lyrics? (All parody lyrics will be deleted)";
+    if (!confirm(message)) {
+        return false;
+    }
+    // delete data in database
+    $.ajax({
+        type: 'DELETE',
+        url: path,
+        async: true
+    }).done(function(){
+        // delete box-line in html
+        $(obj).closest('.x-lyrics-box').remove();
+    });
+}
+
+/**
  * Insert one empty box-line. 
  * @param {Object} curId - id of the line after which you want to insert line
  * @param {String} path - url path to POST

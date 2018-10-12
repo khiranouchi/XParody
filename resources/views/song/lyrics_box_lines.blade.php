@@ -26,13 +26,13 @@
 
     <!-- Delete button -->
     @if (!isset($lyrics_box_line->user) or $request_user_id === $lyrics_box_line->user->id)
-    <div class="x-lyrics-delete"
+    <div class="x-lyrics-line-delete"
          onclick="DeleteBoxLine(this, '{{ route('lyrics_box_lines.destroy', ['id' => $lyrics_box_line]) }}')"
     >[-]</div>
     @endif
 
     <!-- Insert button -->
-    <div class="x-lyrics-insert"
+    <div class="x-lyrics-line-insert"
          onclick="InsertBoxLine('z_box_line_{{ $lyrics_box_line->id }}', '{{ route('lyrics_box_lines.store') }}', '{{ $lyrics_box_line->box_id }}', '{{ $lyrics_box_line->line_idx }}')"
     >[+]</div>
 </div>

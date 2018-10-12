@@ -9,7 +9,20 @@
         @else
         >{{ $lyrics_box->lyrics_old }}</div>
         @endif
-        <div class="x-lyrics-insert"
+
+        <!-- Delete button -->
+        <div class="x-lyrics-box-delete"
+             onclick="DeleteBox(this, '{{ route('lyrics_boxs.destroy', ['id' => $lyrics_box]) }}')"
+        >[[-]]</div>
+
+        <!-- Insert before button -->
+        <div class="x-lyrics-box-insert-before">[[^]]</div>
+
+        <!-- Insert button -->
+        <div class="x-lyrics-box-insert">[[v]]</div>
+
+        <!-- Insert button of box-line -->
+        <div class="x-lyrics-line-insert"
              onclick="InsertBoxLine('z_box_line_old_{{ $lyrics_box->id }}', '{{ route('lyrics_box_lines.store') }}', '{{ $lyrics_box->id }}', '-1')"
         >[+]</div>
     </div>

@@ -109,6 +109,9 @@
     margin-bottom: -0.22rem; /* 0.2+0.02 */
 }
 
-.x-lyrics-delete, .x-lyrics-insert {
+.x-lyrics-box-delete, .x-lyrics-box-insert-before, .x-lyrics-box-insert {
+	margin-left: 5px;
+}
+.x-lyrics-line-delete, .x-lyrics-line-insert {
     margin-left: 10px;
 }

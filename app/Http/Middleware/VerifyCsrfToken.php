@@ -22,6 +22,7 @@ class VerifyCsrfToken extends Middleware
         'songs/*',
         'songs/*/io/import/old',
         'songs/*/io/import/both',
+        'lyrics_boxs',
         'lyrics_boxs/*',
         'lyrics_box_lines',
         'lyrics_box_lines/*'

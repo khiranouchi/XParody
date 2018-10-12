@@ -1,4 +1,39 @@
 /**
+ * Insert one empty box.
+ * @param {Object} curId - id of the box AFTER which you want to insert box
+ * @param {String} path - url path to POST
+ * @param {String} songId - song_id which the box is in (for POST data)
+ * @param {String} curBoxIdx - box_idx of the line (for POST data)
+ * @param {Boolean} insertBefore - insert box BEFORE the specified box if true
+ */
+function InsertBox(curId, path, songId, curBoxIdx, insertBefore=false) {
+    // insert data in database and get resource
+    var box_idx;
+    if (insertBefore) {
+        box_idx = parseInt(curBoxIdx);
+    } else {
+        box_idx = parseInt(curBoxIdx) + 1;
+    }
+    $.ajax({
+        type: 'POST',
+        url: path,
+        data: {
+            'lyrics_old': '(new_box)',
+            'song_id': songId,
+            'box_idx': box_idx,
+        },
+        async: true
+    }).done(function(content){
+        // insert box-line in html
+        if (insertBefore) {
+            $(content).insertBefore('#' + curId);
+        } else {
+            $(content).insertAfter('#' + curId);
+        }
+    });
+}
+
+/**
  * Delete one box.
  * @param {Object} obj - child object of the box which you want to delete
  * @param {String} path - url path to DELETE

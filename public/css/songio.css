@@ -5,3 +5,19 @@
 textarea {
     width: 100%;
 }
+
+.x-part-small-margin-bottom {
+	margin-bottom: 0.5rem;
+}
+
+
+/*************************************************
+ ** example area *********************************
+ *************************************************/
+
+.alert {
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	padding-left: 0.4rem;
+	padding-right: 0.4rem;
+}

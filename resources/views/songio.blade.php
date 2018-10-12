@@ -41,7 +41,7 @@
     </div>
 
     <!-- Text area -->
-    <div class="x-part">
+    <div class="x-part x-part-small-margin-bottom">
         <textarea id="textarea_import" class="z-import"></textarea>
         <div class="z-export">
 	        <textarea id="textarea_export_old" class="z-lyrics-old" readonly></textarea>
@@ -52,8 +52,10 @@
     
     <!-- Example -->
     <div class="x-part">
-        Example: TODO
-        <!-- TODO -->
+        Example
+        <p class="alert alert-secondary">
+            TODO
+        </p>
     </div>
     
     <!-- Submit/Copy button -->

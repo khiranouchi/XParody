@@ -7,6 +7,7 @@
 @section('head')
 <link href="{{ asset('css/songio.css') }}" rel="stylesheet">
 <script src="{{ asset('js/jquery.autosize.js') }}"></script>
+<script src="{{ asset('js/jquery.clipboard.min.js') }}"></script>
 <script src="{{ asset('js/songio.js') }}"></script>
 @endsection
 
@@ -68,11 +69,14 @@
             >{{ __('labels.btn_import_submit') }}</button>
         </div>
         <div class="z-export">
-            <button class="z-lyrics-old btn btn-outline-primary"
+            <button class="z-lyrics-old z-btn-clipboard btn btn-outline-primary"
+                    data-clipboard-target="#textarea_export_old"
             >{{ __('labels.btn_export_copy') }}</button>
-            <button class="z-lyrics-both btn btn-outline-primary"
+            <button class="z-lyrics-both z-btn-clipboard btn btn-outline-primary"
+                    data-clipboard-target="#textarea_export_both"
             >{{ __('labels.btn_export_copy') }}</button>
-            <button class="z-lyrics-new btn btn-outline-primary"
+            <button class="z-lyrics-new z-btn-clipboard btn btn-outline-primary"
+                    data-clipboard-target="#textarea_export_new"
             >{{ __('labels.btn_export_copy') }}</button>
         </div>        
     </div>
@@ -80,8 +84,10 @@
 
 <script>
 $(document).ready(function(){
-    //activate autosize
+    // activate autosize
     autosize($('textarea'));
+    // activate clipboard
+    new ClipboardJS('.z-btn-clipboard');
     // initialize selection (select io_import and fmt_old/fmt_new)
     SwitchMode($('#io_export').get());
     SwitchMode($('#fmt_new').get());

@@ -53,9 +53,16 @@
     <!-- Example -->
     <div class="x-part">
         Example
-        <p class="alert alert-secondary">
-            TODO
-        </p>
+        <div class="z-import">
+            <div class="z-lyrics-old alert alert-secondary">{!! __('texts.example_import_old') !!}</div>
+            <div class="z-lyrics-both alert alert-secondary">{!! __('texts.example_import_both') !!}</div>
+            <div class="z-lyrics-new alert alert-secondary"></div>
+        </div>
+        <div class="z-export">
+            <div class="z-lyrics-old alert alert-secondary"></div>
+            <div class="z-lyrics-both alert alert-secondary"></div>
+            <div class="z-lyrics-new alert alert-secondary">{!! __('texts.example_export_new') !!}</div>
+        </div>
     </div>
     
     <!-- Submit/Copy button -->

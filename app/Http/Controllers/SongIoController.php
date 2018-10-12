@@ -109,7 +109,7 @@ class SongIoController extends Controller
                     $lyrics_box_line->box_id = $lyrics_box->id;
                     $lyrics_box_line->line_idx = $line_idx;
                     $lyrics_box_line->lyrics_new = $list_lyrics[$i];
-                    $lyrics_box_line->level = LyricsBoxLine::getMaxLevel();
+                    $lyrics_box_line->level = LyricsBoxLine::getAvailableMaxLevel($lyrics_box->id);
                     $lyrics_box_line->user_id = $request->user()->id;
                     $lyrics_box_line->save();
 

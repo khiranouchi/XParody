@@ -58,14 +58,10 @@ class LyricsBoxLineController extends Controller
         // eg. [a(1), b(2), c(3), d(4)] + f(3) --> [a(1), b(2), f(3), c(4), d(5)]
         LyricsBoxLine::where('box_id', $box_id)->where('line_idx', '>=', $line_idx)->increment('line_idx');
 
-        if (LyricsBoxLine::where('box_id', $box_id)->where('level', 5)->exists()) {
-            $lyrics_box_line->level = LyricsBoxLine::getMaxLevel() - 1;
-        } else {
-            $lyrics_box_line->level = LyricsBoxLine::getMaxLevel();
-        }
+        $lyrics_box_line->level = LyricsBoxLine::getAvailableMaxLevel($box_id);
 
         $lyrics_box_line->save();
-        
+
         return view('song.lyrics_box_lines', [
             'lyrics_box_lines' => [$lyrics_box_line],
             'list_box_lines_levels' => implode(',', LyricsBoxLine::getLevels()),

@@ -27,4 +27,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Get rgb string of icon_color as css format '#RRGGBB'.
+     * 
+     * @return string
+     */
+    public function getIconColorRgbString()
+    {
+        $rgb = sprintf("%06X", $this->icon_color);
+        return '#'.$rgb;
+    }
 }

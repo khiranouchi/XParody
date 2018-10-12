@@ -1,0 +1,117 @@
+/*************************************************
+ ** page layout (override all.css) ***************
+ *************************************************/
+
+@media (max-width: 575px) {
+    .py-4 {
+        padding-top: 0.3rem!important;
+        padding-bottom: 0.3rem!important;
+    }
+    .container {
+        padding-right: 0;
+        padding-left: 0;
+        margin-right: 2px;
+        margin-left: 2px;
+    }
+    .x-part {
+        margin-bottom: 0.3rem;
+    }
+}
+@media (min-width: 576px) {
+    .x-part {
+        margin-bottom: 1rem;
+    }
+}
+.x-part:last-child {
+    margin-bottom: 0;
+}
+
+
+/*************************************************
+ ** bootstrap card *******************************
+ *************************************************/
+
+.card-body {
+    padding: 0.5rem;
+}
+.card-body dl {
+    margin-bottom: 0;
+}
+.card-body dd {
+    margin-bottom: 0.25rem;
+}
+.card-body dd:last-child {
+    margin-bottom: 0;
+}
+
+
+/*************************************************
+ ** lyrics editor part ***************************
+ *************************************************/
+
+@media (max-width: 575px) {
+    .x-lyrics-box {
+        background-color: white;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        margin-bottom: 0.15rem;
+    }
+    .x-lyrics-old, .x-lyrics-new {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+}
+
+@media (min-width: 576px) {
+    .x-lyrics-box {
+        background-color: white;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        margin-bottom: 0.5rem;
+    }
+    .x-lyrics-old, .x-lyrics-new {
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+}
+
+.x-lyrics-box:last-child {
+	margin-bottom: 0;
+}
+
+.x-lyrics-new {
+    margin-top: -2px;
+    margin-bottom: -2px;
+}
+
+.x-lyrics-old .x-lyrics-text {
+    font-weight: bold;
+}
+
+.x-lyrics-level {
+    margin-left: 10px;
+    font-weight: bold;
+    color: red;
+}
+
+.x-lyrics-user {
+    margin-left: 10px;
+    justify-content: center;
+    color: white;
+    font-size: 0.6rem; /* <= 1rem - (mtop + mbtm) + (span-mtop + span-mbtm) */
+    margin-top: 0.23rem; /* 0.25-0.02 */
+    margin-bottom: 0.27rem; /* 0.25+0.02 */
+    width: 0.9rem;
+    border-radius: 999rem;
+}
+.x-lyrics-user span {
+    margin-top: -0.18rem; /* 0.2-0.02 */
+    margin-bottom: -0.22rem; /* 0.2+0.02 */
+}
+
+.x-lyrics-box-delete, .x-lyrics-box-insert-before, .x-lyrics-box-insert {
+	margin-left: 5px;
+}
+.x-lyrics-line-delete, .x-lyrics-line-insert {
+    margin-left: 10px;
+}

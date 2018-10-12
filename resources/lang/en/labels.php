@@ -38,4 +38,5 @@ return [
      * Messages
      */
     'dialog_delete_song' => 'Really delete this song?',
+    'error_song_export_max_level_duplicate' => 'Choose only one max-level lyrics of each line.',
 ];

@@ -43,9 +43,9 @@
     <div class="x-part">
         <textarea id="textarea_import" class="z-import"></textarea>
         <div class="z-export">
-	        <textarea id="textarea_export" class="z-lyrics-old" readonly></textarea>
-	        <textarea id="textarea_export" class="z-lyrics-both" readonly></textarea>
-	        <textarea id="textarea_export" class="z-lyrics-new" readonly></textarea>
+	        <textarea id="textarea_export_old" class="z-lyrics-old" readonly></textarea>
+	        <textarea id="textarea_export_both" class="z-lyrics-both" readonly></textarea>
+	        <textarea id="textarea_export_new" class="z-lyrics-new" readonly></textarea>
         </div>
 	</div>
     
@@ -85,6 +85,8 @@ $(document).ready(function(){
     // initialize selection (select io_import and fmt_old/fmt_new)
     SwitchMode($('#io_export').get());
     SwitchMode($('#fmt_new').get());
+    // initialize export textarea
+    LoadExportLyrics('textarea_export_new', '{{ route('songio_export_new', ['id' => $song]) }}');
 });
 </script>
 @endsection

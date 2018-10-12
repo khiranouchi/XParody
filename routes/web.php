@@ -26,3 +26,4 @@ Route::resource('lyrics_box_lines', 'Database\\LyricsBoxLineController');
 Route::get('songs/{song}/io', 'SongIoController@index')->name('songio');
 Route::post('songs/{song}/io/import/old', 'SongIoController@storeAllLyricsOld')->name('songio_import_old');
 Route::post('songs/{song}/io/import/both', 'SongIoController@storeAllLyricsBoth')->name('songio_import_both');
+Route::get('songs/{song}/io/export/new', 'SongIoController@indexAllLyricsNew')->name('songio_export_new');

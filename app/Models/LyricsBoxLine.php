@@ -27,7 +27,10 @@ class LyricsBoxLine extends Model
     {
         return [1, 2, 3, 4, 5];
     }
-
+    public static function getMaxLevel()
+    {
+        return 5;
+    }
     public static function getAvailableMaxLevel($box_id)
     {
         if (LyricsBoxLine::where('box_id', $box_id)->where('level', 5)->exists()) {

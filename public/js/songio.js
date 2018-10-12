@@ -15,7 +15,7 @@ function SwitchMode(obj) {
 }
 
 /**
- * POST textarea content (multiple lyrics) with comma-separated text.
+ * POST textarea content (multiple lyrics) with line-separated text.
  * @param {String} textareaId - id of the import textarea
  * @param {String} path - url path to POST
  */
@@ -31,5 +31,21 @@ function SaveImportLyrics(textareaId, path) {
         async: true
     }).done(function(content){
         location.href = content['url'];
+    });
+}
+
+/**
+ * GET textarea content (multiple lyrics) with line-separated text.
+ * @param {String} textareaId - id of the export textarea
+ * @param {String} path - url path to GET
+ */
+function LoadExportLyrics(textareaId, path) {
+    $.ajax({
+        type: 'GET',
+        url: path,
+        cache: false,
+        async: true
+    }).done(function(content){
+        $('#' + textareaId).val(content);
     });
 }

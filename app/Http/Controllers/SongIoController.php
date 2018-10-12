@@ -31,6 +31,7 @@ class SongIoController extends Controller
     /**
      * Store multiple lyrics-old to the table LyricsBox.
      * 
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Song  $song
      * $return \Illuminate\Http\Response
      */
@@ -59,8 +60,9 @@ class SongIoController extends Controller
     }
 
     /**
-     * Store multiple lyrics-old to the table LyricsBox.
+     * Store multiple lyrics-old/new to the table LyricsBox.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Song  $song
      * $return \Illuminate\Http\Response
      */
@@ -121,5 +123,36 @@ class SongIoController extends Controller
         }
 
         return response()->json(['url' => route('songs.show', ['id' => $song])], 201);
+    }
+
+    /**
+     * Index multiple lyrics-new from the table LyricsBoxLine.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Song  $song
+     * $return \Illuminate\Http\Response
+     */
+    public function indexAllLyricsNew(Request $request, Song $song)
+    {
+        $content = '';
+
+        $box_ids = LyricsBox::where('song_id', $song->id)->orderBy('box_idx')->pluck('id');
+
+        // add one lyrics-new from each lyrics-box
+        foreach ($box_ids as $box_id) {
+            $ln_lyrics_box_lines = LyricsBoxLine::where('box_id', $box_id);
+            if (!$ln_lyrics_box_lines->get()->isEmpty()) {
+                // choose one with max-level (should be only one)
+                $lyrics_box_lines_max = $ln_lyrics_box_lines->where('level', LyricsBoxLine::getMaxLevel())->get();
+                if (count($lyrics_box_lines_max) === 1) {
+                    $content .= $lyrics_box_lines_max[0]->lyrics_new; //add
+                } else {
+                    return response(__('labels.error_song_export_max_level_duplicate'));
+                }
+            }
+            $content .= "\n";
+        }
+
+        return response($content);
     }
 }

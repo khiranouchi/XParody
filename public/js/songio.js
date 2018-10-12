@@ -15,11 +15,11 @@ function SwitchMode(obj) {
 }
 
 /**
- * POST multiple old lyrics from imported comma-separated text.
+ * POST textarea content (multiple lyrics) with comma-separated text.
  * @param {String} textareaId - id of the import textarea
  * @param {String} path - url path to POST
  */
-function SaveImportLyricsOld(textareaId, path) {
+function SaveImportLyrics(textareaId, path) {
     var message = "Really import? (Existing all lyrics are deleted)";
     if (!confirm(message)) {
         return false;

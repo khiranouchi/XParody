@@ -20,7 +20,8 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'songs/*',
-        'songs/*/io',
+        'songs/*/io/import/old',
+        'songs/*/io/import/both',
         'lyrics_boxs/*',
         'lyrics_box_lines',
         'lyrics_box_lines/*'

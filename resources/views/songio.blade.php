@@ -13,7 +13,7 @@
 
 @section('content')
 <div class="container">
-	<!--  -->
+	<!-- Modes -->
     <div class="x-part">
         <div class="x-subpart">
             <div class="btn-group">
@@ -37,6 +37,19 @@
                         onclick="SwitchMode(this)"
                 >{{ __('labels.btn_io_lyrics_new') }}</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Options -->
+    <div class="x-part">
+        <div class="z-import"></div>
+        <div class="z-export btn-group">
+            <button id="option_strict" class="btn btn-outline-secondary x-btn-small-padding"
+                    onclick="SwitchExportOption('option_strict', 'textarea_export_new', '{{ route('songio_export_new', ['id' => $song]) }}', true)"
+            >{{ __('labels.btn_export_op_strict') }}</button>
+            <button id="option_loose" class="btn btn-outline-secondary x-btn-small-padding"
+                    onclick="SwitchExportOption('option_loose', 'textarea_export_new', '{{ route('songio_export_new', ['id' => $song]) }}', false)"
+            >{{ __('labels.btn_export_op_loose') }}</button>
         </div>
     </div>
 
@@ -100,8 +113,8 @@ $(document).ready(function(){
     // initialize selection (select io_import and fmt_old/fmt_new)
     SwitchMode($('#io_export').get());
     SwitchMode($('#fmt_new').get());
-    // initialize export textarea
-    LoadExportLyrics('textarea_export_new', '{{ route('songio_export_new', ['id' => $song]) }}');
+    // initialize export option
+    SwitchExportOption('option_strict', 'textarea_export_new', '{{ route('songio_export_new', ['id' => $song]) }}', true);
 });
 </script>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Database;
 use App\Http\Controllers\Controller;
 use App\Models\LyricsBoxLine;
 use Illuminate\Http\Request;
+use App\Models\LyricsBox;
 
 class LyricsBoxLineController extends Controller
 {
@@ -47,7 +48,6 @@ class LyricsBoxLineController extends Controller
         $lyrics_box_line = new LyricsBoxLine;
 
         $lyrics_box_line->user_id = $request->user()->id;
-        $lyrics_box_line->lyrics_new = $request->lyrics_new;
 
         $box_id = $request->box_id;
         $line_idx = $request->line_idx;
@@ -57,6 +57,9 @@ class LyricsBoxLineController extends Controller
         // increment line_idx of every existing table line, if its line_idx >= new line_idx.
         // eg. [a(1), b(2), c(3), d(4)] + f(3) --> [a(1), b(2), f(3), c(4), d(5)]
         LyricsBoxLine::where('box_id', $box_id)->where('line_idx', '>=', $line_idx)->increment('line_idx');
+
+        // set old-lyrics as default new-lyrics
+        $lyrics_box_line->lyrics_new = LyricsBox::find($box_id)->lyrics_old;
 
         $lyrics_box_line->level = LyricsBoxLine::getAvailableMaxLevel($box_id);
 

@@ -43,14 +43,14 @@ class SongIoController extends Controller
         LyricsBox::where('song_id', $song_id)->delete();
 
         // store to table LyricsBox and LyricsBoxLine
-        $list_lyrics_old = preg_split("/\R/", $request['data']);
+        $list_lyrics_old = preg_split('/\r\n|\n|\r/', $request['data']);
         $box_idx = 0;
         foreach ($list_lyrics_old as $lyrics_old) {
             // create new line in LyricsBox
             $lyrics_box = new LyricsBox;
             $lyrics_box->song_id = $song_id;
             $lyrics_box->box_idx = $box_idx;
-            $lyrics_box->lyrics_old = $lyrics_old;
+            $lyrics_box->lyrics_old = trim(mb_convert_kana($lyrics_old, "s"));
             $lyrics_box->save();
 
             $box_idx++;
@@ -74,7 +74,7 @@ class SongIoController extends Controller
         LyricsBox::where('song_id', $song_id)->delete();
 
         // store to table LyricsBox and LyricsBoxLine
-        $list_lyrics = preg_split("/\R/", $request['data']);
+        $list_lyrics = preg_split('/\r\n|\n|\r/', $request['data']);
         $i = -1;
         $box_idx = 0;
         while (true) {
@@ -84,14 +84,16 @@ class SongIoController extends Controller
                 break;
             }
 
+            $lyrics = trim(mb_convert_kana($list_lyrics[$i], "s"));
+
             // create new line in LyricsBox
             $lyrics_box = new LyricsBox;
             $lyrics_box->song_id = $song_id;
             $lyrics_box->box_idx = $box_idx;
-            $lyrics_box->lyrics_old = $list_lyrics[$i];
+            $lyrics_box->lyrics_old = $lyrics;
             $lyrics_box->save();
 
-            if ($list_lyrics[$i] !== "") {
+            if ($lyrics !== "") {
                 $line_idx = 0;
 
                 // read line as new-lyrics until empty line appears
@@ -102,7 +104,9 @@ class SongIoController extends Controller
                         break;
                     }
 
-                    if($list_lyrics[$i] === "") {
+                    $lyrics = trim(mb_convert_kana($list_lyrics[$i], "s"));
+
+                    if($lyrics === "") {
                         break;
                     }
 
@@ -110,7 +114,7 @@ class SongIoController extends Controller
                     $lyrics_box_line = new LyricsBoxLine;
                     $lyrics_box_line->box_id = $lyrics_box->id;
                     $lyrics_box_line->line_idx = $line_idx;
-                    $lyrics_box_line->lyrics_new = $list_lyrics[$i];
+                    $lyrics_box_line->lyrics_new = $lyrics;
                     $lyrics_box_line->level = LyricsBoxLine::getAvailableMaxLevel($lyrics_box->id);
                     $lyrics_box_line->user_id = $request->user()->id;
                     $lyrics_box_line->save();
@@ -142,12 +146,20 @@ class SongIoController extends Controller
         foreach ($box_ids as $box_id) {
             $ln_lyrics_box_lines = LyricsBoxLine::where('box_id', $box_id);
             if (!$ln_lyrics_box_lines->get()->isEmpty()) {
-                // choose one with max-level (should be only one)
-                $lyrics_box_lines_max = $ln_lyrics_box_lines->where('level', LyricsBoxLine::getMaxLevel())->get();
-                if (count($lyrics_box_lines_max) === 1) {
-                    $content .= $lyrics_box_lines_max[0]->lyrics_new; //add
+                // if strict
+                if ($request->strict === "true") {
+                    // choose one with max-level (should be only one)
+                    $lyrics_box_lines_max = $ln_lyrics_box_lines->where('level', LyricsBoxLine::getMaxLevel())->get();
+                    if (count($lyrics_box_lines_max) === 1) {
+                        $content .= $lyrics_box_lines_max[0]->lyrics_new; //add
+                    } else {
+                        return response(__('labels.error_song_export_max_level_duplicate'));
+                    }
+                // if loose
                 } else {
-                    return response(__('labels.error_song_export_max_level_duplicate'));
+                    // choose the most higher level (select only one which appears first(smaller line-idx))
+                    $lyrics_box_line = $ln_lyrics_box_lines->orderBy('level', 'desc')->orderBy('line_idx', 'desc')->take(1)->get()[0];
+                    $content .= $lyrics_box_line->lyrics_new; //add
                 }
             }
             $content .= "\n";

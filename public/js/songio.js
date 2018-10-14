@@ -15,6 +15,19 @@ function SwitchMode(obj) {
 }
 
 /**
+ * Switch Export Option: Switch the option to Get export text.
+ * @param {String} id - id of the switch-button into whose option you want to be switched
+ * @param {String} textareaId - id of the export textarea
+ * @param {String} path - url path to GET export text
+ * @param {Boolean} isStrict - one of field to GET export text
+ */
+function SwitchExportOption(id, textareaId, path, isStrict) {
+    $('#' + id).siblings().removeClass('active');
+    $('#' + id).addClass('active');
+    LoadExportLyrics(textareaId, path, isStrict);
+}
+
+/**
  * POST textarea content (multiple lyrics) with line-separated text.
  * @param {String} textareaId - id of the import textarea
  * @param {String} path - url path to POST
@@ -38,11 +51,13 @@ function SaveImportLyrics(textareaId, path) {
  * GET textarea content (multiple lyrics) with line-separated text.
  * @param {String} textareaId - id of the export textarea
  * @param {String} path - url path to GET
+ * @param {Boolean} isStrict - one of field to GET
  */
-function LoadExportLyrics(textareaId, path) {
+function LoadExportLyrics(textareaId, path, isStrict=true) {
     $.ajax({
         type: 'GET',
         url: path,
+        data: {'strict': isStrict},
         cache: false,
         async: true
     }).done(function(content){

@@ -146,12 +146,20 @@ class SongIoController extends Controller
         foreach ($box_ids as $box_id) {
             $ln_lyrics_box_lines = LyricsBoxLine::where('box_id', $box_id);
             if (!$ln_lyrics_box_lines->get()->isEmpty()) {
-                // choose one with max-level (should be only one)
-                $lyrics_box_lines_max = $ln_lyrics_box_lines->where('level', LyricsBoxLine::getMaxLevel())->get();
-                if (count($lyrics_box_lines_max) === 1) {
-                    $content .= $lyrics_box_lines_max[0]->lyrics_new; //add
+                // if strict
+                if ($request->strict === "true") {
+                    // choose one with max-level (should be only one)
+                    $lyrics_box_lines_max = $ln_lyrics_box_lines->where('level', LyricsBoxLine::getMaxLevel())->get();
+                    if (count($lyrics_box_lines_max) === 1) {
+                        $content .= $lyrics_box_lines_max[0]->lyrics_new; //add
+                    } else {
+                        return response(__('labels.error_song_export_max_level_duplicate'));
+                    }
+                // if loose
                 } else {
-                    return response(__('labels.error_song_export_max_level_duplicate'));
+                    // choose the most higher level (select only one which appears first(smaller line-idx))
+                    $lyrics_box_line = $ln_lyrics_box_lines->orderBy('level', 'desc')->orderBy('line_idx', 'desc')->take(1)->get()[0];
+                    $content .= $lyrics_box_line->lyrics_new; //add
                 }
             }
             $content .= "\n";

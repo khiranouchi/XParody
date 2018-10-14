@@ -1,7 +1,7 @@
 XParody
 ============
+Website: COMING SOON <br>
 XParody helps create song parodies.
-(Detail is TODO)
 
 Requirements
 --------
@@ -30,3 +30,18 @@ Install and Run
 Usage
 --------
 TODO
+
+Dependency
+--------
++ tablesorter
+  - Copyright (c) 2014 Christian Bach
+  - Released under the MIT license
+  - https://github.com/christianbach/tablesorter/blob/master/LICENSE
++ Autosize
+  - Copyright (c) 2015 Jack Moore
+  - Released under the MIT license
+  - https://github.com/jackmoore/autosize/blob/master/LICENSE.md
++ clipboard.js
+  - Copyright (c) 2018 Zeno Rocha
+  - Released under the MIT license
+  - https://zenorocha.mit-license.org/

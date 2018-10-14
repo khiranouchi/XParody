@@ -50,7 +50,7 @@ class SongIoController extends Controller
             $lyrics_box = new LyricsBox;
             $lyrics_box->song_id = $song_id;
             $lyrics_box->box_idx = $box_idx;
-            $lyrics_box->lyrics_old = $lyrics_old;
+            $lyrics_box->lyrics_old = trim(mb_convert_kana($lyrics_old, "s"));
             $lyrics_box->save();
 
             $box_idx++;
@@ -84,14 +84,16 @@ class SongIoController extends Controller
                 break;
             }
 
+            $lyrics = trim(mb_convert_kana($list_lyrics[$i], "s"));
+
             // create new line in LyricsBox
             $lyrics_box = new LyricsBox;
             $lyrics_box->song_id = $song_id;
             $lyrics_box->box_idx = $box_idx;
-            $lyrics_box->lyrics_old = $list_lyrics[$i];
+            $lyrics_box->lyrics_old = $lyrics;
             $lyrics_box->save();
 
-            if ($list_lyrics[$i] !== "") {
+            if ($lyrics !== "") {
                 $line_idx = 0;
 
                 // read line as new-lyrics until empty line appears
@@ -102,7 +104,9 @@ class SongIoController extends Controller
                         break;
                     }
 
-                    if($list_lyrics[$i] === "") {
+                    $lyrics = trim(mb_convert_kana($list_lyrics[$i], "s"));
+
+                    if($lyrics === "") {
                         break;
                     }
 
@@ -110,7 +114,7 @@ class SongIoController extends Controller
                     $lyrics_box_line = new LyricsBoxLine;
                     $lyrics_box_line->box_id = $lyrics_box->id;
                     $lyrics_box_line->line_idx = $line_idx;
-                    $lyrics_box_line->lyrics_new = $list_lyrics[$i];
+                    $lyrics_box_line->lyrics_new = $lyrics;
                     $lyrics_box_line->level = LyricsBoxLine::getAvailableMaxLevel($lyrics_box->id);
                     $lyrics_box_line->user_id = $request->user()->id;
                     $lyrics_box_line->save();

@@ -43,7 +43,7 @@ class SongIoController extends Controller
         LyricsBox::where('song_id', $song_id)->delete();
 
         // store to table LyricsBox and LyricsBoxLine
-        $list_lyrics_old = preg_split("/\R/", $request['data']);
+        $list_lyrics_old = preg_split('/\r\n|\n|\r/', $request['data']);
         $box_idx = 0;
         foreach ($list_lyrics_old as $lyrics_old) {
             // create new line in LyricsBox
@@ -74,7 +74,7 @@ class SongIoController extends Controller
         LyricsBox::where('song_id', $song_id)->delete();
 
         // store to table LyricsBox and LyricsBoxLine
-        $list_lyrics = preg_split("/\R/", $request['data']);
+        $list_lyrics = preg_split('/\r\n|\n|\r/', $request['data']);
         $i = -1;
         $box_idx = 0;
         while (true) {

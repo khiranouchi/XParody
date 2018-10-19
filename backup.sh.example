@@ -1,0 +1,25 @@
+#!/bin/sh
+
+cur_path=/.../XParody/
+drive=/.../drive
+gdrive_folder_id=...
+
+tables=("Users" "Songs" "LyricsBoxes" "LyricsBoxLines")
+tables_lower=("users" "songs" "lyrics_boxes" "lyrics_box_lines")
+
+${drive} list --noheader --query "'${gdrive_folder_id}' in parents" | while read ln
+do
+    ${drive} delete --id `echo ${ln} | awk '{print $1}'` > /dev/null
+done
+echo Delete the existing seed files
+
+for((i=0; i<${#tables[@]}; i++))
+do
+    seeder_path=${cur_path}database/seeds/${tables[i]}TableSeeder.php
+    rm ${seeder_path} -f
+    php ${cur_path}artisan iseed ${tables_lower[i]}
+    ${drive} upload --parent ${gdrive_folder_id} --file ${seeder_path} > /dev/null
+    echo Saved the seed file at folder ${gdrive_folder_id} of google drive
+done
+
+echo -- done at `date`

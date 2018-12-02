@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Database;
 
 use App\Http\Controllers\Controller;
 use App\Models\LyricsBoxLine;
+use App\Models\Song;
 use Illuminate\Http\Request;
 use App\Models\LyricsBox;
 
@@ -16,34 +17,16 @@ class LyricsBoxLineController extends Controller
     {
         $this->middleware('auth');
     }
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        abort(404);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        abort(404);
-    }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request  $request
+     * @param  \App\Models\Song  $song
+     * @param  \App\Models\LyricsBox  $lyricsBox
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Song $song, LyricsBox $lyricsBox)
     {
         $lyrics_box_line = new LyricsBoxLine;
 
@@ -66,6 +49,8 @@ class LyricsBoxLineController extends Controller
         $lyrics_box_line->save();
 
         return view('song.lyrics_box_lines', [
+            'song' => $song,
+            'lyrics_box' => $lyricsBox,
             'lyrics_box_lines' => [$lyrics_box_line],
             'list_box_lines_levels' => implode(',', LyricsBoxLine::getLevels()),
             'request_user_id' => $request->user()->id
@@ -73,35 +58,15 @@ class LyricsBoxLineController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\LyricsBoxLine  $lyricsBoxLine
-     * @return \Illuminate\Http\Response
-     */
-    public function show(LyricsBoxLine $lyricsBoxLine)
-    {
-        abort(404);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\LyricsBoxLine  $lyricsBoxLine
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(LyricsBoxLine $lyricsBoxLine)
-    {
-        abort(404);
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Song  $song
+     * @param  \App\Models\LyricsBox  $lyricsBox
      * @param  \App\Models\LyricsBoxLine  $lyricsBoxLine
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LyricsBoxLine $lyricsBoxLine)
+    public function update(Request $request, Song $song, LyricsBox $lyricsBox, LyricsBoxLine $lyricsBoxLine)
     {
         // only creator can update
         if ($request->filled('lyrics_new')) {
@@ -129,10 +94,12 @@ class LyricsBoxLineController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Song  $song
+     * @param  \App\Models\LyricsBox  $lyricsBox
      * @param  \App\Models\LyricsBoxLine  $lyricsBoxLine
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, LyricsBoxLine $lyricsBoxLine)
+    public function destroy(Request $request, Song $song, LyricsBox $lyricsBox, LyricsBoxLine $lyricsBoxLine)
     {
         // only creator can destroy
         if ($lyricsBoxLine->user_id !== null and $request->user()->id != $lyricsBoxLine->user_id) {

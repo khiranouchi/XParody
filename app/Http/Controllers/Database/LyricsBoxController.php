@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Database;
 use App\Http\Controllers\Controller;
 use App\Models\LyricsBox;
 use App\Models\LyricsBoxLine;
+use App\Models\Song;
 use Illuminate\Http\Request;
 
 class LyricsBoxController extends Controller
@@ -16,34 +17,15 @@ class LyricsBoxController extends Controller
     {
         $this->middleware('auth');
     }
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        abort(404);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        abort(404);
-    }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Song  $song
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Song $song)
     {
         $lyrics_box = new LyricsBox;
 
@@ -66,6 +48,7 @@ class LyricsBoxController extends Controller
         $dict_lyrics_box_lines[$lyrics_box->id] = array();
 
         return view('song.lyrics_boxes', [
+            'song' => $song,
             'lyrics_boxes' => [$lyrics_box],
             'dict_lyrics_box_lines' => $dict_lyrics_box_lines,
             'list_box_lines_levels' => implode(',', LyricsBoxLine::getLevels()),
@@ -74,35 +57,14 @@ class LyricsBoxController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\LyricsBox  $lyricsBox
-     * @return \Illuminate\Http\Response
-     */
-    public function show(LyricsBox $lyricsBox)
-    {
-        abort(404);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\LyricsBox  $lyricsBox
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(LyricsBox $lyricsBox)
-    {
-        abort(404);
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Song  $song
      * @param  \App\Models\LyricsBox  $lyricsBox
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LyricsBox $lyricsBox)
+    public function update(Request $request, Song $song, LyricsBox $lyricsBox)
     {
         if ($request->isMethod('PATCH')) {
             foreach ($lyricsBox->getAllColumnNames() as $fields) {
@@ -120,10 +82,11 @@ class LyricsBoxController extends Controller
     /**
      * Remove the specified resource from storage (lines in LyricsBoxLine is cascade).
      *
+     * @param  \App\Models\Song  $song
      * @param  \App\Models\LyricsBox  $lyricsBox
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LyricsBox $lyricsBox)
+    public function destroy(Song $song, LyricsBox $lyricsBox)
     {
         // decrement box_idx of every existing table line, if its box_idx > deleted box_idx.
         // eg. [a(1), b(2), c(3), d(4), e(5)] - c(3) --> [a(1), b(2), d(3), e(4)]

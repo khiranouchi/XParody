@@ -48,6 +48,11 @@ class LyricsBoxLineController extends Controller
 
         $lyrics_box_line->save();
 
+        // update timestamps of the song
+        if(!$song->is_complete) {
+            $song->touch();
+        }
+
         return view('song.lyrics_box_lines', [
             'song' => $song,
             'lyrics_box' => $lyricsBox,
@@ -83,7 +88,14 @@ class LyricsBoxLineController extends Controller
                     $lyricsBoxLine->$fields = $request->$fields;
                 }
             }
+
+            // update timestamps of the song (if lyricsBoxLine is actually modified)
+            if($lyricsBoxLine->isDirty() and !$song->is_complete) {
+                $song->touch();
+            }
+
             $lyricsBoxLine->save();
+
             return response(null, 204);
         }else{
             return abort(501);
@@ -113,6 +125,11 @@ class LyricsBoxLineController extends Controller
         LyricsBoxLine::where('box_id', $box_id)->where('line_idx', '>', $line_idx)->decrement('line_idx');
 
         $lyricsBoxLine->delete();
+
+        // update timestamps of the song
+        if(!$song->is_complete) {
+            $song->touch();
+        }
 
         return response(null, 204);
     }

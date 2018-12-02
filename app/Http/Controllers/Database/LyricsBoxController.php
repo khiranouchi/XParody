@@ -42,6 +42,11 @@ class LyricsBoxController extends Controller
 
         $lyrics_box->save();
 
+        // update timestamps of the song
+        if(!$song->is_complete) {
+            $song->touch();
+        }
+
         // $dict_lyrics_box_line is list of LyricsBoxLine lines ordered by line_idx of each box,
         // but at this time we only need 'empty list' of 'one created box'.
         $dict_lyrics_box_lines = array();
@@ -72,7 +77,14 @@ class LyricsBoxController extends Controller
                     $lyricsBox->$fields = $request->$fields;
                 }
             }
+
+            // update timestamps of the song (if lyricsBox is actually modified)
+            if($lyricsBox->isDirty() and !$song->is_complete) {
+                $song->touch();
+            }
+
             $lyricsBox->save();
+
             return response(null, 204);
         }else{
             return abort(501);
@@ -95,6 +107,11 @@ class LyricsBoxController extends Controller
         LyricsBox::where('song_id', $song_id)->where('box_idx', '>', $box_idx)->decrement('box_idx');
 
         $lyricsBox->delete();
+
+        // update timestamps of the song
+        if(!$song->is_complete) {
+            $song->touch();
+        }
 
         return response(null, 204);
     }

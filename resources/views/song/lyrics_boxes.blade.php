@@ -12,25 +12,29 @@
         >{{ $lyrics_box->lyrics_old }}</div>
         @endif
 
-        <!-- Delete button -->
         @if (!$song->is_complete)
-        <div class="x-lyrics-box-delete"
-             onclick="DeleteBox(this, '{{ route('lyrics_boxs.destroy', ['song' => $song, 'lyrics_box' => $lyrics_box]) }}')"
-        >[[-]]</div>
-        @endif
+        <div class="dropdown x-lyrics-box-dropdown">
+            <div class="dropdown-toggle" id="z_box_dropdown_{{ $lyrics_box->id }}"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+            >[=]</div>
 
-        <!-- Insert before button -->
-        @if (!$song->is_complete)
-        <div class="x-lyrics-box-insert-before"
-             onclick="InsertBox('z_box_{{ $lyrics_box->id }}', '{{ route('lyrics_boxs.store', ['song' => $song]) }}', '{{ $lyrics_box->box_idx }}', true)"
-        >[[^]]</div>
-        @endif
+            <div class="dropdown-menu" aria-labelledby="z_box_dropdown_{{ $lyrics_box->id }}">
+                <!-- Delete button -->
+                <div class="dropdown-item"
+                     onclick="DeleteBox(this, '{{ route('lyrics_boxs.destroy', ['song' => $song, 'lyrics_box' => $lyrics_box]) }}')"
+                >{{ __('labels.dropdown_delete_box') }}</div>
 
-        <!-- Insert button -->
-        @if (!$song->is_complete)
-        <div class="x-lyrics-box-insert"
-             onclick="InsertBox('z_box_{{ $lyrics_box->id }}', '{{ route('lyrics_boxs.store', ['song' => $song]) }}', '{{ $lyrics_box->box_idx }}')"
-        >[[v]]</div>
+                <!-- Insert before button -->
+                <div class="dropdown-item"
+                     onclick="InsertBox('z_box_{{ $lyrics_box->id }}', '{{ route('lyrics_boxs.store', ['song' => $song]) }}', '{{ $lyrics_box->box_idx }}', true)"
+                >{{ __('labels.dropdown_insert_before_box') }}</div>
+
+                <!-- Insert button -->
+                <div class="dropdown-item"
+                     onclick="InsertBox('z_box_{{ $lyrics_box->id }}', '{{ route('lyrics_boxs.store', ['song' => $song]) }}', '{{ $lyrics_box->box_idx }}')"
+                >{{ __('labels.dropdown_insert_after_box') }}</div>
+            </div>
+        </div>
         @endif
 
         <!-- Insert button of box-line -->

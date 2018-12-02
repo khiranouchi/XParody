@@ -37,6 +37,9 @@ return [
     'btn_export_op_loose' => 'Loose',
     'btn_import_submit' => 'Import',
     'btn_export_copy' => 'Copy to clipboard',
+    'dropdown_delete_box' => 'Delete this',
+    'dropdown_insert_before_box' => 'Insert base lyrics (before)',
+    'dropdown_insert_after_box' => 'Insert base lyrics (after)',
     
     /*
      * Messages

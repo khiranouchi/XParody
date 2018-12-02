@@ -37,6 +37,11 @@ class SongIoController extends Controller
      */
     public function storeAllLyricsOld(Request $request, Song $song)
     {
+        // unable to import lyrics when song's complete flag is on
+        if($song->is_complete) {
+            abort(404);
+        }
+
         $song_id = $song->id;
 
         // delete all existing lines with specified song_id in LyricsBox (lines in LyricsBoxLine is cascade)
@@ -56,6 +61,9 @@ class SongIoController extends Controller
             $box_idx++;
         }
 
+        // update timestamps of the song
+        $song->touch();
+
         return response()->json(['url' => route('songs.show', ['id' => $song])], 201);
     }
 
@@ -68,6 +76,11 @@ class SongIoController extends Controller
      */
     public function storeAllLyricsBoth(Request $request, Song $song)
     {
+        // unable to import lyrics when song's complete flag is on
+        if($song->is_complete) {
+            abort(404);
+        }
+
         $song_id = $song->id;
 
         // delete all existing lines with specified song_id in LyricsBox (lines in LyricsBoxLine is cascade)
@@ -125,6 +138,9 @@ class SongIoController extends Controller
 
             $box_idx++;
         }
+
+        // update timestamps of the song
+        $song->touch();
 
         return response()->json(['url' => route('songs.show', ['id' => $song])], 201);
     }

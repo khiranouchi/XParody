@@ -114,7 +114,12 @@ class SongController extends Controller
                 }
             }
             $song->save();
-            return response(null, 204);
+
+            if ($request->header('accept') == 'application/json') {
+                return response(null, 204);
+            } else {
+                return redirect()->route('songs.show', ['id' => $song]);
+            }
         }else{
             return abort(501);
         }

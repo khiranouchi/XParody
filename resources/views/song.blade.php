@@ -36,11 +36,12 @@
                         <dd class="col-sm-10">{{ $song->getUpdatedAtDateTime() }}</dd>
                         <dd class="col-sm-12">
                             <!-- Set is_complete flag on -->
-                            <form action="" method="post"
+                            <form action="{{ route('songs.update', ['id' => $song]) }}" method="post"
                                   onsubmit="ShowCheckDialog(event, '{{ __('labels.dialog_complete_song') }}')"
                                   class="x-inline-form">
                                 @csrf
-                                @method('POST')
+                                @method('PATCH')
+                                <input type="hidden" name="is_complete" value="1">
                                 <button type="submit" class="btn btn-outline-secondary x-btn-small-padding">
                                     {{ __('labels.btn_complete_song') }}
                                 </button>

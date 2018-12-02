@@ -36,6 +36,7 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
                     $.ajax({
                         type: 'PATCH',
                         url: path,
+                        headers: { Accept: "application/json" },
                         data: data,
                         async: true
                     }).done(function(){
@@ -88,6 +89,7 @@ function SwitchSelectMode(obj, path, fieldName, options) {
                 $.ajax({
                     type: 'PATCH',
                     url: path,
+                    headers: { Accept: "application/json" },
                     data: data,
                     async: true
                 }).done(function(){

@@ -17,9 +17,11 @@
     <div class="x-part">
         <div class="x-subpart">
             <div class="btn-group">
+                @if (!$song->is_complete)
                 <button id="io_import" name="z-import" class="btn btn-outline-secondary"
                         onclick="SwitchMode(this)"
                 >{{ __('labels.btn_import') }}</button>
+                @endif
                 <button id="io_export" name="z-export" class="btn btn-outline-secondary"
                         onclick="SwitchMode(this)"
                 >{{ __('labels.btn_export') }}</button>

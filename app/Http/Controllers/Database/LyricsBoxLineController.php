@@ -28,6 +28,11 @@ class LyricsBoxLineController extends Controller
      */
     public function store(Request $request, Song $song, LyricsBox $lyricsBox)
     {
+        // unable to store when song's complete flag is on
+        if($song->is_complete) {
+            abort(404);
+        }
+
         $lyrics_box_line = new LyricsBoxLine;
 
         $lyrics_box_line->user_id = $request->user()->id;
@@ -49,9 +54,7 @@ class LyricsBoxLineController extends Controller
         $lyrics_box_line->save();
 
         // update timestamps of the song
-        if(!$song->is_complete) {
-            $song->touch();
-        }
+        $song->touch();
 
         return view('song.lyrics_box_lines', [
             'song' => $song,
@@ -81,7 +84,12 @@ class LyricsBoxLineController extends Controller
                 return response(null, 400);
             }
         }
-        
+
+        // unable to update when song's complete flag is on
+        if($song->is_complete) {
+            abort(404);
+        }
+
         if ($request->isMethod('PATCH')) {
             foreach ($lyricsBoxLine->getAllColumnNames() as $fields) {
                 if ($request->filled($fields)) {
@@ -90,7 +98,7 @@ class LyricsBoxLineController extends Controller
             }
 
             // update timestamps of the song (if lyricsBoxLine is actually modified)
-            if($lyricsBoxLine->isDirty() and !$song->is_complete) {
+            if($lyricsBoxLine->isDirty()) {
                 $song->touch();
             }
 
@@ -117,7 +125,12 @@ class LyricsBoxLineController extends Controller
         if ($lyricsBoxLine->user_id !== null and $request->user()->id != $lyricsBoxLine->user_id) {
             return response(null, 400);
         }
-        
+
+        // unable to destroy when song's complete flag is on
+        if($song->is_complete) {
+            abort(404);
+        }
+
         // decrement line_idx of every existing table line, if its line_idx > deleted line_idx.
         // eg. [a(1), b(2), c(3), d(4), e(5)] - c(3) --> [a(1), b(2), d(3), e(4)]
         $box_id = $lyricsBox->id;
@@ -127,9 +140,7 @@ class LyricsBoxLineController extends Controller
         $lyricsBoxLine->delete();
 
         // update timestamps of the song
-        if(!$song->is_complete) {
-            $song->touch();
-        }
+        $song->touch();
 
         return response(null, 204);
     }

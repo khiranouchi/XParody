@@ -34,6 +34,28 @@
                         </dd>
                         <dt class="col-sm-2">{{ __('labels.song_updated_time') }}</dt>
                         <dd class="col-sm-10">{{ $song->getUpdatedAtDateTime() }}</dd>
+                        <dd class="col-sm-12">
+                            <!-- Set is_complete flag on -->
+                            <form action="" method="post"
+                                  onsubmit="ShowCheckDialog(event, '{{ __('labels.dialog_complete_song') }}')"
+                                  class="x-inline-form">
+                                @csrf
+                                @method('POST')
+                                <button type="submit" class="btn btn-outline-secondary x-btn-small-padding">
+                                    {{ __('labels.btn_complete_song') }}
+                                </button>
+                            </form>
+                            <!-- Update updated-time -->
+                            <form action="" method="post"
+                                  onsubmit="ShowCheckDialog(event, '{{ __('labels.dialog_update_song_time') }}')"
+                                  class="x-inline-form">
+                                @csrf
+                                @method('POST')
+                                <button type="submit" class="btn btn-outline-secondary x-btn-small-padding">
+                                    {{ __('labels.btn_update_song_time') }}
+                                </button>
+                            </form>
+                        </dd>
                     </dl>
                 </div>
             </div>

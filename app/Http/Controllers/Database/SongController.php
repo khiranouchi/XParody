@@ -108,6 +108,11 @@ class SongController extends Controller
     public function update(Request $request, Song $song)
     {
         if ($request->isMethod('PATCH')) {
+            // Do not update timestamps if is_complete flag is true (see this before the flag itself changed)
+            if ($song->is_complete) {
+                $song->timestamps = false;
+            }
+
             foreach ($song->getAllColumnNames() as $fields) {
                 if ($request->filled($fields)) {
                     $song->$fields = $request->$fields;

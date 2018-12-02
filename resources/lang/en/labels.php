@@ -42,7 +42,7 @@ return [
     /*
      * Messages
      */
-    'dialog_complete_song' => 'Complete this song?',
+    'dialog_complete_song' => 'Complete this song? (Fix updated time and it will be never changed after this)',
     'dialog_restart_song' => 'Restart edit of this song?',
     'dialog_update_song_time' => 'Update updated-time of this song?',
     'dialog_delete_song' => 'Really delete this song?',

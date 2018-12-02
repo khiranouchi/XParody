@@ -18,6 +18,7 @@
             <div class="card">
                 <div class="card-body">
                     <dl class="row">
+                        <!-- Name new -->
                         <dt class="col-sm-2">{{ __('labels.song_name_new') }}</dt>
                         <dd class="col-sm-10">
                             <span onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_new', false)"
@@ -25,6 +26,7 @@
                             (<span onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_new_ruby', false)"
                             >{{ $song->name_new_ruby }}</span>)
                         </dd>
+                        <!-- Name old -->
                         <dt class="col-sm-2">{{ __('labels.song_name_old') }}</dt>
                         <dd class="col-sm-10">
                             <span onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_old', false)"
@@ -32,8 +34,40 @@
                             (<span onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_old_ruby', false)"
                             >{{ $song->name_old_ruby }}</span>)
                         </dd>
+                        <!-- Updated time -->
                         <dt class="col-sm-2">{{ __('labels.song_updated_time') }}</dt>
-                        <dd class="col-sm-10">{{ $song->getUpdatedAtDateTime() }}</dd>
+                        <dd class="col-sm-10
+                                   @if ($song->is_complete)
+                                   text-success
+                                   @endif
+                        ">{{ $song->getUpdatedAtDateTime() }}</dd>
+                        <!-- Buttons -->
+                        <dd class="col-sm-12">
+                            <!-- Set is_complete flag on -->
+                            <form action="{{ route('songs.update', ['id' => $song]) }}" method="post"
+                                  @if ($song->is_complete)
+                                  onsubmit="ShowCheckDialog(event, '{{ __('labels.dialog_restart_song') }}')"
+                                  @else
+                                  onsubmit="ShowCheckDialog(event, '{{ __('labels.dialog_complete_song') }}')"
+                                  @endif
+                                  class="x-inline-form">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="is_complete"
+                                       @if ($song->is_complete)
+                                       value="0">
+                                       @else
+                                       value="1">
+                                       @endif
+                                <button type="submit" class="btn btn-outline-secondary x-btn-small-padding">
+                                    @if ($song->is_complete)
+                                    {{ __('labels.btn_restart_song') }}
+                                    @else
+                                    {{ __('labels.btn_complete_song') }}
+                                    @endif
+                                </button>
+                            </form>
+                        </dd>
                     </dl>
                 </div>
             </div>

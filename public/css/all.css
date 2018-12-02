@@ -49,3 +49,9 @@
 .x-button-row button {
 	margin-bottom: 2px;
 }
+
+.x-btn-small-padding {
+    font-size: 95%;
+    padding-top: 0.05rem;
+    padding-bottom: 0rem;
+}

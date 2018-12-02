@@ -24,6 +24,8 @@ return [
     /*
      * Button labels
      */
+    'btn_complete_song' => 'Complete',
+    'btn_restart_song' => 'Restart edit',
     'btn_delete_song' => 'Delete this song',
     'btn_import_and_export' => 'Import and Export',
     'btn_import' => 'Import',
@@ -35,10 +37,15 @@ return [
     'btn_export_op_loose' => 'Loose',
     'btn_import_submit' => 'Import',
     'btn_export_copy' => 'Copy to clipboard',
+    'dropdown_delete_box' => 'Delete this',
+    'dropdown_insert_before_box' => 'Insert base lyrics (before)',
+    'dropdown_insert_after_box' => 'Insert base lyrics (after)',
     
     /*
      * Messages
      */
+    'dialog_complete_song' => 'Complete this song? (Fix updated time to current time)',
+    'dialog_restart_song' => 'Restart edit of this song?',
     'dialog_delete_song' => 'Really delete this song?',
     'error_song_export_max_level_duplicate' => 'Choose only one max-level lyrics of each line.',
 ];

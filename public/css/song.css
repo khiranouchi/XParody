@@ -46,6 +46,19 @@
 
 
 /*************************************************
+ ** bootstrap dropdown ***************************
+ *************************************************/
+
+.dropdown-toggle:after {
+    content: none;
+}
+
+.dropdown-toggle:hover {
+    cursor: pointer;
+}
+
+
+/*************************************************
  ** lyrics editor part ***************************
  *************************************************/
 
@@ -109,7 +122,7 @@
     margin-bottom: -0.22rem; /* 0.2+0.02 */
 }
 
-.x-lyrics-box-delete, .x-lyrics-box-insert-before, .x-lyrics-box-insert {
+.x-lyrics-box-dropdown {
 	margin-left: 5px;
 }
 .x-lyrics-line-delete, .x-lyrics-line-insert {

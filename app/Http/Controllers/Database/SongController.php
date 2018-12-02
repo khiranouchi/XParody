@@ -52,6 +52,7 @@ class SongController extends Controller
         $song->name_old_ruby = $request->name_old_ruby;
         $song->name_new = $request->name_new;
         $song->name_new_ruby = $request->name_new_ruby;
+        $song->is_complete = false;
         $song->save();
         return redirect()->route('songs.show', ['id' => $song]);
     }

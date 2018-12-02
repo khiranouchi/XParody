@@ -26,7 +26,11 @@
                     <tr onclick="window.location.href='{{ route('songs.show', ['id' => $song]) }}'">
                         <td class="{sortValue: '{{ $song->name_old_ruby }}' }">{{ $song->name_old }}</td>
                         <td class="{sortValue: '{{ $song->name_new_ruby }}' }">{{ $song->name_new }}</td>
-                        <td class="{sortValue:{{ $song->updated_at }}}">{{ $song->getUpdatedAtDate() }}</td>
+                        <td class="{sortValue:{{ $song->updated_at }}}
+                                   @if ($song->is_complete)
+                                   text-success
+                                   @endif
+                        ">{{ $song->getUpdatedAtDate() }}</td>
                     </tr>
                     @endforeach
                 </tbody>

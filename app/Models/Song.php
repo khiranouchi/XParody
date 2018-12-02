@@ -8,7 +8,7 @@ class Song extends Model
 {
     public function getAllColumnNames()
     {
-        return ['name_old', 'name_old_ruby', 'name_new', 'name_new_ruby'];
+        return ['name_old', 'name_old_ruby', 'name_new', 'name_new_ruby', 'is_complete'];
     }
     
     public function getUpdatedAtDate()

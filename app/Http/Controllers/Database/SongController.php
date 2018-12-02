@@ -25,7 +25,7 @@ class SongController extends Controller
      */
     public function index()
     {
-        $songs = Song::all();
+        $songs = Song::orderBy('updated_at', 'desc')->get();
         return view('songlist', ['songs' => $songs]);
     }
 
@@ -52,6 +52,7 @@ class SongController extends Controller
         $song->name_old_ruby = $request->name_old_ruby;
         $song->name_new = $request->name_new;
         $song->name_new_ruby = $request->name_new_ruby;
+        $song->is_complete = false;
         $song->save();
         return redirect()->route('songs.show', ['id' => $song]);
     }
@@ -107,13 +108,23 @@ class SongController extends Controller
     public function update(Request $request, Song $song)
     {
         if ($request->isMethod('PATCH')) {
+            // Do not update timestamps if is_complete flag is true (see this before the flag itself changed)
+            if ($song->is_complete) {
+                $song->timestamps = false;
+            }
+
             foreach ($song->getAllColumnNames() as $fields) {
                 if ($request->filled($fields)) {
                     $song->$fields = $request->$fields;
                 }
             }
             $song->save();
-            return response(null, 204);
+
+            if ($request->header('accept') == 'application/json') {
+                return response(null, 204);
+            } else {
+                return redirect()->route('songs.show', ['id' => $song]);
+            }
         }else{
             return abort(501);
         }

@@ -22,6 +22,7 @@ class CreateSongsTable extends Migration
             $table->timestamps();
             $table->index('name_old_ruby');
             $table->index('name_new_ruby');
+            $table->boolean('is_complete');
             $table->index('updated_at');
         });
     }

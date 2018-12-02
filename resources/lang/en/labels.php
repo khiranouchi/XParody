@@ -26,7 +26,6 @@ return [
      */
     'btn_complete_song' => 'Complete',
     'btn_restart_song' => 'Restart edit',
-    'btn_update_song_time' => 'Update time',
     'btn_delete_song' => 'Delete this song',
     'btn_import_and_export' => 'Import and Export',
     'btn_import' => 'Import',
@@ -42,9 +41,8 @@ return [
     /*
      * Messages
      */
-    'dialog_complete_song' => 'Complete this song?',
+    'dialog_complete_song' => 'Complete this song? (Fix updated time to current time)',
     'dialog_restart_song' => 'Restart edit of this song?',
-    'dialog_update_song_time' => 'Update updated-time of this song?',
     'dialog_delete_song' => 'Really delete this song?',
     'error_song_export_max_level_duplicate' => 'Choose only one max-level lyrics of each line.',
 ];

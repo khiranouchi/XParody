@@ -25,7 +25,7 @@ class SongController extends Controller
      */
     public function index()
     {
-        $songs = Song::all();
+        $songs = Song::orderBy('updated_at', 'desc')->get();
         return view('songlist', ['songs' => $songs]);
     }
 

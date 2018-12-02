@@ -67,18 +67,6 @@
                                     @endif
                                 </button>
                             </form>
-                            <!-- Update updated-time -->
-                            @if (!$song->is_complete)
-                            <form action="" method="post"
-                                  onsubmit="ShowCheckDialog(event, '{{ __('labels.dialog_update_song_time') }}')"
-                                  class="x-inline-form">
-                                @csrf
-                                @method('POST')
-                                <button type="submit" class="btn btn-outline-secondary x-btn-small-padding">
-                                    {{ __('labels.btn_update_song_time') }}
-                                </button>
-                            </form>
-                            @endif
                         </dd>
                     </dl>
                 </div>

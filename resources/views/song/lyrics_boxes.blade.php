@@ -17,17 +17,17 @@
 
         <!-- Insert before button -->
         <div class="x-lyrics-box-insert-before"
-             onclick="InsertBox('z_box_{{ $lyrics_box->id }}', '{{ route('lyrics_boxs.store', ['song' => $song]) }}', '{{ $lyrics_box->song_id }}', '{{ $lyrics_box->box_idx }}', true)"
+             onclick="InsertBox('z_box_{{ $lyrics_box->id }}', '{{ route('lyrics_boxs.store', ['song' => $song]) }}', '{{ $lyrics_box->box_idx }}', true)"
         >[[^]]</div>
 
         <!-- Insert button -->
         <div class="x-lyrics-box-insert"
-             onclick="InsertBox('z_box_{{ $lyrics_box->id }}', '{{ route('lyrics_boxs.store', ['song' => $song]) }}', '{{ $lyrics_box->song_id }}', '{{ $lyrics_box->box_idx }}')"
+             onclick="InsertBox('z_box_{{ $lyrics_box->id }}', '{{ route('lyrics_boxs.store', ['song' => $song]) }}', '{{ $lyrics_box->box_idx }}')"
         >[[v]]</div>
 
         <!-- Insert button of box-line -->
         <div class="x-lyrics-line-insert"
-             onclick="InsertBoxLine('z_box_line_old_{{ $lyrics_box->id }}', '{{ route('lyrics_box_lines.store', ['song' => $song, 'lyrics_box' => $lyrics_box]) }}', '{{ $lyrics_box->id }}', '-1')"
+             onclick="InsertBoxLine('z_box_line_old_{{ $lyrics_box->id }}', '{{ route('lyrics_box_lines.store', ['song' => $song, 'lyrics_box' => $lyrics_box]) }}', '-1')"
         >[+]</div>
     </div>
 

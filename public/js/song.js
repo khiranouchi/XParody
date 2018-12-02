@@ -2,11 +2,10 @@
  * Insert one empty box.
  * @param {Object} curId - id of the box AFTER which you want to insert box
  * @param {String} path - url path to POST
- * @param {String} songId - song_id which the box is in (for POST data)
  * @param {String} curBoxIdx - box_idx of the line (for POST data)
  * @param {Boolean} insertBefore - insert box BEFORE the specified box if true
  */
-function InsertBox(curId, path, songId, curBoxIdx, insertBefore=false) {
+function InsertBox(curId, path, curBoxIdx, insertBefore=false) {
     // insert data in database and get resource
     var box_idx;
     if (insertBefore) {
@@ -19,7 +18,6 @@ function InsertBox(curId, path, songId, curBoxIdx, insertBefore=false) {
         url: path,
         data: {
             'lyrics_old': '(new_box)',
-            'song_id': songId,
             'box_idx': box_idx,
         },
         async: true
@@ -58,17 +56,15 @@ function DeleteBox(obj, path) {
  * Insert one empty box-line. 
  * @param {Object} curId - id of the line after which you want to insert line
  * @param {String} path - url path to POST
- * @param {String} boxId - box_id which the line is in (for POST data)
  * @param {String} curLineIdx - line_idx of the line (for POST data)
  */
-function InsertBoxLine(curId, path, boxId, curLineIdx) {
+function InsertBoxLine(curId, path, curLineIdx) {
     // insert data in database and get resource
     $.ajax({
         type: 'POST',
         url: path,
         data: {
             'lyrics_new': '(new_line)',
-            'box_id': boxId,
             'line_idx': parseInt(curLineIdx) + 1,
         },
         async: true

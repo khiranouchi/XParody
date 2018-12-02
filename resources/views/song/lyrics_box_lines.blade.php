@@ -33,7 +33,7 @@
 
     <!-- Insert button -->
     <div class="x-lyrics-line-insert"
-         onclick="InsertBoxLine('z_box_line_{{ $lyrics_box_line->id }}', '{{ route('lyrics_box_lines.store', ['song' => $song, 'lyrics_box' => $lyrics_box]) }}', '{{ $lyrics_box_line->box_id }}', '{{ $lyrics_box_line->line_idx }}')"
+         onclick="InsertBoxLine('z_box_line_{{ $lyrics_box_line->id }}', '{{ route('lyrics_box_lines.store', ['song' => $song, 'lyrics_box' => $lyrics_box]) }}', '{{ $lyrics_box_line->line_idx }}')"
     >[+]</div>
 </div>
 @endforeach

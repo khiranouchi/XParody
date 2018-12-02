@@ -31,7 +31,7 @@ class LyricsBoxController extends Controller
 
         $lyrics_box->lyrics_old = $request->lyrics_old;
 
-        $song_id = $request->song_id;
+        $song_id = $song->id;
         $box_idx = $request->box_idx;
         $lyrics_box->song_id = $song_id;
         $lyrics_box->box_idx = $box_idx;
@@ -90,7 +90,7 @@ class LyricsBoxController extends Controller
     {
         // decrement box_idx of every existing table line, if its box_idx > deleted box_idx.
         // eg. [a(1), b(2), c(3), d(4), e(5)] - c(3) --> [a(1), b(2), d(3), e(4)]
-        $song_id = $lyricsBox->song_id;
+        $song_id = $song->id;
         $box_idx = $lyricsBox->box_idx;
         LyricsBox::where('song_id', $song_id)->where('box_idx', '>', $box_idx)->decrement('box_idx');
 

@@ -32,16 +32,22 @@ class LyricsBoxController extends Controller
             abort(404);
         }
 
+        // set box_idx of new box
+        if ($request->insert_before === "true") {
+            $box_idx = LyricsBox::find($request->box_id)->box_idx;
+        } else {
+            $box_idx = LyricsBox::find($request->box_id)->box_idx + 1;
+        }
+
         $lyrics_box = new LyricsBox;
 
         $lyrics_box->lyrics_old = $request->lyrics_old;
 
         $song_id = $song->id;
-        $box_idx = $request->box_idx;
         $lyrics_box->song_id = $song_id;
         $lyrics_box->box_idx = $box_idx;
 
-        // increment line_idx of every existing table line, if its line_idx >= new line_idx.
+        // increment box_idx of every existing table line, if its box_idx >= new box_idx.
         // eg. [a(1), b(2), c(3), d(4)] + f(3) --> [a(1), b(2), f(3), c(4), d(5)]
         LyricsBox::where('song_id', $song_id)->where('box_idx', '>=', $box_idx)->increment('box_idx');
 

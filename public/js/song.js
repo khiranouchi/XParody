@@ -2,23 +2,18 @@
  * Insert one empty box.
  * @param {Object} curId - id of the box AFTER which you want to insert box
  * @param {String} path - url path to POST
- * @param {String} curBoxIdx - box_idx of the line (for POST data)
+ * @param {String} curBoxId - box_id of the line (for POST data)
  * @param {Boolean} insertBefore - insert box BEFORE the specified box if true
  */
-function InsertBox(curId, path, curBoxIdx, insertBefore=false) {
+function InsertBox(curId, path, curBoxId, insertBefore=false) {
     // insert data in database and get resource
-    var box_idx;
-    if (insertBefore) {
-        box_idx = parseInt(curBoxIdx);
-    } else {
-        box_idx = parseInt(curBoxIdx) + 1;
-    }
     $.ajax({
         type: 'POST',
         url: path,
         data: {
             'lyrics_old': '(new_box)',
-            'box_idx': box_idx,
+            'box_id': curBoxId,
+            'insert_before': insertBefore,
         },
         async: true
     }).done(function(content){

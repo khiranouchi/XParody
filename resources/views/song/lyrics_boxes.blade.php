@@ -26,12 +26,12 @@
 
                 <!-- Insert before button -->
                 <div class="dropdown-item"
-                     onclick="InsertBox('z_box_{{ $lyrics_box->id }}', '{{ route('lyrics_boxs.store', ['song' => $song]) }}', '{{ $lyrics_box->box_idx }}', true)"
+                     onclick="InsertBox('z_box_{{ $lyrics_box->id }}', '{{ route('lyrics_boxs.store', ['song' => $song]) }}', '{{ $lyrics_box->id }}', true)"
                 >{{ __('labels.dropdown_insert_before_box') }}</div>
 
                 <!-- Insert button -->
                 <div class="dropdown-item"
-                     onclick="InsertBox('z_box_{{ $lyrics_box->id }}', '{{ route('lyrics_boxs.store', ['song' => $song]) }}', '{{ $lyrics_box->box_idx }}')"
+                     onclick="InsertBox('z_box_{{ $lyrics_box->id }}', '{{ route('lyrics_boxs.store', ['song' => $song]) }}', '{{ $lyrics_box->id }}')"
                 >{{ __('labels.dropdown_insert_after_box') }}</div>
             </div>
         </div>

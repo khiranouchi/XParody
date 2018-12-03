@@ -40,7 +40,7 @@
         <!-- Insert button of box-line -->
         @if (!$song->is_complete)
         <div class="x-lyrics-line-insert"
-             onclick="InsertBoxLine('z_box_line_old_{{ $lyrics_box->id }}', '{{ route('lyrics_box_lines.store', ['song' => $song, 'lyrics_box' => $lyrics_box]) }}', '-1')"
+             onclick="InsertBoxLine('z_box_line_old_{{ $lyrics_box->id }}', '{{ route('lyrics_box_lines.store', ['song' => $song, 'lyrics_box' => $lyrics_box]) }}', -1)"
         >[+]</div>
         @endif
     </div>

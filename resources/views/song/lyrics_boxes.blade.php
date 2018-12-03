@@ -26,12 +26,12 @@
 
                 <!-- Insert before button -->
                 <div class="dropdown-item"
-                     onclick="InsertBox('z_box_{{ $lyrics_box->id }}', '{{ route('lyrics_boxs.store', ['song' => $song]) }}', '{{ $lyrics_box->box_idx }}', true)"
+                     onclick="InsertBox('z_box_{{ $lyrics_box->id }}', '{{ route('lyrics_boxs.store', ['song' => $song]) }}', '{{ $lyrics_box->id }}', true)"
                 >{{ __('labels.dropdown_insert_before_box') }}</div>
 
                 <!-- Insert button -->
                 <div class="dropdown-item"
-                     onclick="InsertBox('z_box_{{ $lyrics_box->id }}', '{{ route('lyrics_boxs.store', ['song' => $song]) }}', '{{ $lyrics_box->box_idx }}')"
+                     onclick="InsertBox('z_box_{{ $lyrics_box->id }}', '{{ route('lyrics_boxs.store', ['song' => $song]) }}', '{{ $lyrics_box->id }}')"
                 >{{ __('labels.dropdown_insert_after_box') }}</div>
             </div>
         </div>
@@ -40,7 +40,7 @@
         <!-- Insert button of box-line -->
         @if (!$song->is_complete)
         <div class="x-lyrics-line-insert"
-             onclick="InsertBoxLine('z_box_line_old_{{ $lyrics_box->id }}', '{{ route('lyrics_box_lines.store', ['song' => $song, 'lyrics_box' => $lyrics_box]) }}', '-1')"
+             onclick="InsertBoxLine('z_box_line_old_{{ $lyrics_box->id }}', '{{ route('lyrics_box_lines.store', ['song' => $song, 'lyrics_box' => $lyrics_box]) }}', -1)"
         >[+]</div>
         @endif
     </div>

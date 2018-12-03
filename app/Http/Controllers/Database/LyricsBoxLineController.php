@@ -33,12 +33,20 @@ class LyricsBoxLineController extends Controller
             abort(404);
         }
 
+        // set box_idx of new box
+        if ($request->line_id == -1) {
+            $line_idx = 0;
+        } else if ($request->insert_before === "true") {
+            $line_idx = LyricsBoxLine::find($request->line_id)->line_idx;
+        } else {
+            $line_idx = LyricsBoxLine::find($request->line_id)->line_idx + 1;
+        }
+
         $lyrics_box_line = new LyricsBoxLine;
 
         $lyrics_box_line->user_id = $request->user()->id;
 
         $box_id = $lyricsBox->id;
-        $line_idx = $request->line_idx;
         $lyrics_box_line->box_id = $box_id;
         $lyrics_box_line->line_idx = $line_idx;
 

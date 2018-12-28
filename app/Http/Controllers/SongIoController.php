@@ -175,14 +175,17 @@ class SongIoController extends Controller
             $lyrics_box->lyrics_old = LyricsBox::filterEmptyLyrics(''); //set empty string
             $lyrics_box->save();
 
-            // create new line in LyricsBoxLine
-            $lyrics_box_line = new LyricsBoxLine;
-            $lyrics_box_line->box_id = $lyrics_box->id;
-            $lyrics_box_line->line_idx = 1;
-            $lyrics_box_line->lyrics_new = LyricsBoxLine::filterEmptyLyrics(trim(mb_convert_kana($lyrics_new, "s")));
-            $lyrics_box_line->level = LyricsBoxLine::getMaxLevel();
-            $lyrics_box_line->user_id = $request->user()->id;
-            $lyrics_box_line->save();
+            $lyrics_new = trim(mb_convert_kana($lyrics_new, "s"));
+            if ($lyrics_new !== "") {
+                // create new line in LyricsBoxLine
+                $lyrics_box_line = new LyricsBoxLine;
+                $lyrics_box_line->box_id = $lyrics_box->id;
+                $lyrics_box_line->line_idx = 1;
+                $lyrics_box_line->lyrics_new = $lyrics_new;
+                $lyrics_box_line->level = LyricsBoxLine::getMaxLevel();
+                $lyrics_box_line->user_id = $request->user()->id;
+                $lyrics_box_line->save();
+            }
 
             $box_idx++;
         }

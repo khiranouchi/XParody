@@ -1,9 +1,9 @@
 /**
- * Switch Mode: Show the element with class-name which equals to the specified obj's name and hide its sibings.
+ * Show the element with "class-name" which equals to the specified obj's "name" and hide its sibings.
  * Also change activeness of the specified obj.
  * @param {Object} obj - object of the switch-button into whose mode you want to be switched
  */
-function SwitchMode(obj) {
+function SwitchVisibility(obj) {
     var activeId = $(obj).attr('id');
     var activeClass = $(obj).attr('name');
     // change active button
@@ -12,19 +12,6 @@ function SwitchMode(obj) {
     // change visible textarea and submit/copy button
     $('.' + activeClass).siblings().hide();
     $('.' + activeClass).show();
-}
-
-/**
- * Switch Export Option: Switch the option to Get export text.
- * @param {String} id - id of the switch-button into whose option you want to be switched
- * @param {String} textareaId - id of the export textarea
- * @param {String} path - url path to GET export text
- * @param {Boolean} isStrict - one of field to GET export text
- */
-function SwitchExportOption(id, textareaId, path, isStrict) {
-    $('#' + id).siblings().removeClass('active');
-    $('#' + id).addClass('active');
-    LoadExportLyrics(textareaId, path, isStrict);
 }
 
 /**

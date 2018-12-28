@@ -44,8 +44,8 @@ return [
     /*
      * Messages
      */
-    'dialog_complete_song' => 'Complete this song? (Fix updated time to current time)',
-    'dialog_restart_song' => 'Restart edit of this song?',
+    'dialog_complete_song' => 'Complete this song? (Fix updated time to current value)',
+    'dialog_restart_song' => 'Restart edit of this song? (Update time is also updated now)',
     'dialog_delete_song' => 'Really delete this song?',
     'error_song_export_max_level_duplicate' => 'Choose only one max-level lyrics of each line.',
 ];

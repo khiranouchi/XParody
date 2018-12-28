@@ -37,6 +37,8 @@ Route::get('songs/{song}/io', 'SongIoController@index')->name('songio');
 Route::post('songs/{song}/io/import/old', 'SongIoController@storeAllLyricsOld')->name('songio_import_old');
 Route::post('songs/{song}/io/import/both', 'SongIoController@storeAllLyricsBoth')->name('songio_import_both');
 Route::post('songs/{song}/io/import/new', 'SongIoController@storeAllLyricsNew')->name('songio_import_new');
+Route::post('songs/{song}/io/import/all', 'SongIoController@storeAll')->name('songio_import_all');
 Route::get('songs/{song}/io/export/old', 'SongIoController@indexAllLyricsOld')->name('songio_export_old');
 Route::get('songs/{song}/io/export/both', 'SongIoController@indexAllLyricsBoth')->name('songio_export_both');
 Route::get('songs/{song}/io/export/new', 'SongIoController@indexAllLyricsNew')->name('songio_export_new');
+Route::get('songs/{song}/io/export/all', 'SongIoController@indexAll')->name('songio_export_all');

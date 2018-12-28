@@ -152,6 +152,7 @@ $(document).ready(function(){
     LoadExportLyrics('textarea_export_both_strict', '{{ route('songio_export_both', ['id' => $song]) }}');
     LoadExportLyrics('textarea_export_both_loose', '{{ route('songio_export_both', ['id' => $song]) }}', false);
     LoadExportLyrics('textarea_export_old', '{{ route('songio_export_old', ['id' => $song]) }}');
+    LoadExportLyrics('textarea_export_all', '{{ route('songio_export_all', ['id' => $song]) }}');
 });
 </script>
 @endsection

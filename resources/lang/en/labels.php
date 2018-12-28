@@ -32,7 +32,8 @@ return [
     'btn_export' => 'Export',
     'btn_io_lyrics_old' => 'Base',
     'btn_io_lyrics_new' => 'Parody',
-    'btn_io_lyrics_both' => 'Base and Parody',
+    'btn_io_lyrics_both' => 'Base & Parody',
+    'btn_io_lyrics_all' => 'All',
     'btn_export_op_strict' => 'Strict',
     'btn_export_op_loose' => 'Loose',
     'btn_import_submit' => 'Import',
@@ -40,12 +41,14 @@ return [
     'dropdown_delete_box' => 'Delete this',
     'dropdown_insert_before_box' => 'Insert base lyrics (before)',
     'dropdown_insert_after_box' => 'Insert base lyrics (after)',
+    'checkbox_incomplete' => 'In Progress',
+    'checkbox_complete' => 'Completed',
     
     /*
      * Messages
      */
-    'dialog_complete_song' => 'Complete this song? (Fix updated time to current time)',
-    'dialog_restart_song' => 'Restart edit of this song?',
+    'dialog_complete_song' => 'Complete this song? (Fix updated time to current value)',
+    'dialog_restart_song' => 'Restart edit of this song? (Update time is also updated now)',
     'dialog_delete_song' => 'Really delete this song?',
     'error_song_export_max_level_duplicate' => 'Choose only one max-level lyrics of each line.',
 ];

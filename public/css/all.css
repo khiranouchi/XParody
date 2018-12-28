@@ -23,6 +23,15 @@
 
 
 /*************************************************
+ ** about base view ******************************
+ *************************************************/
+
+a.navbar-brand {
+	margin-right: 0;
+}
+
+
+/*************************************************
  ** others ***************************************
  *************************************************/
 
@@ -40,6 +49,12 @@
     text-align: center;
     vertical-align: middle;
     padding: 0;
+}
+
+.x-text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .x-inline-form {

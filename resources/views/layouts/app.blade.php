@@ -34,7 +34,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand x-text-ellipsis" href="{{ url('/') }}">
                 	@if (View::hasSection('subtitle'))
                     	{{ config('app.name', 'XParody') }} - @yield('subtitle')    	
                 	@else

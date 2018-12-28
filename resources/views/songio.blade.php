@@ -38,6 +38,9 @@
                 <button id="fmt_new" name="z-lyrics-new" class="btn btn-outline-secondary"
                         onclick="SwitchVisibility(this)"
                 >{{ __('labels.btn_io_lyrics_new') }}</button>
+                <button id="fmt_all" name="z-lyrics-all" class="btn btn-outline-secondary"
+                        onclick="SwitchVisibility(this)"
+                >{{ __('labels.btn_io_lyrics_all') }}</button>
             </div>
         </div>
     </div>
@@ -68,6 +71,7 @@
                 <textarea id="textarea_export_new_strict" class="z-option-strict" readonly></textarea>
                 <textarea id="textarea_export_new_loose" class="z-option-loose" readonly></textarea>
             </div>
+            <textarea id="textarea_export_all" class="z-lyrics-all" readonly></textarea>
         </div>
 	</div>
     
@@ -78,11 +82,13 @@
             <div class="z-lyrics-old alert alert-secondary">{!! __('texts.example_import_old') !!}</div>
             <div class="z-lyrics-both alert alert-secondary">{!! __('texts.example_import_both') !!}</div>
             <div class="z-lyrics-new alert alert-secondary">{!! __('texts.example_import_new') !!}</div>
+            <div class="z-lyrics-all alert alert-secondary"></div>
         </div>
         <div class="z-export">
             <div class="z-lyrics-old alert alert-secondary">{!! __('texts.example_export_old') !!}</div>
             <div class="z-lyrics-both alert alert-secondary">{!! __('texts.example_export_both') !!}</div>
             <div class="z-lyrics-new alert alert-secondary">{!! __('texts.example_export_new') !!}</div>
+            <div class="z-lyrics-all alert alert-secondary"></div>
         </div>
     </div>
     
@@ -97,6 +103,9 @@
             >{{ __('labels.btn_import_submit') }}</button>
             <button class="z-lyrics-new btn btn-outline-primary"
                     onclick="SaveImportLyrics('textarea_import', '{{ route('songio_import_new', ['id' => $song]) }}')"
+            >{{ __('labels.btn_import_submit') }}</button>
+            <button class="z-lyrics-all btn btn-outline-primary"
+                    onclick="SaveImportLyrics('textarea_import', '{{ route('songio_import_all', ['id' => $song]) }}')"
             >{{ __('labels.btn_import_submit') }}</button>
         </div>
         <div class="z-export">
@@ -122,6 +131,14 @@
                 >{{ __('labels.btn_export_copy') }}</button>
                 <button class="z-option-loose z-btn-clipboard btn btn-outline-primary"
                         data-clipboard-target="#textarea_export_new_loose"
+                >{{ __('labels.btn_export_copy') }}</button>
+            </div>
+            <div class="z-lyrics-all">
+                <button class="z-option-strict z-btn-clipboard btn btn-outline-primary"
+                        data-clipboard-target="#textarea_export_all_strict"
+                >{{ __('labels.btn_export_copy') }}</button>
+                <button class="z-option-loose z-btn-clipboard btn btn-outline-primary"
+                        data-clipboard-target="#textarea_export_all_loose"
                 >{{ __('labels.btn_export_copy') }}</button>
             </div>
         </div>        

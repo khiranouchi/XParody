@@ -11,7 +11,7 @@ function InsertBox(curId, path, curBoxId, insertBefore=false) {
         type: 'POST',
         url: path,
         data: {
-            'lyrics_old': '(new_box)',
+            'lyrics_old': '(empty)',
             'box_id': curBoxId,
             'insert_before': insertBefore,
         },
@@ -59,7 +59,6 @@ function InsertBoxLine(curId, path, curLineId) {
         type: 'POST',
         url: path,
         data: {
-            'lyrics_new': '(new_line)',
             'line_id': curLineId,
             'insert_before': false,
         },

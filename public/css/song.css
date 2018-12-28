@@ -53,7 +53,7 @@
     content: none;
 }
 
-.dropdown-toggle:hover {
+.dropdown-toggle {
     cursor: pointer;
 }
 

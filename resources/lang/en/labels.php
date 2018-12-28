@@ -41,6 +41,8 @@ return [
     'dropdown_delete_box' => 'Delete this',
     'dropdown_insert_before_box' => 'Insert base lyrics (before)',
     'dropdown_insert_after_box' => 'Insert base lyrics (after)',
+    'checkbox_incomplete' => 'In Progress',
+    'checkbox_complete' => 'Completed',
     
     /*
      * Messages

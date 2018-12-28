@@ -197,6 +197,27 @@ class SongIoController extends Controller
     }
 
     /**
+     * Index multiple lyrics-old from the table LyricsBox.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Song  $song
+     * $return \Illuminate\Http\Response
+     */
+    public function indexAllLyricsOld(Request $request, Song $song)
+    {
+        $content = '';
+
+        $lyrics_boxes = LyricsBox::where('song_id', $song->id)->orderBy('box_idx')->get();
+
+        foreach ($lyrics_boxes as $lyrics_box) {
+            $content .= $lyrics_box->lyrics_old;
+            $content .= "\n";
+        }
+
+        return response($content);
+    }
+
+    /**
      * Index multiple lyrics-old/new from the table LyricsBox/LyricsBoxLine.
      *
      * @param  \Illuminate\Http\Request  $request

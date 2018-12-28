@@ -59,10 +59,7 @@
     <div class="x-part x-part-small-margin-bottom">
         <textarea id="textarea_import" class="z-import"></textarea>
         <div class="z-export">
-            <div class="z-lyrics-old">
-                <textarea id="textarea_export_old_strict" class="z-option-strict" readonly></textarea>
-                <textarea id="textarea_export_old_loose" class="z-option-loose" readonly></textarea>
-            </div>
+            <textarea id="textarea_export_old" class="z-lyrics-old" readonly></textarea>
             <div class="z-lyrics-both">
                 <textarea id="textarea_export_both_strict" class="z-option-strict" readonly></textarea>
                 <textarea id="textarea_export_both_loose" class="z-option-loose" readonly></textarea>
@@ -83,7 +80,7 @@
             <div class="z-lyrics-new alert alert-secondary">{!! __('texts.example_import_new') !!}</div>
         </div>
         <div class="z-export">
-            <div class="z-lyrics-old alert alert-secondary"></div>
+            <div class="z-lyrics-old alert alert-secondary">{!! __('texts.example_export_old') !!}</div>
             <div class="z-lyrics-both alert alert-secondary">{!! __('texts.example_export_both') !!}</div>
             <div class="z-lyrics-new alert alert-secondary">{!! __('texts.example_export_new') !!}</div>
         </div>
@@ -146,6 +143,7 @@ $(document).ready(function(){
     LoadExportLyrics('textarea_export_new_loose', '{{ route('songio_export_new', ['id' => $song]) }}', false);
     LoadExportLyrics('textarea_export_both_strict', '{{ route('songio_export_both', ['id' => $song]) }}');
     LoadExportLyrics('textarea_export_both_loose', '{{ route('songio_export_both', ['id' => $song]) }}', false);
+    LoadExportLyrics('textarea_export_old', '{{ route('songio_export_old', ['id' => $song]) }}');
 });
 </script>
 @endsection

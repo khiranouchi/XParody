@@ -6,11 +6,7 @@
              @if (!$song->is_complete)
              onclick="SwitchInputMode(this, '{{ route('lyrics_boxs.update', ['song' => $song, 'lyrics_box' => $lyrics_box]) }}', 'lyrics_old', false)"
              @endif
-        @if ($lyrics_box->lyrics_old === "")
-        >(empty)</div>
-        @else
         >{{ $lyrics_box->lyrics_old }}</div>
-        @endif
 
         @if (!$song->is_complete)
         <div class="dropdown x-lyrics-box-dropdown">

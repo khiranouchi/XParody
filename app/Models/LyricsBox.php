@@ -12,4 +12,13 @@ class LyricsBox extends Model
     {
         return ['box_idx', 'lyrics_old'];
     }
+
+    public static function filterEmptyLyrics($lyrics_old)
+    {
+        if ($lyrics_old === '') {
+            return '(empty)';
+        } else {
+            return $lyrics_old;
+        }
+    }
 }

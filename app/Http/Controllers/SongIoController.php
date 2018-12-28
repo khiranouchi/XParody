@@ -205,6 +205,59 @@ class SongIoController extends Controller
      */
     public function storeAll(Request $request, Song $song)
     {
+        // unable to import lyrics when song's complete flag is on
+        if($song->is_complete) {
+            abort(404);
+        }
+
+        $song_id = $song->id;
+
+        // delete all existing lines with specified song_id in LyricsBox (lines in LyricsBoxLine is cascade)
+        LyricsBox::where('song_id', $song_id)->delete();
+
+        $data = json_decode($request['data'], true);
+
+        // update specified song in Song
+        $song->name_old = $data['name_old'];
+        $song->name_old_ruby = $data['name_old_ruby'];
+        $song->name_new = $data['name_new'];
+        $song->name_new_ruby = $data['name_new_ruby'];
+        $song->save();
+
+        $box_idx = 0;
+        if (array_key_exists('lyrics_boxes', $data)) {
+            // get each LyricsBox data
+            foreach ($data['lyrics_boxes'] as $data_lyrics_box) {
+                // create new line in LyricsBox
+                $lyrics_box = new LyricsBox;
+                $lyrics_box->song_id = $song_id;
+                $lyrics_box->box_idx = $box_idx;
+                $lyrics_box->lyrics_old = $data_lyrics_box['lyrics_old'];
+                $lyrics_box->save();
+
+                $line_idx = 0;
+                if (array_key_exists('lyrics_box_lines', $data_lyrics_box)) {
+                    // get each LyricsBoxLine data
+                    foreach ($data_lyrics_box['lyrics_box_lines'] as $data_lyrics_box_line) {
+                        // create one new line with the box_idx in LyricsBoxLine
+                        $lyrics_box_line = new LyricsBoxLine;
+                        $lyrics_box_line->box_id = $lyrics_box->id;
+                        $lyrics_box_line->line_idx = $line_idx;
+                        $lyrics_box_line->lyrics_new = $data_lyrics_box_line['lyrics_new'];
+                        $lyrics_box_line->level = $data_lyrics_box_line['level'];
+                        if (array_key_exists('user_id', $data_lyrics_box_line)) {
+                            $lyrics_box_line->user_id = $data_lyrics_box_line['user_id'];
+                        }
+                        $lyrics_box_line->save();
+
+                        $line_idx++;
+                    }
+                }
+
+                $box_idx++;
+            }
+        }
+
         return response()->json(['url' => route('songs.show', ['id' => $song])], 201);
     }
 
@@ -345,8 +398,11 @@ class SongIoController extends Controller
                 $content_lyrics_box_line = [
                     'lyrics_new' => $lyrics_box_line->lyrics_new,
                     'level' => $lyrics_box_line->level,
-                    'user_id' => $lyrics_box_line->user_id
                 ];
+                if ($lyrics_box_line->user_id !== null) {
+                    $content_lyrics_box_line['user_id'] = $lyrics_box_line->user_id;
+                }
+
                 $content_lyrics_box['lyrics_box_lines'][] = $content_lyrics_box_line;
             }
 

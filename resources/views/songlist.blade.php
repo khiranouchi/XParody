@@ -11,6 +11,21 @@
 
 @section('content')
 <div class="container">
+    <!-- Filter -->
+    <div class="row">
+        <div class="pl-1 pb-sm-1">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="checkbox_incomplete" checked>
+                <label class="form-check-label" for="checkbox_incomplete">{{ __('labels.checkbox_incomplete') }}</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="checkbox_complete" checked>
+                <label class="form-check-label" for="checkbox_complete">{{ __('labels.checkbox_complete') }}</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Song list -->
     <div class="row">
         <div class="table-responsive">
             <table id="table_song_list" class="table table-bordered table-hover">

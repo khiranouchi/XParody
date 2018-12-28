@@ -71,7 +71,7 @@
         <div class="z-import">
             <div class="z-lyrics-old alert alert-secondary">{!! __('texts.example_import_old') !!}</div>
             <div class="z-lyrics-both alert alert-secondary">{!! __('texts.example_import_both') !!}</div>
-            <div class="z-lyrics-new alert alert-secondary"></div>
+            <div class="z-lyrics-new alert alert-secondary">{!! __('texts.example_import_new') !!}</div>
         </div>
         <div class="z-export">
             <div class="z-lyrics-old alert alert-secondary"></div>
@@ -90,6 +90,7 @@
                     onclick="SaveImportLyrics('textarea_import', '{{ route('songio_import_both', ['id' => $song]) }}')"
             >{{ __('labels.btn_import_submit') }}</button>
             <button class="z-lyrics-new btn btn-outline-primary"
+                    onclick="SaveImportLyrics('textarea_import', '{{ route('songio_import_new', ['id' => $song]) }}')"
             >{{ __('labels.btn_import_submit') }}</button>
         </div>
         <div class="z-export">

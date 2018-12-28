@@ -47,7 +47,7 @@ class SongIoController extends Controller
         // delete all existing lines with specified song_id in LyricsBox (lines in LyricsBoxLine is cascade)
         LyricsBox::where('song_id', $song_id)->delete();
 
-        // store to table LyricsBox and LyricsBoxLine
+        // store to table LyricsBox
         $list_lyrics_old = preg_split('/\r\n|\n|\r/', $request['data']);
         $box_idx = 0;
         foreach ($list_lyrics_old as $lyrics_old) {
@@ -135,6 +135,54 @@ class SongIoController extends Controller
                     $line_idx++;
                 }
             }
+
+            $box_idx++;
+        }
+
+        // update timestamps of the song
+        $song->touch();
+
+        return response()->json(['url' => route('songs.show', ['id' => $song])], 201);
+    }
+
+    /**
+     * Store multiple lyrics-new to the table LyricsBox.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Song  $song
+     * $return \Illuminate\Http\Response
+     */
+    public function storeAllLyricsNew(Request $request, Song $song)
+    {
+        // unable to import lyrics when song's complete flag is on
+        if($song->is_complete) {
+            abort(404);
+        }
+
+        $song_id = $song->id;
+
+        // delete all existing lines with specified song_id in LyricsBox (lines in LyricsBoxLine is cascade)
+        LyricsBox::where('song_id', $song_id)->delete();
+
+        // store to table LyricsBox and LyricsBoxLine
+        $list_lyrics_new = preg_split('/\r\n|\n|\r/', $request['data']);
+        $box_idx = 0;
+        foreach ($list_lyrics_new as $lyrics_new) {
+            // create new line in LyricsBox
+            $lyrics_box = new LyricsBox;
+            $lyrics_box->song_id = $song_id;
+            $lyrics_box->box_idx = $box_idx;
+            $lyrics_box->lyrics_old = ''; //set empty string
+            $lyrics_box->save();
+
+            // create new line in LyricsBoxLine
+            $lyrics_box_line = new LyricsBoxLine;
+            $lyrics_box_line->box_id = $lyrics_box->id;
+            $lyrics_box_line->line_idx = 1;
+            $lyrics_box_line->lyrics_new = $lyrics_new;
+            $lyrics_box_line->level = LyricsBoxLine::getMaxLevel();
+            $lyrics_box_line->user_id = $request->user()->id;
+            $lyrics_box_line->save();
 
             $box_idx++;
         }

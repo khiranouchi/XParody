@@ -197,6 +197,51 @@ class SongIoController extends Controller
     }
 
     /**
+     * Index multiple lyrics-old/new from the table LyricsBox/LyricsBoxLine.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Song  $song
+     * $return \Illuminate\Http\Response
+     */
+    public function indexAllLyricsBoth(Request $request, Song $song)
+    {
+        $content = '';
+
+        $lyrics_boxes = LyricsBox::where('song_id', $song->id)->orderBy('box_idx')->get();
+
+        foreach ($lyrics_boxes as $lyrics_box) {
+            // add lyrics-old
+            $content .= $lyrics_box->lyrics_old;
+            $content .= "\n";
+
+            // add one lyrics-new from each lyrics-box
+            $ln_lyrics_box_lines = LyricsBoxLine::where('box_id', $lyrics_box->id);
+            if (!$ln_lyrics_box_lines->get()->isEmpty()) {
+                // if strict
+                if ($request->strict === "true") {
+                    // choose one with max-level (should be only one)
+                    $lyrics_box_lines_max = $ln_lyrics_box_lines->where('level', LyricsBoxLine::getMaxLevel())->get();
+                    if (count($lyrics_box_lines_max) === 1) {
+                        $content .= $lyrics_box_lines_max[0]->lyrics_new; //add
+                    } else {
+                        return response(__('labels.error_song_export_max_level_duplicate'));
+                    }
+                    // if loose
+                } else {
+                    // choose the most higher level (select only one which appears first(smaller line-idx))
+                    $lyrics_box_line = $ln_lyrics_box_lines->orderBy('level', 'desc')->orderBy('line_idx', 'desc')->take(1)->get()[0];
+                    $content .= $lyrics_box_line->lyrics_new; //add
+                }
+                $content .= "\n";
+            }
+
+            $content .= "\n";
+        }
+
+        return response($content);
+    }
+
+    /**
      * Index multiple lyrics-new from the table LyricsBoxLine.
      *
      * @param  \Illuminate\Http\Request  $request

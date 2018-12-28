@@ -109,14 +109,9 @@
             >{{ __('labels.btn_import_submit') }}</button>
         </div>
         <div class="z-export">
-            <div class="z-lyrics-old">
-                <button class="z-option-strict z-btn-clipboard btn btn-outline-primary"
-                        data-clipboard-target="#textarea_export_old_strict"
-                >{{ __('labels.btn_export_copy') }}</button>
-                <button class="z-option-loose z-btn-clipboard btn btn-outline-primary"
-                        data-clipboard-target="#textarea_export_old_loose"
-                >{{ __('labels.btn_export_copy') }}</button>
-            </div>
+            <button class="z-lyrics-old z-btn-clipboard btn btn-outline-primary"
+                    data-clipboard-target="#textarea_export_old"
+            >{{ __('labels.btn_export_copy') }}</button>
             <div class="z-lyrics-both">
                 <button class="z-option-strict z-btn-clipboard btn btn-outline-primary"
                         data-clipboard-target="#textarea_export_both_strict"
@@ -133,14 +128,9 @@
                         data-clipboard-target="#textarea_export_new_loose"
                 >{{ __('labels.btn_export_copy') }}</button>
             </div>
-            <div class="z-lyrics-all">
-                <button class="z-option-strict z-btn-clipboard btn btn-outline-primary"
-                        data-clipboard-target="#textarea_export_all_strict"
-                >{{ __('labels.btn_export_copy') }}</button>
-                <button class="z-option-loose z-btn-clipboard btn btn-outline-primary"
-                        data-clipboard-target="#textarea_export_all_loose"
-                >{{ __('labels.btn_export_copy') }}</button>
-            </div>
+            <button class="z-lyrics-all z-btn-clipboard btn btn-outline-primary"
+                    data-clipboard-target="#textarea_export_all"
+            >{{ __('labels.btn_export_copy') }}</button>
         </div>        
     </div>
 </div>

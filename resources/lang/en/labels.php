@@ -32,7 +32,7 @@ return [
     'btn_export' => 'Export',
     'btn_io_lyrics_old' => 'Base',
     'btn_io_lyrics_new' => 'Parody',
-    'btn_io_lyrics_both' => 'Base and Parody',
+    'btn_io_lyrics_both' => 'Base & Parody',
     'btn_io_lyrics_all' => 'All',
     'btn_export_op_strict' => 'Strict',
     'btn_export_op_loose' => 'Loose',

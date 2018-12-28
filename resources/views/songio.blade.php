@@ -132,6 +132,7 @@
 $(document).ready(function(){
     // activate autosize
     autosize($('textarea'));
+    $($('textarea')).on('focus', function(){ autosize.update(this) });
     // activate clipboard
     new ClipboardJS('.z-btn-clipboard');
     // initialize selection (select from io_import/_export & fmt_old/_new & option_strict/_loose)

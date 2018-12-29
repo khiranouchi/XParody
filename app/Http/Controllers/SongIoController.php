@@ -161,8 +161,13 @@ class SongIoController extends Controller
 
         $song_id = $song->id;
 
+        $box_ids = LyricsBox::where('song_id', $song->id)->orderBy('box_idx')->pluck('id');
+
+        // delete all existing lines with specified song_id in LyricsBoxLine (not delete lines in LyricsBox)
+        LyricsBoxLine::whereIn('box_id', $box_ids)->delete();
+
         // merge box_id-list(existing lyrics) and lyrics_new-list (store 'null' if one are longer than the other)
-        $list_box_id = LyricsBox::where('song_id', $song->id)->orderBy('box_idx')->pluck('id')->toArray();
+        $list_box_id = $box_ids->toArray();
         $list_lyrics_new = preg_split('/\r\n|\n|\r/', $request['data']);
         $merged_list = array_map(null, $list_box_id, $list_lyrics_new);
 

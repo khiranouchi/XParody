@@ -96,16 +96,16 @@
     <div class="x-part">
     	<div class="z-import">
             <button class="z-lyrics-old btn btn-outline-primary"
-                    onclick="SaveImportLyrics('textarea_import', '{{ route('songio_import_old', ['id' => $song]) }}')"
+                    onclick="SaveImportLyrics('textarea_import', '{{ route('songio_import_old', ['id' => $song]) }}', '{{ __('labels.dialog_import') }}')"
             >{{ __('labels.btn_import_submit') }}</button>
             <button class="z-lyrics-both btn btn-outline-primary"
-                    onclick="SaveImportLyrics('textarea_import', '{{ route('songio_import_both', ['id' => $song]) }}')"
+                    onclick="SaveImportLyrics('textarea_import', '{{ route('songio_import_both', ['id' => $song]) }}', '{{ __('labels.dialog_import') }}')"
             >{{ __('labels.btn_import_submit') }}</button>
             <button class="z-lyrics-new btn btn-outline-primary"
-                    onclick="SaveImportLyrics('textarea_import', '{{ route('songio_import_new', ['id' => $song]) }}')"
+                    onclick="SaveImportLyrics('textarea_import', '{{ route('songio_import_new', ['id' => $song]) }}', '{{ __('labels.dialog_import') }}')"
             >{{ __('labels.btn_import_submit') }}</button>
             <button class="z-lyrics-all btn btn-outline-primary"
-                    onclick="SaveImportLyrics('textarea_import', '{{ route('songio_import_all', ['id' => $song]) }}')"
+                    onclick="SaveImportLyrics('textarea_import', '{{ route('songio_import_all', ['id' => $song]) }}', '{{ __('labels.dialog_import_all') }}')"
             >{{ __('labels.btn_import_submit') }}</button>
         </div>
         <div class="z-export">

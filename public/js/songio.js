@@ -18,9 +18,9 @@ function SwitchVisibility(obj) {
  * POST textarea content (multiple lyrics) with line-separated text.
  * @param {String} textareaId - id of the import textarea
  * @param {String} path - url path to POST
+ * @param {String} message - message of confirm dialog
  */
-function SaveImportLyrics(textareaId, path) {
-    var message = "Really import? (Existing all lyrics are deleted)";
+function SaveImportLyrics(textareaId, path, message) {
     if (!confirm(message)) {
         return false;
     }

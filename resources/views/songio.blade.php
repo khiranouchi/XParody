@@ -102,7 +102,7 @@
                     onclick="SaveImportLyrics('textarea_import', '{{ route('songio_import_both', ['id' => $song]) }}', '{{ __('labels.dialog_import') }}')"
             >{{ __('labels.btn_import_submit') }}</button>
             <button class="z-lyrics-new btn btn-outline-primary"
-                    onclick="SaveImportLyrics('textarea_import', '{{ route('songio_import_new', ['id' => $song]) }}', '{{ __('labels.dialog_import') }}')"
+                    onclick="SaveImportLyrics('textarea_import', '{{ route('songio_import_new', ['id' => $song]) }}', '{{ __('labels.dialog_import_new') }}')"
             >{{ __('labels.btn_import_submit') }}</button>
             <button class="z-lyrics-all btn btn-outline-primary"
                     onclick="SaveImportLyrics('textarea_import', '{{ route('songio_import_all', ['id' => $song]) }}', '{{ __('labels.dialog_import_all') }}')"

@@ -161,25 +161,47 @@ class SongIoController extends Controller
 
         $song_id = $song->id;
 
-        // delete all existing lines with specified song_id in LyricsBox (lines in LyricsBoxLine is cascade)
-        LyricsBox::where('song_id', $song_id)->delete();
+        $box_ids = LyricsBox::where('song_id', $song->id)->orderBy('box_idx')->pluck('id');
 
-        // store to table LyricsBox and LyricsBoxLine
+        // delete all existing lines with specified song_id in LyricsBoxLine (not delete lines in LyricsBox)
+        LyricsBoxLine::whereIn('box_id', $box_ids)->delete();
+
+        // merge box_id-list(existing lyrics) and lyrics_new-list (store 'null' if one are longer than the other)
+        $list_box_id = $box_ids->toArray();
         $list_lyrics_new = preg_split('/\r\n|\n|\r/', $request['data']);
+        $merged_list = array_map(null, $list_box_id, $list_lyrics_new);
+
+        // store to table LyricsBoxLine (and LyricsBox)
         $box_idx = 0;
-        foreach ($list_lyrics_new as $lyrics_new) {
-            // create new line in LyricsBox
-            $lyrics_box = new LyricsBox;
-            $lyrics_box->song_id = $song_id;
-            $lyrics_box->box_idx = $box_idx;
-            $lyrics_box->lyrics_old = LyricsBox::filterEmptyLyrics(''); //set empty string
-            $lyrics_box->save();
+        foreach ($merged_list as $merged) {
+            $box_id = $merged[0];
+            $lyrics_new = $merged[1];
+
+            // (when lyrics_new-list is longer)
+            if ($lyrics_new === null) {
+                break;
+            }
+
+            // (when box_id-list is longer)
+            if ($box_id === null) {
+                // create new line in LyricsBox
+                $lyrics_box = new LyricsBox;
+                $lyrics_box->song_id = $song_id;
+                $lyrics_box->box_idx = $box_idx;
+                $lyrics_box->lyrics_old = LyricsBox::filterEmptyLyrics(''); //set empty string
+                $lyrics_box->save();
+
+                $box_id = $lyrics_box->id; //use new box's id
+            } else {
+                // delete all existing lines in LyricsBoxLine of the box
+                LyricsBoxLine::where('box_id', $box_id)->delete();
+            }
 
             $lyrics_new = trim(mb_convert_kana($lyrics_new, "s"));
             if ($lyrics_new !== "") {
                 // create new line in LyricsBoxLine
                 $lyrics_box_line = new LyricsBoxLine;
-                $lyrics_box_line->box_id = $lyrics_box->id;
+                $lyrics_box_line->box_id = $box_id;
                 $lyrics_box_line->line_idx = 1;
                 $lyrics_box_line->lyrics_new = $lyrics_new;
                 $lyrics_box_line->level = LyricsBoxLine::getMaxLevel();

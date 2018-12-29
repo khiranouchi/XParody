@@ -50,5 +50,8 @@ return [
     'dialog_complete_song' => 'Complete this song? (Fix updated time to current value)',
     'dialog_restart_song' => 'Restart edit of this song? (Update time is also updated now)',
     'dialog_delete_song' => 'Really delete this song?',
+    'dialog_import' => 'Really import? (Existing all lyrics are deleted)',
+    'dialog_import_new' => 'Really import? (Existing new lyrics are deleted)',
+    'dialog_import_all' => 'Really import? (Existing all lyrics and song info are deleted)',
     'error_song_export_max_level_duplicate' => 'Choose only one max-level lyrics of each line.',
 ];

@@ -39,8 +39,15 @@
                         <dd class="col-sm-10
                                    @if ($song->is_complete)
                                    text-success
-                                   @endif
-                        ">{{ $song->getUpdatedAtDateTime() }}</dd>
+                                   @endif">
+                            <div class="row x-row-margin-reset">
+                                <div>{{ $song->getUpdatedAtDateTime() }}</div>
+                                <div class="x-lyrics-user d-flex align-items-center"
+                                     style="background-color:{{ $latest_edit->user->getIconColorRgbString() }}">
+                                    <span>{{ $latest_edit->user->icon_char }}</span>
+                                </div>
+                            </div>
+                        </dd>
                         <!-- Buttons -->
                         <dd class="col-sm-12">
                             <!-- Set is_complete flag on -->

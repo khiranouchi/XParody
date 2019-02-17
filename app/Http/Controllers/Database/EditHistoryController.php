@@ -30,4 +30,9 @@ class EditHistoryController extends Controller
         $latest_edit_histories = $edit_histories->orderBy('created_at', 'desc')->take(10)->select('created_at')->get();
         $edit_histories->whereNotIn('created_at', $latest_edit_histories)->delete();
     }
+
+    public static function getLatest(Song $song)
+    {
+        return EditHistory::where('song_id', $song->id)->orderBy('created_at', 'desc')->take(1)->get()[0];
+    }
 }

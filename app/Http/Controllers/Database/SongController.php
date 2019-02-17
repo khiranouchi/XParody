@@ -78,12 +78,16 @@ class SongController extends Controller
             $dict_lyrics_box_lines[$box_id] = LyricsBoxLine::where('box_id', $box_id)->orderBy('line_idx')->get();
         }
 
+        // get latest line of EditHistory
+        $latest_edit = EditHistoryController::getLatest($song);
+
         return view('song', [
             'song' => $song,
             'lyrics_boxes' => $lyrics_boxes,
             'dict_lyrics_box_lines' => $dict_lyrics_box_lines,
             'list_box_lines_levels' => implode(',', LyricsBoxLine::getLevels()),
-            'request_user_id' => $request->user()->id
+            'request_user_id' => $request->user()->id,
+            'latest_edit' => $latest_edit
         ]);
     }
 

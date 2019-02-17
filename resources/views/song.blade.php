@@ -42,10 +42,12 @@
                                    @endif">
                             <div class="row x-row-margin-reset">
                                 <div>{{ $song->getUpdatedAtDateTime() }}</div>
+                                @if (isset($latest_edit))
                                 <div class="x-lyrics-user d-flex align-items-center"
                                      style="background-color:{{ $latest_edit->user->getIconColorRgbString() }}">
                                     <span>{{ $latest_edit->user->icon_char }}</span>
                                 </div>
+                                @endif
                             </div>
                         </dd>
                         <!-- Buttons -->

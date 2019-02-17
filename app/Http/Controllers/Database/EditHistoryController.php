@@ -33,7 +33,12 @@ class EditHistoryController extends Controller
 
     public static function getLatest(Song $song)
     {
-        return EditHistory::where('song_id', $song->id)->orderBy('created_at', 'desc')->take(1)->get()[0];
+        $latist_edit_history = EditHistory::where('song_id', $song->id)->orderBy('created_at', 'desc')->take(1)->get();
+        if (count($latist_edit_history) === 0) {
+            return null;
+        } else {
+            return $latist_edit_history[0];
+        }
     }
 
     /**

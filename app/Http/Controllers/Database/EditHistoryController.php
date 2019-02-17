@@ -35,4 +35,18 @@ class EditHistoryController extends Controller
     {
         return EditHistory::where('song_id', $song->id)->orderBy('created_at', 'desc')->take(1)->get()[0];
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request, Song $song)
+    {
+        $edit_histories = EditHistory::where('song_id', $song->id)->orderBy('created_at')->get();
+        return view('songh', [
+            'song' => $song,
+            'edit_histories' => $edit_histories
+        ]);
+    }
 }

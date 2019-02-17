@@ -45,6 +45,14 @@ return [
     'checkbox_complete' => 'Completed',
     
     /*
+     * Values
+     */
+    'value_edit_type_song' => 'Info',
+    'value_edit_type_lyrics_box' => 'Old',
+    'value_edit_type_lyrics_box_line' => 'New',
+    'value_edit_type_song_import' => 'Import',
+    
+    /*
      * Messages
      */
     'dialog_complete_song' => 'Complete this song? (Fix updated time to current value)',

@@ -22,7 +22,7 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
     if(!$(obj).hasClass('input_mode_on')){
         $(obj).addClass('input_mode_on');
         $(obj).html('<input type="text" '
-                    + 'value="'+$(obj).text()+'">'); // use current text as default value
+                    + 'value="'+$(obj).text().replace(/"/g, "&quot;")+'">'); // use current text as default value
         $($(obj)[0].nodeName + '> input').focus().select().blur(
             // listener which activates when the focus is lost
             function(){

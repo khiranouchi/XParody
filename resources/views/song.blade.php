@@ -39,8 +39,18 @@
                         <dd class="col-sm-10
                                    @if ($song->is_complete)
                                    text-success
-                                   @endif
-                        ">{{ $song->getUpdatedAtDateTime() }}</dd>
+                                   @endif">
+                            <div class="row x-row-margin-reset">
+                                <div>{{ $song->getUpdatedAtDateTime() }}</div>
+                                @if (isset($latest_edit))
+                                <div class="x-lyrics-user d-flex align-items-center x-cursor-pointer"
+                                     style="background-color:{{ $latest_edit->user->getIconColorRgbString() }}"
+                                     onclick="location.href='{{ route('songh', ['id' => $song]) }}'">
+                                    <span>{{ $latest_edit->user->icon_char }}</span>
+                                </div>
+                                @endif
+                            </div>
+                        </dd>
                         <!-- Buttons -->
                         <dd class="col-sm-12">
                             <!-- Set is_complete flag on -->

@@ -7,6 +7,7 @@ use App\Models\LyricsBox;
 use App\Models\LyricsBoxLine;
 use App\Models\Song;
 use Illuminate\Http\Request;
+use App\Models\EditHistory;
 
 class LyricsBoxController extends Controller
 {
@@ -56,6 +57,9 @@ class LyricsBoxController extends Controller
         // update timestamps of the song
         $song->touch();
 
+        // create edit history
+        EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_LYRICS_BOX);
+
         // $dict_lyrics_box_line is list of LyricsBoxLine lines ordered by line_idx of each box,
         // but at this time we only need 'empty list' of 'one created box'.
         $dict_lyrics_box_lines = array();
@@ -92,9 +96,12 @@ class LyricsBoxController extends Controller
                 }
             }
 
-            // update timestamps of the song (if lyricsBox is actually modified)
+            // if lyricsBox is actually modified)
             if($lyricsBox->isDirty()) {
+                // update timestamps of the song
                 $song->touch();
+                // create edit history
+                EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_LYRICS_BOX);
             }
 
             $lyricsBox->save();
@@ -112,7 +119,7 @@ class LyricsBoxController extends Controller
      * @param  \App\Models\LyricsBox  $lyricsBox
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Song $song, LyricsBox $lyricsBox)
+    public function destroy(Request $request, Song $song, LyricsBox $lyricsBox)
     {
         // unable to destroy when song's complete flag is on
         if($song->is_complete) {
@@ -129,6 +136,9 @@ class LyricsBoxController extends Controller
 
         // update timestamps of the song
         $song->touch();
+
+        // create edit history
+        EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_LYRICS_BOX);
 
         return response(null, 204);
     }

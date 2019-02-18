@@ -47,6 +47,7 @@ return [
     /*
      * Values
      */
+    'value_edit_type_song_created' => 'Created',
     'value_edit_type_song' => 'Info',
     'value_edit_type_lyrics_box' => 'Old',
     'value_edit_type_lyrics_box_line' => 'New',

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\EditHistory;
 use App\Models\Song;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EditHistoryController extends Controller
 {
@@ -19,16 +20,18 @@ class EditHistoryController extends Controller
 
     public static function store(Request $request, Song $song, $edit_type)
     {
-        $edit_history = new EditHistory;
-        $edit_history->song_id = $song->id;
-        $edit_history->user_id = $request->user()->id;
-        $edit_history->edit_type = $edit_type;
-        $edit_history->save();
+        DB::transaction(function () use ($request, $song, $edit_type) {
+            $edit_history = new EditHistory;
+            $edit_history->song_id = $song->id;
+            $edit_history->user_id = $request->user()->id;
+            $edit_history->edit_type = $edit_type;
+            $edit_history->save();
 
-        // delete the oldest row
-        $edit_histories = EditHistory::where('song_id', $song->id);
-        $latest_edit_histories = $edit_histories->orderBy('created_at', 'desc')->take(10)->select('created_at')->get();
-        $edit_histories->whereNotIn('created_at', $latest_edit_histories)->delete();
+            // delete the oldest row
+            $edit_histories = EditHistory::where('song_id', $song->id);
+            $latest_edit_histories = $edit_histories->orderBy('created_at', 'desc')->take(10)->select('created_at')->get();
+            $edit_histories->whereNotIn('created_at', $latest_edit_histories)->delete();
+        });
     }
 
     public static function getLatest(Song $song)

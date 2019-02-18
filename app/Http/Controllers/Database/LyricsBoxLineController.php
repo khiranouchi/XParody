@@ -7,6 +7,7 @@ use App\Models\EditHistory;
 use App\Models\LyricsBoxLine;
 use App\Models\Song;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\LyricsBox;
 
 class LyricsBoxLineController extends Controller
@@ -34,47 +35,49 @@ class LyricsBoxLineController extends Controller
             abort(404);
         }
 
-        // set box_idx of new box
-        if ($request->line_id == -1) {
-            $line_idx = 0;
-        } else if ($request->insert_before === "true") {
-            $line_idx = LyricsBoxLine::find($request->line_id)->line_idx;
-        } else {
-            $line_idx = LyricsBoxLine::find($request->line_id)->line_idx + 1;
-        }
+        return DB::transaction(function () use ($request, $song, $lyricsBox) {
+            // set box_idx of new box
+            if ($request->line_id == -1) {
+                $line_idx = 0;
+            } else if ($request->insert_before === "true") {
+                $line_idx = LyricsBoxLine::find($request->line_id)->line_idx;
+            } else {
+                $line_idx = LyricsBoxLine::find($request->line_id)->line_idx + 1;
+            }
 
-        $lyrics_box_line = new LyricsBoxLine;
+            $lyrics_box_line = new LyricsBoxLine;
 
-        $lyrics_box_line->user_id = $request->user()->id;
+            $lyrics_box_line->user_id = $request->user()->id;
 
-        $box_id = $lyricsBox->id;
-        $lyrics_box_line->box_id = $box_id;
-        $lyrics_box_line->line_idx = $line_idx;
+            $box_id = $lyricsBox->id;
+            $lyrics_box_line->box_id = $box_id;
+            $lyrics_box_line->line_idx = $line_idx;
 
-        // increment line_idx of every existing table line, if its line_idx >= new line_idx.
-        // eg. [a(1), b(2), c(3), d(4)] + f(3) --> [a(1), b(2), f(3), c(4), d(5)]
-        LyricsBoxLine::where('box_id', $box_id)->where('line_idx', '>=', $line_idx)->increment('line_idx');
+            // increment line_idx of every existing table line, if its line_idx >= new line_idx.
+            // eg. [a(1), b(2), c(3), d(4)] + f(3) --> [a(1), b(2), f(3), c(4), d(5)]
+            LyricsBoxLine::where('box_id', $box_id)->where('line_idx', '>=', $line_idx)->increment('line_idx');
 
-        // set old-lyrics as default new-lyrics
-        $lyrics_box_line->lyrics_new = LyricsBox::find($box_id)->lyrics_old;
+            // set old-lyrics as default new-lyrics
+            $lyrics_box_line->lyrics_new = LyricsBox::find($box_id)->lyrics_old;
 
-        $lyrics_box_line->level = LyricsBoxLine::getAvailableMaxLevel($box_id);
+            $lyrics_box_line->level = LyricsBoxLine::getAvailableMaxLevel($box_id);
 
-        $lyrics_box_line->save();
+            $lyrics_box_line->save();
 
-        // update timestamps of the song
-        $song->touch();
+            // update timestamps of the song
+            $song->touch();
 
-        // create edit history
-        EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_LYRICS_BOX_LINE);
+            // create edit history
+            EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_LYRICS_BOX_LINE);
 
-        return view('song.lyrics_box_lines', [
-            'song' => $song,
-            'lyrics_box' => $lyricsBox,
-            'lyrics_box_lines' => [$lyrics_box_line],
-            'list_box_lines_levels' => implode(',', LyricsBoxLine::getLevels()),
-            'request_user_id' => $request->user()->id
-        ]);
+            return view('song.lyrics_box_lines', [
+                'song' => $song,
+                'lyrics_box' => $lyricsBox,
+                'lyrics_box_lines' => [$lyrics_box_line],
+                'list_box_lines_levels' => implode(',', LyricsBoxLine::getLevels()),
+                'request_user_id' => $request->user()->id
+            ]);
+        });
     }
 
     /**
@@ -109,15 +112,17 @@ class LyricsBoxLineController extends Controller
                 }
             }
 
-            // if lyricsBoxLine is actually modified
-            if($lyricsBoxLine->isDirty()) {
-                // update timestamps of the song
-                $song->touch();
-                // create edit history
-                EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_LYRICS_BOX_LINE);
-            }
+            DB::transaction(function () use ($request, $song, $lyricsBox, $lyricsBoxLine) {
+                // if lyricsBoxLine is actually modified
+                if($lyricsBoxLine->isDirty()) {
+                    // update timestamps of the song
+                    $song->touch();
+                    // create edit history
+                    EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_LYRICS_BOX_LINE);
+                }
 
-            $lyricsBoxLine->save();
+                $lyricsBoxLine->save();
+            });
 
             return response(null, 204);
         }else{
@@ -146,19 +151,21 @@ class LyricsBoxLineController extends Controller
             abort(404);
         }
 
-        // decrement line_idx of every existing table line, if its line_idx > deleted line_idx.
-        // eg. [a(1), b(2), c(3), d(4), e(5)] - c(3) --> [a(1), b(2), d(3), e(4)]
-        $box_id = $lyricsBox->id;
-        $line_idx = $lyricsBoxLine->line_idx;
-        LyricsBoxLine::where('box_id', $box_id)->where('line_idx', '>', $line_idx)->decrement('line_idx');
+        DB::transaction(function () use ($request, $song, $lyricsBox, $lyricsBoxLine) {
+            // decrement line_idx of every existing table line, if its line_idx > deleted line_idx.
+            // eg. [a(1), b(2), c(3), d(4), e(5)] - c(3) --> [a(1), b(2), d(3), e(4)]
+            $box_id = $lyricsBox->id;
+            $line_idx = $lyricsBoxLine->line_idx;
+            LyricsBoxLine::where('box_id', $box_id)->where('line_idx', '>', $line_idx)->decrement('line_idx');
 
-        $lyricsBoxLine->delete();
+            $lyricsBoxLine->delete();
 
-        // update timestamps of the song
-        $song->touch();
+            // update timestamps of the song
+            $song->touch();
 
-        // create edit history
-        EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_LYRICS_BOX_LINE);
+            // create edit history
+            EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_LYRICS_BOX_LINE);
+        });
 
         return response(null, 204);
     }

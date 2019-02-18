@@ -16,7 +16,7 @@ class LyricsBox extends Model
     public static function filterEmptyLyrics($lyrics_old)
     {
         if ($lyrics_old === '') {
-            return '(empty)';
+            return '------';
         } else {
             return $lyrics_old;
         }

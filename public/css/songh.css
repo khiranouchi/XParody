@@ -1,0 +1,40 @@
+/*************************************************
+ ** history list area ****************************
+ *************************************************/
+
+.alert {
+    padding-top: 0.28rem;
+    padding-bottom: 0.28rem;
+    padding-left: 0.45rem;
+    padding-right: 0.45rem;
+}
+.alert-light {
+	color: unset;
+}
+
+
+/*************************************************
+ ** line of history list *************************
+ *************************************************/
+
+.x-user-icon {
+    margin-left: 10px;
+    justify-content: center;
+    color: white;
+    font-size: 0.6rem; /* <= 1rem - (mtop + mbtm) + (span-mtop + span-mbtm) */
+    margin-top: 0.23rem; /* 0.25-0.02 */
+    margin-bottom: 0.27rem; /* 0.25+0.02 */
+    width: 0.9rem;
+    border-radius: 999rem;
+}
+.x-user-icon span {
+    margin-top: -0.18rem; /* 0.2-0.02 */
+    margin-bottom: -0.22rem; /* 0.2+0.02 */
+}
+.x-user-empty {
+	width: calc(10px + 0.9rem);
+}
+
+.x-edit-type {
+	margin-left: 10px;
+}

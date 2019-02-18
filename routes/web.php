@@ -42,3 +42,6 @@ Route::get('songs/{song}/io/export/old', 'SongIoController@indexAllLyricsOld')->
 Route::get('songs/{song}/io/export/both', 'SongIoController@indexAllLyricsBoth')->name('songio_export_both');
 Route::get('songs/{song}/io/export/new', 'SongIoController@indexAllLyricsNew')->name('songio_export_new');
 Route::get('songs/{song}/io/export/all', 'SongIoController@indexAll')->name('songio_export_all');
+
+// song edit history
+Route::get('songs/{song}/h', 'Database\\EditHistoryController@index')->name('songh');

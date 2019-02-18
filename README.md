@@ -12,7 +12,15 @@ Requirements
 Install and Run
 --------
 
-1. Install PHP, MariaDB and Laravel.
+1. Install PHP and MariaDB.
+
+1. Install Composer.
+
+        curl -sS https://getcomposer.org/installer | php
+
+1. Create `vendor` directory in the project directory (install Laravel).
+
+        php ../composer install
 
 1. Create one database.
 

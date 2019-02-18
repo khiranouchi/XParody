@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Database\EditHistoryController;
 use App\Models\Song;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\EditHistory;
 use App\Models\LyricsBox;
 use App\Models\LyricsBoxLine;
 
@@ -42,27 +45,32 @@ class SongIoController extends Controller
             abort(404);
         }
 
-        $song_id = $song->id;
+        DB::transaction(function () use ($request, $song) {
+            $song_id = $song->id;
 
-        // delete all existing lines with specified song_id in LyricsBox (lines in LyricsBoxLine is cascade)
-        LyricsBox::where('song_id', $song_id)->delete();
+            // delete all existing lines with specified song_id in LyricsBox (lines in LyricsBoxLine is cascade)
+            LyricsBox::where('song_id', $song_id)->delete();
 
-        // store to table LyricsBox
-        $list_lyrics_old = preg_split('/\r\n|\n|\r/', $request['data']);
-        $box_idx = 0;
-        foreach ($list_lyrics_old as $lyrics_old) {
-            // create new line in LyricsBox
-            $lyrics_box = new LyricsBox;
-            $lyrics_box->song_id = $song_id;
-            $lyrics_box->box_idx = $box_idx;
-            $lyrics_box->lyrics_old = LyricsBox::filterEmptyLyrics(trim(mb_convert_kana($lyrics_old, "s")));
-            $lyrics_box->save();
+            // store to table LyricsBox
+            $list_lyrics_old = preg_split('/\r\n|\n|\r/', $request['data']);
+            $box_idx = 0;
+            foreach ($list_lyrics_old as $lyrics_old) {
+                // create new line in LyricsBox
+                $lyrics_box = new LyricsBox;
+                $lyrics_box->song_id = $song_id;
+                $lyrics_box->box_idx = $box_idx;
+                $lyrics_box->lyrics_old = LyricsBox::filterEmptyLyrics(trim(mb_convert_kana($lyrics_old, "s")));
+                $lyrics_box->save();
 
-            $box_idx++;
-        }
+                $box_idx++;
+            }
 
-        // update timestamps of the song
-        $song->touch();
+            // update timestamps of the song
+            $song->touch();
+
+            // create edit history
+            EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_SONG_IMPORT);
+        });
 
         return response()->json(['url' => route('songs.show', ['id' => $song])], 201);
     }
@@ -81,66 +89,71 @@ class SongIoController extends Controller
             abort(404);
         }
 
-        $song_id = $song->id;
+        DB::transaction(function () use ($request, $song) {
+            $song_id = $song->id;
 
-        // delete all existing lines with specified song_id in LyricsBox (lines in LyricsBoxLine is cascade)
-        LyricsBox::where('song_id', $song_id)->delete();
+            // delete all existing lines with specified song_id in LyricsBox (lines in LyricsBoxLine is cascade)
+            LyricsBox::where('song_id', $song_id)->delete();
 
-        // store to table LyricsBox and LyricsBoxLine
-        $list_lyrics = preg_split('/\r\n|\n|\r/', $request['data']);
-        $i = -1;
-        $box_idx = 0;
-        while (true) {
-            $i++;
+            // store to table LyricsBox and LyricsBoxLine
+            $list_lyrics = preg_split('/\r\n|\n|\r/', $request['data']);
+            $i = -1;
+            $box_idx = 0;
+            while (true) {
+                $i++;
 
-            if (!array_key_exists($i, $list_lyrics)){
-                break;
-            }
-
-            $lyrics = trim(mb_convert_kana($list_lyrics[$i], "s"));
-
-            // create new line in LyricsBox
-            $lyrics_box = new LyricsBox;
-            $lyrics_box->song_id = $song_id;
-            $lyrics_box->box_idx = $box_idx;
-            $lyrics_box->lyrics_old = LyricsBox::filterEmptyLyrics($lyrics);
-            $lyrics_box->save();
-
-            if ($lyrics !== "") {
-                $line_idx = 0;
-
-                // read line as new-lyrics until empty line appears
-                while(true) {
-                    $i++;
-
-                    if (!array_key_exists($i, $list_lyrics)) {
-                        break;
-                    }
-
-                    $lyrics = trim(mb_convert_kana($list_lyrics[$i], "s"));
-
-                    if($lyrics === "") {
-                        break;
-                    }
-
-                    // create one new line with the box_idx in LyricsBoxLine
-                    $lyrics_box_line = new LyricsBoxLine;
-                    $lyrics_box_line->box_id = $lyrics_box->id;
-                    $lyrics_box_line->line_idx = $line_idx;
-                    $lyrics_box_line->lyrics_new = $lyrics;
-                    $lyrics_box_line->level = LyricsBoxLine::getAvailableMaxLevel($lyrics_box->id);
-                    $lyrics_box_line->user_id = $request->user()->id;
-                    $lyrics_box_line->save();
-
-                    $line_idx++;
+                if (!array_key_exists($i, $list_lyrics)){
+                    break;
                 }
+
+                $lyrics = trim(mb_convert_kana($list_lyrics[$i], "s"));
+
+                // create new line in LyricsBox
+                $lyrics_box = new LyricsBox;
+                $lyrics_box->song_id = $song_id;
+                $lyrics_box->box_idx = $box_idx;
+                $lyrics_box->lyrics_old = LyricsBox::filterEmptyLyrics($lyrics);
+                $lyrics_box->save();
+
+                if ($lyrics !== "") {
+                    $line_idx = 0;
+
+                    // read line as new-lyrics until empty line appears
+                    while(true) {
+                        $i++;
+
+                        if (!array_key_exists($i, $list_lyrics)) {
+                            break;
+                        }
+
+                        $lyrics = trim(mb_convert_kana($list_lyrics[$i], "s"));
+
+                        if($lyrics === "") {
+                            break;
+                        }
+
+                        // create one new line with the box_idx in LyricsBoxLine
+                        $lyrics_box_line = new LyricsBoxLine;
+                        $lyrics_box_line->box_id = $lyrics_box->id;
+                        $lyrics_box_line->line_idx = $line_idx;
+                        $lyrics_box_line->lyrics_new = $lyrics;
+                        $lyrics_box_line->level = LyricsBoxLine::getAvailableMaxLevel($lyrics_box->id);
+                        $lyrics_box_line->user_id = $request->user()->id;
+                        $lyrics_box_line->save();
+
+                        $line_idx++;
+                    }
+                }
+
+                $box_idx++;
             }
 
-            $box_idx++;
-        }
+            // update timestamps of the song
+            $song->touch();
 
-        // update timestamps of the song
-        $song->touch();
+            // create edit history
+            EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_SONG_IMPORT);
+        });
 
         return response()->json(['url' => route('songs.show', ['id' => $song])], 201);
     }
@@ -159,61 +172,66 @@ class SongIoController extends Controller
             abort(404);
         }
 
-        $song_id = $song->id;
+        DB::transaction(function () use ($request, $song) {
+            $song_id = $song->id;
 
-        $box_ids = LyricsBox::where('song_id', $song->id)->orderBy('box_idx')->pluck('id');
+            $box_ids = LyricsBox::where('song_id', $song->id)->orderBy('box_idx')->pluck('id');
 
-        // delete all existing lines with specified song_id in LyricsBoxLine (not delete lines in LyricsBox)
-        LyricsBoxLine::whereIn('box_id', $box_ids)->delete();
+            // delete all existing lines with specified song_id in LyricsBoxLine (not delete lines in LyricsBox)
+            LyricsBoxLine::whereIn('box_id', $box_ids)->delete();
 
-        // merge box_id-list(existing lyrics) and lyrics_new-list (store 'null' if one are longer than the other)
-        $list_box_id = $box_ids->toArray();
-        $list_lyrics_new = preg_split('/\r\n|\n|\r/', $request['data']);
-        $merged_list = array_map(null, $list_box_id, $list_lyrics_new);
+            // merge box_id-list(existing lyrics) and lyrics_new-list (store 'null' if one are longer than the other)
+            $list_box_id = $box_ids->toArray();
+            $list_lyrics_new = preg_split('/\r\n|\n|\r/', $request['data']);
+            $merged_list = array_map(null, $list_box_id, $list_lyrics_new);
 
-        // store to table LyricsBoxLine (and LyricsBox)
-        $box_idx = 0;
-        foreach ($merged_list as $merged) {
-            $box_id = $merged[0];
-            $lyrics_new = $merged[1];
+            // store to table LyricsBoxLine (and LyricsBox)
+            $box_idx = 0;
+            foreach ($merged_list as $merged) {
+                $box_id = $merged[0];
+                $lyrics_new = $merged[1];
 
-            // (when lyrics_new-list is longer)
-            if ($lyrics_new === null) {
-                break;
+                // (when lyrics_new-list is longer)
+                if ($lyrics_new === null) {
+                    break;
+                }
+
+                // (when box_id-list is longer)
+                if ($box_id === null) {
+                    // create new line in LyricsBox
+                    $lyrics_box = new LyricsBox;
+                    $lyrics_box->song_id = $song_id;
+                    $lyrics_box->box_idx = $box_idx;
+                    $lyrics_box->lyrics_old = LyricsBox::filterEmptyLyrics(''); //set empty string
+                    $lyrics_box->save();
+
+                    $box_id = $lyrics_box->id; //use new box's id
+                } else {
+                    // delete all existing lines in LyricsBoxLine of the box
+                    LyricsBoxLine::where('box_id', $box_id)->delete();
+                }
+
+                $lyrics_new = trim(mb_convert_kana($lyrics_new, "s"));
+                if ($lyrics_new !== "") {
+                    // create new line in LyricsBoxLine
+                    $lyrics_box_line = new LyricsBoxLine;
+                    $lyrics_box_line->box_id = $box_id;
+                    $lyrics_box_line->line_idx = 1;
+                    $lyrics_box_line->lyrics_new = $lyrics_new;
+                    $lyrics_box_line->level = LyricsBoxLine::getMaxLevel();
+                    $lyrics_box_line->user_id = $request->user()->id;
+                    $lyrics_box_line->save();
+                }
+
+                $box_idx++;
             }
 
-            // (when box_id-list is longer)
-            if ($box_id === null) {
-                // create new line in LyricsBox
-                $lyrics_box = new LyricsBox;
-                $lyrics_box->song_id = $song_id;
-                $lyrics_box->box_idx = $box_idx;
-                $lyrics_box->lyrics_old = LyricsBox::filterEmptyLyrics(''); //set empty string
-                $lyrics_box->save();
+            // update timestamps of the song
+            $song->touch();
 
-                $box_id = $lyrics_box->id; //use new box's id
-            } else {
-                // delete all existing lines in LyricsBoxLine of the box
-                LyricsBoxLine::where('box_id', $box_id)->delete();
-            }
-
-            $lyrics_new = trim(mb_convert_kana($lyrics_new, "s"));
-            if ($lyrics_new !== "") {
-                // create new line in LyricsBoxLine
-                $lyrics_box_line = new LyricsBoxLine;
-                $lyrics_box_line->box_id = $box_id;
-                $lyrics_box_line->line_idx = 1;
-                $lyrics_box_line->lyrics_new = $lyrics_new;
-                $lyrics_box_line->level = LyricsBoxLine::getMaxLevel();
-                $lyrics_box_line->user_id = $request->user()->id;
-                $lyrics_box_line->save();
-            }
-
-            $box_idx++;
-        }
-
-        // update timestamps of the song
-        $song->touch();
+            // create edit history
+            EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_SONG_IMPORT);
+        });
 
         return response()->json(['url' => route('songs.show', ['id' => $song])], 201);
     }
@@ -232,53 +250,61 @@ class SongIoController extends Controller
             abort(404);
         }
 
-        $song_id = $song->id;
+        DB::transaction(function () use ($request, $song) {
+            $song_id = $song->id;
 
-        // delete all existing lines with specified song_id in LyricsBox (lines in LyricsBoxLine is cascade)
-        LyricsBox::where('song_id', $song_id)->delete();
+            // delete all existing lines with specified song_id in LyricsBox (lines in LyricsBoxLine is cascade)
+            LyricsBox::where('song_id', $song_id)->delete();
 
-        $data = json_decode($request['data'], true);
+            $data = json_decode($request['data'], true);
 
-        // update specified song in Song
-        $song->name_old = $data['name_old'];
-        $song->name_old_ruby = $data['name_old_ruby'];
-        $song->name_new = $data['name_new'];
-        $song->name_new_ruby = $data['name_new_ruby'];
-        $song->save();
+            // update specified song in Song
+            $song->name_old = $data['name_old'];
+            $song->name_old_ruby = $data['name_old_ruby'];
+            $song->name_new = $data['name_new'];
+            $song->name_new_ruby = $data['name_new_ruby'];
+            $song->save();
 
-        $box_idx = 0;
-        if (array_key_exists('lyrics_boxes', $data)) {
-            // get each LyricsBox data
-            foreach ($data['lyrics_boxes'] as $data_lyrics_box) {
-                // create new line in LyricsBox
-                $lyrics_box = new LyricsBox;
-                $lyrics_box->song_id = $song_id;
-                $lyrics_box->box_idx = $box_idx;
-                $lyrics_box->lyrics_old = $data_lyrics_box['lyrics_old'];
-                $lyrics_box->save();
+            $box_idx = 0;
+            if (array_key_exists('lyrics_boxes', $data)) {
+                // get each LyricsBox data
+                foreach ($data['lyrics_boxes'] as $data_lyrics_box) {
+                    // create new line in LyricsBox
+                    $lyrics_box = new LyricsBox;
+                    $lyrics_box->song_id = $song_id;
+                    $lyrics_box->box_idx = $box_idx;
+                    $lyrics_box->lyrics_old = $data_lyrics_box['lyrics_old'];
+                    $lyrics_box->save();
 
-                $line_idx = 0;
-                if (array_key_exists('lyrics_box_lines', $data_lyrics_box)) {
-                    // get each LyricsBoxLine data
-                    foreach ($data_lyrics_box['lyrics_box_lines'] as $data_lyrics_box_line) {
-                        // create one new line with the box_idx in LyricsBoxLine
-                        $lyrics_box_line = new LyricsBoxLine;
-                        $lyrics_box_line->box_id = $lyrics_box->id;
-                        $lyrics_box_line->line_idx = $line_idx;
-                        $lyrics_box_line->lyrics_new = $data_lyrics_box_line['lyrics_new'];
-                        $lyrics_box_line->level = $data_lyrics_box_line['level'];
-                        if (array_key_exists('user_id', $data_lyrics_box_line)) {
-                            $lyrics_box_line->user_id = $data_lyrics_box_line['user_id'];
+                    $line_idx = 0;
+                    if (array_key_exists('lyrics_box_lines', $data_lyrics_box)) {
+                        // get each LyricsBoxLine data
+                        foreach ($data_lyrics_box['lyrics_box_lines'] as $data_lyrics_box_line) {
+                            // create one new line with the box_idx in LyricsBoxLine
+                            $lyrics_box_line = new LyricsBoxLine;
+                            $lyrics_box_line->box_id = $lyrics_box->id;
+                            $lyrics_box_line->line_idx = $line_idx;
+                            $lyrics_box_line->lyrics_new = $data_lyrics_box_line['lyrics_new'];
+                            $lyrics_box_line->level = $data_lyrics_box_line['level'];
+                            if (array_key_exists('user_id', $data_lyrics_box_line)) {
+                                $lyrics_box_line->user_id = $data_lyrics_box_line['user_id'];
+                            }
+                            $lyrics_box_line->save();
+
+                            $line_idx++;
                         }
-                        $lyrics_box_line->save();
-
-                        $line_idx++;
                     }
-                }
 
-                $box_idx++;
+                    $box_idx++;
+                }
             }
-        }
+
+            // update timestamps of the song
+            $song->touch();
+
+            // create edit history
+            EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_SONG_IMPORT);
+        });
 
         return response()->json(['url' => route('songs.show', ['id' => $song])], 201);
     }

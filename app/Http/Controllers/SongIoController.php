@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Database\EditHistoryController;
 use App\Models\Song;
 use Illuminate\Http\Request;
+use App\Models\EditHistory;
 use App\Models\LyricsBox;
 use App\Models\LyricsBoxLine;
 
@@ -63,6 +65,9 @@ class SongIoController extends Controller
 
         // update timestamps of the song
         $song->touch();
+
+        // create edit history
+        EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_SONG_IMPORT);
 
         return response()->json(['url' => route('songs.show', ['id' => $song])], 201);
     }
@@ -142,6 +147,9 @@ class SongIoController extends Controller
         // update timestamps of the song
         $song->touch();
 
+        // create edit history
+        EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_SONG_IMPORT);
+
         return response()->json(['url' => route('songs.show', ['id' => $song])], 201);
     }
 
@@ -215,6 +223,9 @@ class SongIoController extends Controller
         // update timestamps of the song
         $song->touch();
 
+        // create edit history
+        EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_SONG_IMPORT);
+
         return response()->json(['url' => route('songs.show', ['id' => $song])], 201);
     }
 
@@ -279,6 +290,12 @@ class SongIoController extends Controller
                 $box_idx++;
             }
         }
+
+        // update timestamps of the song
+        $song->touch();
+
+        // create edit history
+        EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_SONG_IMPORT);
 
         return response()->json(['url' => route('songs.show', ['id' => $song])], 201);
     }

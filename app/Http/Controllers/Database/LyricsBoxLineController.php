@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Database;
 
 use App\Http\Controllers\Controller;
+use App\Models\EditHistory;
 use App\Models\LyricsBoxLine;
 use App\Models\Song;
 use Illuminate\Http\Request;
@@ -64,6 +65,9 @@ class LyricsBoxLineController extends Controller
         // update timestamps of the song
         $song->touch();
 
+        // create edit history
+        EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_LYRICS_BOX_LINE);
+
         return view('song.lyrics_box_lines', [
             'song' => $song,
             'lyrics_box' => $lyricsBox,
@@ -105,9 +109,12 @@ class LyricsBoxLineController extends Controller
                 }
             }
 
-            // update timestamps of the song (if lyricsBoxLine is actually modified)
+            // if lyricsBoxLine is actually modified
             if($lyricsBoxLine->isDirty()) {
+                // update timestamps of the song
                 $song->touch();
+                // create edit history
+                EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_LYRICS_BOX_LINE);
             }
 
             $lyricsBoxLine->save();
@@ -149,6 +156,9 @@ class LyricsBoxLineController extends Controller
 
         // update timestamps of the song
         $song->touch();
+
+        // create edit history
+        EditHistoryController::store($request, $song, EditHistory::EDIT_TYPE_LYRICS_BOX_LINE);
 
         return response(null, 204);
     }

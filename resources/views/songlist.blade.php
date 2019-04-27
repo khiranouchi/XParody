@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('flgnavbar')
+@endsection
+
 @section('subtitle')
 {{ __('labels.subtitle_song_list') }}
 @endsection

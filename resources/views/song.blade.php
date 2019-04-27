@@ -11,32 +11,32 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container x-container-ds">
     <!-- Song info -->
-    <div class="x-part row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="x-part row x-row-ds">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 x-col-ds">
             <div class="card">
                 <div class="card-body">
-                    <dl class="row">
+                    <dl class="row x-row-ds">
                         <!-- Name new -->
-                        <dt class="col-sm-2">{{ __('labels.song_name_new') }}</dt>
-                        <dd class="col-sm-10">
+                        <dt class="col-sm-2 x-col-ds">{{ __('labels.song_name_new') }}</dt>
+                        <dd class="col-sm-10 x-col-ds">
                             <span onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_new', false)"
                             >{{ $song->name_new }}</span>
                             (<span onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_new_ruby', false)"
                             >{{ $song->name_new_ruby }}</span>)
                         </dd>
                         <!-- Name old -->
-                        <dt class="col-sm-2">{{ __('labels.song_name_old') }}</dt>
-                        <dd class="col-sm-10">
+                        <dt class="col-sm-2 x-col-ds">{{ __('labels.song_name_old') }}</dt>
+                        <dd class="col-sm-10 x-col-ds">
                             <span onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_old', false)"
                             >{{ $song->name_old }}</span>
                             (<span onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_old_ruby', false)"
                             >{{ $song->name_old_ruby }}</span>)
                         </dd>
                         <!-- Updated time -->
-                        <dt class="col-sm-2">{{ __('labels.song_updated_time') }}</dt>
-                        <dd class="col-sm-10
+                        <dt class="col-sm-2 x-col-ds">{{ __('labels.song_updated_time') }}</dt>
+                        <dd class="col-sm-10 x-col-ds
                                    @if ($song->is_complete)
                                    text-success
                                    @endif">
@@ -52,7 +52,7 @@
                             </div>
                         </dd>
                         <!-- Buttons -->
-                        <dd class="col-sm-12">
+                        <dd class="col-sm-12 x-col-ds">
                             <!-- Set is_complete flag on -->
                             <form action="{{ route('songs.update', ['id' => $song]) }}" method="post"
                                   @if ($song->is_complete)
@@ -85,8 +85,8 @@
     </div>
     
     <!-- Song editor -->
-    <div class="x-part row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="x-part row x-row-ds">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 x-col-ds">
         	@include('song.lyrics_boxes')
         </div>
     </div>

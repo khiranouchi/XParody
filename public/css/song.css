@@ -7,11 +7,19 @@
         padding-top: 0.3rem!important;
         padding-bottom: 0.3rem!important;
     }
-    .container {
-        padding-right: 0;
+    .x-container-ds {
+        padding-left: 2px;
+        padding-right: 2px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .x-row-ds {
+        margin-left: 0;
+        margin-right: 0
+    }
+    .x-col-ds {
         padding-left: 0;
-        margin-right: 2px;
-        margin-left: 2px;
+        padding-right: 0;
     }
     .x-part {
         margin-bottom: 0.3rem;

@@ -27,6 +27,7 @@ function SaveImportLyrics(textareaId, path, message) {
     $.ajax({
         type: 'POST',
         url: path,
+        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         data: { 'data': $('#' + textareaId).val() },
         async: true
     }).done(function(content){

@@ -43,8 +43,8 @@
                     @foreach ($songs as $song)
                     <tr class="z-song-row-{{ $song->is_complete }}"
                         onclick="window.location.href='{{ route('songs.show', ['id' => $song]) }}'">
-                        <td class="{sortValue: '{{ $song->name_old_ruby }}' }">{{ $song->name_old }}</td>
-                        <td class="{sortValue: '{{ $song->name_new_ruby }}' }">{{ $song->name_new }}</td>
+                        <td class="{sortValue: '{{ $song->name_old_ruby }}' } x-text-word-break">{{ $song->name_old }}</td>
+                        <td class="{sortValue: '{{ $song->name_new_ruby }}' } x-text-word-break">{{ $song->name_new }}</td>
                         <td class="{sortValue:{{ $song->updated_at }}}
                                    @if ($song->is_complete)
                                    text-success

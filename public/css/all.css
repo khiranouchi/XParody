@@ -57,6 +57,10 @@ a.navbar-brand {
     white-space: nowrap;
 }
 
+.x-text-word-break {
+    word-break: break-all;
+}
+
 .x-inline-form {
     display: inline;
 }

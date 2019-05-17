@@ -19,13 +19,21 @@
     <div class="row">
         <div class="pl-1 pb-sm-1">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkbox_incomplete" checked
-                       onchange="FilterVisibleRow(this.checked, 'z-song-row-0', '{{ route('cookie_save') }}', '{{ config('const.COOKIE_SONGLIST_INCOMPLETE_KEY') }}')">
+                <input class="form-check-input" type="checkbox" id="checkbox_incomplete"
+                       onchange="FilterVisibleRow(this.checked, 'z-song-row-0', '{{ route('cookie_save') }}', '{{ config('const.COOKIE_SONGLIST_INCOMPLETE_KEY') }}')"
+                       @if ($dict_row_visibility['incomplete'] != '0')
+                       checked
+                       @endif
+                >
                 <label class="form-check-label" for="checkbox_incomplete">{{ __('labels.checkbox_incomplete') }}</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkbox_complete" checked
-                       onchange="FilterVisibleRow(this.checked, 'z-song-row-1', '{{ route('cookie_save') }}', '{{ config('const.COOKIE_SONGLIST_COMPLETE_KEY') }}')">
+                <input class="form-check-input" type="checkbox" id="checkbox_complete"
+                       onchange="FilterVisibleRow(this.checked, 'z-song-row-1', '{{ route('cookie_save') }}', '{{ config('const.COOKIE_SONGLIST_COMPLETE_KEY') }}')"
+                       @if ($dict_row_visibility['complete'] != '0')
+                       checked
+                       @endif
+                >
                 <label class="form-check-label" for="checkbox_complete">{{ __('labels.checkbox_complete') }}</label>
             </div>
         </div>
@@ -68,8 +76,19 @@
 </div>
 
 <script>
-// activate tablesorter
 $(document).ready(function(){
+    // initialize column visibility (TODO slow?)
+    @if ($dict_row_visibility['incomplete'] != '0')
+    FilterVisibleRow(true, 'z-song-row-0', '{{ route('cookie_save') }}', '{{ config('const.COOKIE_SONGLIST_INCOMPLETE_KEY') }}');
+    @else
+    FilterVisibleRow(false, 'z-song-row-0', '{{ route('cookie_save') }}', '{{ config('const.COOKIE_SONGLIST_INCOMPLETE_KEY') }}');
+    @endif
+    @if ($dict_row_visibility['complete'] != '0')
+    FilterVisibleRow(true, 'z-song-row-1', '{{ route('cookie_save') }}', '{{ config('const.COOKIE_SONGLIST_COMPLETE_KEY') }}');
+    @else
+    FilterVisibleRow(false, 'z-song-row-1', '{{ route('cookie_save') }}', '{{ config('const.COOKIE_SONGLIST_COMPLETE_KEY') }}');
+    @endif
+    // activate tablesorter
     $("#table_song_list").tablesorter();
 });
 </script>

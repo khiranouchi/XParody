@@ -19,13 +19,21 @@
     <div class="row">
         <div class="pl-1 pb-sm-1">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkbox_incomplete" checked
-                       onchange="FilterVisibleRow(this.checked, 'z-song-row-0')">
+                <input class="form-check-input" type="checkbox" id="checkbox_incomplete"
+                       onchange="FilterVisibleRow(this.checked, 'z-song-row-0', '{{ route('cookie_save') }}', '{{ config('const.COOKIE_SONGLIST_INCOMPLETE_KEY') }}')"
+                       @if ($dict_row_visibility['incomplete'] != '0')
+                       checked
+                       @endif
+                >
                 <label class="form-check-label" for="checkbox_incomplete">{{ __('labels.checkbox_incomplete') }}</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkbox_complete" checked
-                       onchange="FilterVisibleRow(this.checked, 'z-song-row-1')">
+                <input class="form-check-input" type="checkbox" id="checkbox_complete"
+                       onchange="FilterVisibleRow(this.checked, 'z-song-row-1', '{{ route('cookie_save') }}', '{{ config('const.COOKIE_SONGLIST_COMPLETE_KEY') }}')"
+                       @if ($dict_row_visibility['complete'] != '0')
+                       checked
+                       @endif
+                >
                 <label class="form-check-label" for="checkbox_complete">{{ __('labels.checkbox_complete') }}</label>
             </div>
         </div>
@@ -45,7 +53,11 @@
                 <tbody>
                     @foreach ($songs as $song)
                     <tr class="z-song-row-{{ $song->is_complete }}"
-                        onclick="window.location.href='{{ route('songs.show', ['id' => $song]) }}'">
+                        onclick="window.location.href='{{ route('songs.show', ['id' => $song]) }}'"
+                        @if (($song->is_complete == '0' and $dict_row_visibility['incomplete'] == '0') or ($song->is_complete == '1' and $dict_row_visibility['complete'] == '0'))
+                        style="display: none"
+                        @endif
+                    >
                         <td class="{sortValue: '{{ $song->name_old_ruby }}' } x-text-word-break">{{ $song->name_old }}</td>
                         <td class="{sortValue: '{{ $song->name_new_ruby }}' } x-text-word-break">{{ $song->name_new }}</td>
                         <td class="{sortValue:{{ $song->updated_at }}}
@@ -68,8 +80,8 @@
 </div>
 
 <script>
-// activate tablesorter
 $(document).ready(function(){
+    // activate tablesorter
     $("#table_song_list").tablesorter();
 });
 </script>

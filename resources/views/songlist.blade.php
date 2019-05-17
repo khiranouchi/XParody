@@ -53,7 +53,11 @@
                 <tbody>
                     @foreach ($songs as $song)
                     <tr class="z-song-row-{{ $song->is_complete }}"
-                        onclick="window.location.href='{{ route('songs.show', ['id' => $song]) }}'">
+                        onclick="window.location.href='{{ route('songs.show', ['id' => $song]) }}'"
+                        @if (($song->is_complete == '0' and $dict_row_visibility['incomplete'] == '0') or ($song->is_complete == '1' and $dict_row_visibility['complete'] == '0'))
+                        style="display: none"
+                        @endif
+                    >
                         <td class="{sortValue: '{{ $song->name_old_ruby }}' } x-text-word-break">{{ $song->name_old }}</td>
                         <td class="{sortValue: '{{ $song->name_new_ruby }}' } x-text-word-break">{{ $song->name_new }}</td>
                         <td class="{sortValue:{{ $song->updated_at }}}
@@ -77,17 +81,6 @@
 
 <script>
 $(document).ready(function(){
-    // initialize column visibility (TODO slow?)
-    @if ($dict_row_visibility['incomplete'] != '0')
-    FilterVisibleRow(true, 'z-song-row-0', '{{ route('cookie_save') }}', '{{ config('const.COOKIE_SONGLIST_INCOMPLETE_KEY') }}');
-    @else
-    FilterVisibleRow(false, 'z-song-row-0', '{{ route('cookie_save') }}', '{{ config('const.COOKIE_SONGLIST_INCOMPLETE_KEY') }}');
-    @endif
-    @if ($dict_row_visibility['complete'] != '0')
-    FilterVisibleRow(true, 'z-song-row-1', '{{ route('cookie_save') }}', '{{ config('const.COOKIE_SONGLIST_COMPLETE_KEY') }}');
-    @else
-    FilterVisibleRow(false, 'z-song-row-1', '{{ route('cookie_save') }}', '{{ config('const.COOKIE_SONGLIST_COMPLETE_KEY') }}');
-    @endif
     // activate tablesorter
     $("#table_song_list").tablesorter();
 });

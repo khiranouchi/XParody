@@ -20,12 +20,12 @@
         <div class="pl-1 pb-sm-1">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" id="checkbox_incomplete" checked
-                       onchange="FilterVisibleRow(this.checked, 'z-song-row-0')">
+                       onchange="FilterVisibleRow(this.checked, 'z-song-row-0', '{{ route('cookie_save') }}', '{{ config('const.COOKIE_SONGLIST_INCOMPLETE_KEY') }}')">
                 <label class="form-check-label" for="checkbox_incomplete">{{ __('labels.checkbox_incomplete') }}</label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" id="checkbox_complete" checked
-                       onchange="FilterVisibleRow(this.checked, 'z-song-row-1')">
+                       onchange="FilterVisibleRow(this.checked, 'z-song-row-1', '{{ route('cookie_save') }}', '{{ config('const.COOKIE_SONGLIST_COMPLETE_KEY') }}')">
                 <label class="form-check-label" for="checkbox_complete">{{ __('labels.checkbox_complete') }}</label>
             </div>
         </div>

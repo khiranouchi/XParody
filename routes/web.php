@@ -48,3 +48,6 @@ Route::get('songs/{song}/io/export/all', 'SongIoController@indexAll')->name('son
 
 // song edit history
 Route::get('songs/{song}/h', 'Database\\EditHistoryController@index')->name('songh');
+
+// cookie
+Route::post('cookie', 'CookieController@save')->name('cookie_save');

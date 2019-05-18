@@ -36,7 +36,10 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
                     $.ajax({
                         type: 'PATCH',
                         url: path,
-                        headers: { Accept: "application/json" },
+                        headers: {
+                            Accept: "application/json",
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
                         data: data,
                         async: true
                     }).done(function(){
@@ -89,7 +92,10 @@ function SwitchSelectMode(obj, path, fieldName, options) {
                 $.ajax({
                     type: 'PATCH',
                     url: path,
-                    headers: { Accept: "application/json" },
+                    headers: {
+                        Accept: "application/json",
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     data: data,
                     async: true
                 }).done(function(){

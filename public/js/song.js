@@ -10,6 +10,7 @@ function InsertBox(curId, path, curBoxId, insertBefore=false) {
     $.ajax({
         type: 'POST',
         url: path,
+        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         data: {
             'lyrics_old': '------',
             'box_id': curBoxId,
@@ -40,6 +41,7 @@ function DeleteBox(obj, path) {
     $.ajax({
         type: 'DELETE',
         url: path,
+        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         async: true
     }).done(function(){
         // delete box-line in html
@@ -58,6 +60,7 @@ function InsertBoxLine(curId, path, curLineId) {
     $.ajax({
         type: 'POST',
         url: path,
+        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         data: {
             'line_id': curLineId,
             'insert_before': false,
@@ -83,6 +86,7 @@ function DeleteBoxLine(obj, path) {
     $.ajax({
         type: 'DELETE',
         url: path,
+        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         async: true
     }).done(function(){
         // delete box-line in html

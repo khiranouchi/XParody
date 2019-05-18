@@ -9,6 +9,7 @@
 
 @section('head')
 <script src="{{ asset('js/jquery.tablesorter.js') }}"></script>
+<script src="{{ asset('js/jquery.metadata.js') }}"></script>
 <script src="{{ asset('js/jquery.metatext.js') }}"></script>
 <script src="{{ asset('js/songlist.js') }}"></script>
 @endsection
@@ -47,7 +48,7 @@
                     <tr>
                         <th class="{sorter:'metatext'}">{{ __('labels.song_name_old') }}</th>
                         <th class="{sorter:'metatext'}">{{ __('labels.song_name_new') }}</th>
-                        <th class="{sorter:'metadata'}">{{ __('labels.song_updated_time') }}</th>
+                        <th class="{sorter:'metatext'}">{{ __('labels.song_updated_time') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,7 +61,7 @@
                     >
                         <td class="{sortValue: '{{ $song->name_old_ruby }}' } x-text-word-break">{{ $song->name_old }}</td>
                         <td class="{sortValue: '{{ $song->name_new_ruby }}' } x-text-word-break">{{ $song->name_new }}</td>
-                        <td class="{sortValue:{{ $song->updated_at }}}
+                        <td class="{sortValue: '{{ $song->updated_at }}' }
                                    @if ($song->is_complete)
                                    text-success
                                    @endif

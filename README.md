@@ -53,3 +53,7 @@ Dependency
   - Copyright (c) 2018 Zeno Rocha
   - Released under the MIT license
   - https://zenorocha.mit-license.org/
++ jquery.disableAutoFill
+  - Copyright (c) 2018 Terry Lin
+  - Released under the MIT license
+  - https://github.com/terrylinooo/jquery.disableAutoFill/blob/master/LICENSE

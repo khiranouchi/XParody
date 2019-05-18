@@ -4,11 +4,15 @@
 {{ __('labels.subtitle_song_list') }}
 @endsection
 
+@section('head')
+<script src="{{ asset('js/jquery.disableAutoFill.min.js') }}"></script>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-sm-11">
-            <form method="POST" action="{{ route('songs.store') }}">
+            <form method="POST" action="{{ route('songs.store') }}" id="song_create_form">
                 @csrf
                 
                 <!-- name_old -->
@@ -54,4 +58,11 @@
         </div>
     </div>
 </div>
+
+<script>
+$(document).ready(function(){
+    // activate disableAutoFill
+    $("#song_create_form").disableAutoFill();
+});
+</script>
 @endsection

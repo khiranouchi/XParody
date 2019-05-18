@@ -22,12 +22,21 @@ class SongController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $songs = Song::orderBy('updated_at', 'desc')->get();
-        return view('songlist', ['songs' => $songs]);
+
+        $dict_row_visibility = array();
+        $dict_row_visibility['incomplete'] = $request->cookie(config('const.COOKIE_SONGLIST_INCOMPLETE_KEY'));
+        $dict_row_visibility['complete'] = $request->cookie(config('const.COOKIE_SONGLIST_COMPLETE_KEY'));
+
+        return view('songlist', [
+            'songs' => $songs,
+            'dict_row_visibility' => $dict_row_visibility
+        ]);
     }
 
     /**

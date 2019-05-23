@@ -10,6 +10,29 @@ function ShowCheckDialog(e, message="Do you really submit?") {
 }
 
 /**
+ * Show check dialog.
+ * Prevent default if not confirmed.
+ * Show prompt of input current date to confirm (to prevent mis-confirm).
+ * @param {Object} e - event object
+ */
+function ShowCheckDialogWithDate(e, message="Do you really submit?") {
+    if (!confirm(message)) {
+        e.preventDefault();
+    } else {
+        while (true) {
+            input = prompt("Type today's date (ex. 2018/1/3 -> type '3')");
+            if (input == null) {  // cancel button clicked
+                e.preventDefault();
+                break;
+            }
+            if (input == (new Date()).getDate()) {
+                break;
+            }
+        }
+    }
+}
+
+/**
  * Switch normal-text(eg. <...>aaa</...>) and input-mode(eg. <...><input type="text" value="aaa"></...>).
  * Also send http request to PATCH modification of text.
  * Empty input is arrowed when arrowEmpty is true.

@@ -62,7 +62,16 @@
 <script>
 $(document).ready(function(){
     // activate disableAutoFill
-    $("#song_create_form").disableAutoFill();
+    $("#song_create_form").disableAutoFill({
+        html5FormValidate: true,
+    });
+    // re-activate disableAutoFill after submission failed
+    // (because disableAutoFill restore original names before submission)
+    $("#song_create_form").find('input').on('invalid', function(){
+        $("#song_create_form").disableAutoFill({
+            html5FormValidate: true
+        });
+    });
 });
 </script>
 @endsection

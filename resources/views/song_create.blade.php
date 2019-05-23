@@ -27,7 +27,7 @@
                 <div class="form-group row">
                     <label for="name_old_ruby" class="col-sm-4 col-form-label text-sm-right">{{ __('labels.form_song_name_old_ruby') }}</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" name="name_old_ruby" value="{{ old('name_old_ruby') }}" required autofocus>
+                        <input type="text" class="form-control" name="name_old_ruby" value="{{ old('name_old_ruby') }}" required pattern="^[ぁ-んヴー]+$" autofocus>
                     </div>
                 </div>
                 
@@ -43,7 +43,7 @@
                 <div class="form-group row">
                     <label for="name_new_ruby" class="col-sm-4 col-form-label text-sm-right">{{ __('labels.form_song_name_new_ruby') }}</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" name="name_new_ruby" value="{{ old('name_new_ruby') }}" required autofocus>
+                        <input type="text" class="form-control" name="name_new_ruby" value="{{ old('name_new_ruby') }}" required pattern="^[ぁ-んヴー]+$" autofocus>
                     </div>
                 </div>
                 

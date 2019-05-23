@@ -57,6 +57,11 @@ class SongController extends Controller
      */
     public function store(Request $request)
     {
+        if (preg_match('/^[ぁ-んヴー]+$/u', $request->name_old_ruby) == false
+         || preg_match('/^[ぁ-んヴー]+$/u', $request->name_new_ruby) == false) {
+            return abort(500);
+        }
+
         $song = new Song;
         $song->name_old = $request->name_old;
         $song->name_old_ruby = $request->name_old_ruby;

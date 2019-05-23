@@ -19,6 +19,7 @@
     <!-- <script src="{{ asset('js/app.js') }}" defer></script> -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="{{ asset('js/all.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">

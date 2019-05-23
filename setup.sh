@@ -1,5 +1,13 @@
 #!/bin/sh
 
+usage(){
+    echo "Usage: $0 [Options] [targetfiles]"
+    echo "Options:"
+    echo "  -g  process about git"
+    echo "  -p  process about directory permission"
+    echo "  -c  process about code"
+}
+
 proc_git(){
     # TODO
     echo "Reseted modification after the latest commit and updated files by using git"
@@ -24,6 +32,10 @@ while [ $# -gt 0 ]
 do
     case "$1" in
         -*)
+            if [[ "$1" =~ 'h' ]]; then
+                usage
+                exit 1
+            fi
             if [[ "$1" =~ 'g' ]]; then
                 flg_git=1
             fi
@@ -43,15 +55,21 @@ do
 done
 
 if [ $flg_git ]; then
+    flg_any=1
     proc_git
 fi
 
 if [ $flg_perm ]; then
+    flg_any=1
     proc_permission
 fi
 
 if [ $flg_code ]; then
+    flg_any=1
     proc_code ${param[@]}
 fi
 
+if [ ! $flg_any ]; then
+    usage
+fi
 echo -- all done

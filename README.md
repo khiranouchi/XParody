@@ -33,6 +33,8 @@ Install and Run
 
         php artisan migrate
 
+1. Use `setup.sh` if necessary.
+
 1. Run server.
 
 Usage

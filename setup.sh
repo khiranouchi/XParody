@@ -9,12 +9,15 @@ usage(){
 }
 
 proc_git(){
-    # TODO
+    git fetch > /dev/null 2>&1
+    git checkout deploy > /dev/null 2>&1
+    git reset --hard origin/deploy > /dev/null 2>&1
     echo "Reseted modification after the latest commit and updated files by using git"
 }
 
 proc_permission(){
-    # TODO
+    chmod -R 775 storage/ > /dev/null
+    chmod -R 775 bootstrap/cache/ > /dev/null
     echo "Changed directory permission to enable Laravel to access them"
 }
 

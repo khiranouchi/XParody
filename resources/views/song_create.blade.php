@@ -47,6 +47,19 @@
                     </div>
                 </div>
                 
+                <!-- access_level -->
+                <div class="form-group row">
+                    <label for="access_level" class="col-sm-4 col-form-label text-sm-right">{{ __('labels.form_song_access_level') }}</label>
+                    <div class="col-auto">
+                        <select name="access_level" class="form-control">
+                            <option value="0" selected>{{ __('labels.value_access_level_0') }}</option>
+                            <option value="1">{{ __('labels.value_access_level_1') }}</option>
+                            <option value="2">{{ __('labels.value_access_level_2') }}</option>
+                            <option value="3">{{ __('labels.value_access_level_3') }}</option>
+                        </select>
+                    </div>
+                </div>
+                
                 <div class="form-group row">
                     <div class="col-md-8">
                         <button type="submit" class="btn btn-primary">

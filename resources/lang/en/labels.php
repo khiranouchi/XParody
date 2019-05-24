@@ -20,6 +20,7 @@ return [
     'form_song_name_old_ruby' => '-- Ruby (Hiragana)',
     'form_song_name_new' => 'Parody song name',
     'form_song_name_new_ruby' => '-- Ruby (Hiragana)',
+    'form_song_access_level' => 'Access level',
     
     /*
      * Button labels
@@ -52,6 +53,10 @@ return [
     'value_edit_type_lyrics_box' => 'Old',
     'value_edit_type_lyrics_box_line' => 'New',
     'value_edit_type_song_import' => 'Import',
+    'value_access_level_0' => 'Lv0',
+    'value_access_level_1' => 'Lv1',
+    'value_access_level_2' => 'Lv2',
+    'value_access_level_3' => 'Lv3',
     
     /*
      * Messages

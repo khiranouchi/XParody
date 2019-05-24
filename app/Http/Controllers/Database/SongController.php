@@ -67,6 +67,8 @@ class SongController extends Controller
         $song->name_old_ruby = $request->name_old_ruby;
         $song->name_new = $request->name_new;
         $song->name_new_ruby = $request->name_new_ruby;
+        $song->creator_user_id = $request->user()->id;
+        $song->access_level = $request->access_level;
         $song->is_complete = false;
         $song->save();
         return redirect()->route('songs.show', ['id' => $song]);

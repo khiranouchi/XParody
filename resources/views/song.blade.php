@@ -47,6 +47,12 @@
                                      onclick="location.href='{{ route('songh', ['id' => $song]) }}'">
                                     <span>{{ $latest_edit->user->icon_char }}</span>
                                 </div>
+                                @elseif (isset($song->creator_user))
+                                <div class="x-lyrics-user d-flex align-items-center x-cursor-pointer"
+                                     style="background-color:{{ $song->creator_user->getIconColorRgbString() }}"
+                                     onclick="location.href='{{ route('songh', ['id' => $song]) }}'">
+                                    <span>{{ $song->creator_user->icon_char }}</span>
+                                </div>
                                 @endif
                             </div>
                         </dd>

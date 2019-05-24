@@ -5,6 +5,7 @@
 @endsection
 
 @section('head')
+<link href="{{ asset('css/song_create.css') }}" rel="stylesheet">
 <script src="{{ asset('js/jquery.disableAutoFill.min.js') }}"></script>
 @endsection
 

@@ -20,19 +20,39 @@
                         <!-- Name new -->
                         <dt class="col-sm-2 x-col-ds">{{ __('labels.song_name_new') }}</dt>
                         <dd class="col-sm-10 x-col-ds">
-                            <span onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_new', false)"
+                            <span
+                                @if ($song->isAccessible($request_user_id, 1))
+                                onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_new', false)"
+                                @endif
                             >{{ $song->name_new }}</span>
-                            (<span onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_new_ruby', false)"
+                            (<span
+                                @if ($song->isAccessible($request_user_id, 1))
+                                onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_new_ruby', false)"
+                                @endif
                             >{{ $song->name_new_ruby }}</span>)
                         </dd>
+
                         <!-- Name old -->
                         <dt class="col-sm-2 x-col-ds">{{ __('labels.song_name_old') }}</dt>
                         <dd class="col-sm-10 x-col-ds">
-                            <span onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_old', false)"
+                            <span
+                                @if ($song->isAccessible($request_user_id, 1))
+                                onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_old', false)"
+                                @endif
                             >{{ $song->name_old }}</span>
-                            (<span onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_old_ruby', false)"
+                            (<span
+                                @if ($song->isAccessible($request_user_id, 1))
+                                onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_old_ruby', false)"
+                                @endif
                             >{{ $song->name_old_ruby }}</span>)
+                            @if (!isset($song->access_level) or $song->access_level === 0 or !isset($song->creator_user))
+                            @elseif ($request_user_id === $song->creator_user_id)
+                            <span class="text-primary">({{ $song->access_level }})</span>
+                            @else
+                            <span class="text-danger">({{ $song->access_level }})</span>
+                            @endif
                         </dd>
+
                         <!-- Updated time -->
                         <dt class="col-sm-2 x-col-ds">{{ __('labels.song_updated_time') }}</dt>
                         <dd class="col-sm-10 x-col-ds
@@ -47,12 +67,20 @@
                                      onclick="location.href='{{ route('songh', ['id' => $song]) }}'">
                                     <span>{{ $latest_edit->user->icon_char }}</span>
                                 </div>
+                                @elseif (isset($song->creator_user))
+                                <div class="x-lyrics-user d-flex align-items-center x-cursor-pointer"
+                                     style="background-color:{{ $song->creator_user->getIconColorRgbString() }}"
+                                     onclick="location.href='{{ route('songh', ['id' => $song]) }}'">
+                                    <span>{{ $song->creator_user->icon_char }}</span>
+                                </div>
                                 @endif
                             </div>
                         </dd>
+
                         <!-- Buttons -->
+                        @if ($song->isAccessible($request_user_id, 1))
                         <dd class="col-sm-12 x-col-ds">
-                            <!-- Set is_complete flag on -->
+                            <!-- Complete / Restart edit -->
                             <form action="{{ route('songs.update', ['id' => $song]) }}" method="post"
                                   @if ($song->is_complete)
                                   onsubmit="ShowCheckDialog(event, '{{ __('labels.dialog_restart_song') }}')"
@@ -76,7 +104,15 @@
                                     @endif
                                 </button>
                             </form>
+                            <!-- Edit song -->
+                            @if (isset($song->creator_user) and $request_user_id === $song->creator_user->id)
+                            <button onclick="location.href='{{ route('songs.edit', ['id' => $song]) }}'"
+                                    class="btn btn-outline-secondary x-btn-small-padding">
+                                {{ __('labels.btn_edit_song') }}
+                            </button>
+                            @endif
                         </dd>
+                        @endif
                     </dl>
                 </div>
             </div>
@@ -93,6 +129,7 @@
     <!-- Buttons -->
     <div class="x-part x-button-row">
         <!-- Delete song -->
+        @if ($song->isAccessible($request_user_id, 1))
         <form action="{{ route('songs.destroy', ['id' => $song]) }}" method="post"
               onsubmit="ShowCheckDialogWithDate(event, '{{ __('labels.dialog_delete_song') }}')"
               class="x-inline-form">
@@ -102,6 +139,7 @@
                 {{ __('labels.btn_delete_song') }}
             </button>
         </form>
+        @endif
         <!-- Import and Export -->
         <button onclick="location.href='{{ route('songio', ['id' => $song]) }}'"
                 class="btn btn-outline-primary">

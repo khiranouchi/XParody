@@ -17,7 +17,7 @@
     <div class="x-part">
         <div class="x-subpart">
             <div class="btn-group">
-                @if (!$song->is_complete)
+                @if (!$song->is_complete and $song->isAccessible($request_user_id, 1))
                 <button id="io_import" name="z-import" class="btn btn-outline-secondary"
                         onclick="SwitchVisibility(this)"
                 >{{ __('labels.btn_import') }}</button>

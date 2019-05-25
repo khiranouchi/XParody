@@ -33,7 +33,7 @@ Route::patch('/songs/{song}/boxes/{lyrics_box}/lines/{lyrics_box_line}', 'Databa
 Route::delete('/songs/{song}/boxes/{lyrics_box}/lines/{lyrics_box_line}', 'Database\\LyricsBoxLineController@destroy')->name('lyrics_box_lines.destroy');
 
 // song import and export
-Route::get('songs/{song}/io', 'SongIoController@index')->name('songio');
+Route::get('songs/{song}/io', 'SongIoController@show')->name('songio');
 Route::post('songs/{song}/io/import/old', 'SongIoController@storeAllLyricsOld')->name('songio_import_old');
 Route::post('songs/{song}/io/import/both', 'SongIoController@storeAllLyricsBoth')->name('songio_import_both');
 Route::post('songs/{song}/io/import/new', 'SongIoController@storeAllLyricsNew')->name('songio_import_new');

@@ -18,17 +18,23 @@ class SongIoController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('verify.song.creator:2')->only(['show', 'indexAllLyricsOld', 'indexAllLyricsBoth', 'indexAllLyricsNew', 'indexAll']); // user check for show/index*
+        $this->middleware('verify.song.creator:1')->only(['storeAllLyricsOld', 'storeAllLyricsBoth', 'storeAllLyricsNew', 'storeAll']); // user check for store*
     }
     
     /**
      * Show the i/o pages of the specified song.
      * 
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Song  $song
      * @return \Illuminate\Http\Response
      */
-    public function index(Song $song)
+    public function show(Request $request, Song $song)
     {
-        return view('songio', ['song' => $song]);
+        return view('songio', [
+            'song' => $song,
+            'request_user_id' => $request->user()->id
+        ]);
     }
     
     /**

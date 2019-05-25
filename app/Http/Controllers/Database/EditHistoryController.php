@@ -16,6 +16,7 @@ class EditHistoryController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('verify.song.creator:2'); // user check for index
     }
 
     public static function store(Request $request, Song $song, $edit_type)

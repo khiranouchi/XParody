@@ -14,8 +14,8 @@ return [
     /*
      * Captions of access level
      */
-    'caption_access_level_0' => 'Lv0 - No restriction',
-    'caption_access_level_1' => 'Lv1 - Only creator can edit',
-    'caption_access_level_2' => 'Lv2 - Only creator can see song page',
-    'caption_access_level_3' => 'Lv3 - Only creator can see song page and title list',
+    'caption_access_level_0' => '0 - No restriction',
+    'caption_access_level_1' => '1 - Only creator can edit',
+    'caption_access_level_2' => '2 - Only creator can see song page',
+    'caption_access_level_3' => '3 - Only creator can see title in song list',
 ];

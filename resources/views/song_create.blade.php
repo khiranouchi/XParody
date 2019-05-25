@@ -12,7 +12,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-sm-11">
+        <div class="col-sm-12">
             <form method="POST" action="{{ route('songs.store') }}" id="song_create_form">
                 @csrf
                 

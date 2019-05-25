@@ -11,8 +11,8 @@
 @section('content')
 <div class="container">
     <div class="x-part">
-        Edit History
-        <div class="alert alert-light">
+        {{ __('labels.parttitle_edit_history') }}
+        <div class="alert alert-light x-alert-small-padding x-alert-light-black">
             <!-- History of create song -->
             <div class="row x-row-margin-reset">
                 <!-- Time -->

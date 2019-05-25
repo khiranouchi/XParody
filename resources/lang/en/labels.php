@@ -7,6 +7,12 @@ return [
     'subtitle_song_list' => 'Song List',
     
     /*
+     * Part titles
+     */
+    'parttitle_edit_history' => 'Edit History',
+    'parttitle_access_level' => 'Access Level',
+    
+    /*
      * Table columns
      */
     'song_name_old' => 'Base',

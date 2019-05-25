@@ -45,6 +45,12 @@
                                 onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_old_ruby', false)"
                                 @endif
                             >{{ $song->name_old_ruby }}</span>)
+                            @if (!isset($song->access_level) or $song->access_level === 0 or !isset($song->creator_user))
+                            @elseif ($request_user_id === $song->creator_user_id)
+                            <span class="text-primary">({{ $song->access_level }})</span>
+                            @else
+                            <span class="text-danger">({{ $song->access_level }})</span>
+                            @endif
                         </dd>
 
                         <!-- Updated time -->

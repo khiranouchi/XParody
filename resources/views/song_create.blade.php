@@ -5,13 +5,14 @@
 @endsection
 
 @section('head')
+<link href="{{ asset('css/song_create.css') }}" rel="stylesheet">
 <script src="{{ asset('js/jquery.disableAutoFill.min.js') }}"></script>
 @endsection
 
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-sm-11">
+        <div class="col-sm-12">
             <form method="POST" action="{{ route('songs.store') }}" id="song_create_form">
                 @csrf
                 
@@ -44,6 +45,18 @@
                     <label for="name_new_ruby" class="col-sm-4 col-form-label text-sm-right">{{ __('labels.form_song_name_new_ruby') }}</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="name_new_ruby" value="{{ old('name_new_ruby') }}" required pattern="^[ぁ-んヴー]+$" autofocus>
+                    </div>
+                </div>
+                
+                <!-- access_level -->
+                <div class="form-group row">
+                    <label for="access_level" class="col-sm-4 col-form-label text-sm-right">{{ __('labels.form_song_access_level') }}</label>
+                    <div class="col-auto">
+                        <select name="access_level" class="form-control">
+                            <option value="0" selected>{{ __('labels.value_access_level_0') }}</option>
+                            <option value="2">{{ __('labels.value_access_level_2') }}</option>
+                            <option value="3">{{ __('labels.value_access_level_3') }}</option>
+                        </select>
                     </div>
                 </div>
                 

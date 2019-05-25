@@ -18,6 +18,7 @@ class LyricsBoxLineController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('verify.song.creator:1'); // user check for store/update/destroy
     }
 
     /**

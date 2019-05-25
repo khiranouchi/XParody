@@ -25,6 +25,7 @@
                             (<span onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_new_ruby', false)"
                             >{{ $song->name_new_ruby }}</span>)
                         </dd>
+
                         <!-- Name old -->
                         <dt class="col-sm-2 x-col-ds">{{ __('labels.song_name_old') }}</dt>
                         <dd class="col-sm-10 x-col-ds">
@@ -32,7 +33,11 @@
                             >{{ $song->name_old }}</span>
                             (<span onclick="SwitchInputMode(this, '{{ route('songs.update', ['id' => $song]) }}', 'name_old_ruby', false)"
                             >{{ $song->name_old_ruby }}</span>)
+                            @if (isset($song->access_level) and $song->access_level > 0 and isset($song->creator_user) and $request_user_id === $song->creator_user_id)
+                            <span class="text-primary">({{ $song->access_level }})</span>
+                            @endif
                         </dd>
+
                         <!-- Updated time -->
                         <dt class="col-sm-2 x-col-ds">{{ __('labels.song_updated_time') }}</dt>
                         <dd class="col-sm-10 x-col-ds
@@ -47,12 +52,19 @@
                                      onclick="location.href='{{ route('songh', ['id' => $song]) }}'">
                                     <span>{{ $latest_edit->user->icon_char }}</span>
                                 </div>
+                                @elseif (isset($song->creator_user))
+                                <div class="x-lyrics-user d-flex align-items-center x-cursor-pointer"
+                                     style="background-color:{{ $song->creator_user->getIconColorRgbString() }}"
+                                     onclick="location.href='{{ route('songh', ['id' => $song]) }}'">
+                                    <span>{{ $song->creator_user->icon_char }}</span>
+                                </div>
                                 @endif
                             </div>
                         </dd>
+
                         <!-- Buttons -->
                         <dd class="col-sm-12 x-col-ds">
-                            <!-- Set is_complete flag on -->
+                            <!-- Complete / Restart edit -->
                             <form action="{{ route('songs.update', ['id' => $song]) }}" method="post"
                                   @if ($song->is_complete)
                                   onsubmit="ShowCheckDialog(event, '{{ __('labels.dialog_restart_song') }}')"
@@ -76,6 +88,13 @@
                                     @endif
                                 </button>
                             </form>
+                            <!-- Edit song -->
+                            @if (isset($song->creator_user) and $request_user_id === $song->creator_user->id)
+                            <button onclick="location.href='{{ route('songs.edit', ['id' => $song]) }}'"
+                                    class="btn btn-outline-secondary x-btn-small-padding">
+                                {{ __('labels.btn_edit_song') }}
+                            </button>
+                            @endif
                         </dd>
                     </dl>
                 </div>

@@ -11,17 +11,28 @@
 @section('content')
 <div class="container">
     <div class="x-part">
-        Edit History
-        <div class="alert alert-light">
-            @if (count($edit_histories) < 10)
+        {{ __('labels.parttitle_edit_history') }}
+        <div class="alert alert-light x-alert-small-padding x-alert-light-black">
             <!-- History of create song -->
             <div class="row x-row-margin-reset">
+                <!-- Time -->
                 <div>{{ $song->getCreatedAtDateTime() }}</div>
+
+                <!-- User -->
+                @if (isset($song->creator_user))
+                <div class="x-user-icon d-flex align-items-center"
+                     style="background-color:{{ $song->creator_user->getIconColorRgbString() }}">
+                    <span>{{ $song->creator_user->icon_char }}</span>
+                </div>
+                @else
                 <div class="x-user-empty"></div>
+                @endif
+
+                <!-- Edit type -->
                 <div class="x-edit-type">{{ __('labels.value_edit_type_song_created') }}</div>
             </div>
-            @endif
 
+            <!-- Histories of edit song -->
             @foreach ($edit_histories as $edit_history)
             <div class="row x-row-margin-reset">
                 <!-- Time -->

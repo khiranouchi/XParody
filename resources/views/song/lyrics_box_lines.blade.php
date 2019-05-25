@@ -2,14 +2,14 @@
 <div id="z_box_line_{{ $lyrics_box_line->id }}" class="x-lyrics-new x-row-margin-reset row">
     <!-- new-lyrics -->
     <div class="x-lyrics-text"
-         @if ((!$song->is_complete) and ($song->isAccessible($request_user_id, 1)) and (!isset($lyrics_box_line->user) or $request_user_id === $lyrics_box_line->user->id))
+         @if ((!$song->is_complete) and (!isset($lyrics_box_line->user) or $request_user_id === $lyrics_box_line->user->id))
          onclick="SwitchInputMode(this, '{{ route('lyrics_box_lines.update', ['song' => $song, 'lyrics_box' => $lyrics_box, 'lyrics_box_line' => $lyrics_box_line]) }}', 'lyrics_new', false)"
          @endif
     >{{ $lyrics_box_line->lyrics_new }}</div>
 
     <!-- level -->
     <div class="x-lyrics-level"
-         @if (!$song->is_complete and $song->isAccessible($request_user_id, 1))
+         @if (!$song->is_complete)
          onclick="SwitchSelectMode(this, '{{ route('lyrics_box_lines.update', ['song' => $song, 'lyrics_box' => $lyrics_box, 'lyrics_box_line' => $lyrics_box_line]) }}', 'level', '{{ $list_box_lines_levels }}')"
          @endif
     >{{ $lyrics_box_line->level }}</div>
@@ -23,14 +23,14 @@
     @endif
 
     <!-- Delete button -->
-    @if ((!$song->is_complete) and ($song->isAccessible($request_user_id, 1)) and (!isset($lyrics_box_line->user) or $request_user_id === $lyrics_box_line->user->id))
+    @if ((!$song->is_complete) and (!isset($lyrics_box_line->user) or $request_user_id === $lyrics_box_line->user->id))
     <div class="x-lyrics-line-delete"
          onclick="DeleteBoxLine(this, '{{ route('lyrics_box_lines.destroy', ['song' => $song, 'lyrics_box' => $lyrics_box, 'lyrics_box_line' => $lyrics_box_line]) }}')"
     >[-]</div>
     @endif
 
     <!-- Insert button -->
-    @if (!$song->is_complete and $song->isAccessible($request_user_id, 1))
+    @if (!$song->is_complete)
     <div class="x-lyrics-line-insert"
          onclick="InsertBoxLine('z_box_line_{{ $lyrics_box_line->id }}', '{{ route('lyrics_box_lines.store', ['song' => $song, 'lyrics_box' => $lyrics_box]) }}', '{{ $lyrics_box_line->id }}')"
     >[+]</div>

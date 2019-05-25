@@ -31,10 +31,7 @@ class SongIoController extends Controller
      */
     public function show(Request $request, Song $song)
     {
-        return view('songio', [
-            'song' => $song,
-            'request_user_id' => $request->user()->id
-        ]);
+        return view('songio', ['song' => $song]);
     }
     
     /**

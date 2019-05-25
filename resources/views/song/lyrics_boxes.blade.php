@@ -3,12 +3,12 @@
     <!-- lyrics-old -->
     <div id="z_box_line_old_{{ $lyrics_box->id }}" class="x-lyrics-old x-row-margin-reset row">
         <div class="x-lyrics-text"
-             @if (!$song->is_complete and $song->isAccessible($request_user_id, 1))
+             @if (!$song->is_complete)
              onclick="SwitchInputMode(this, '{{ route('lyrics_boxs.update', ['song' => $song, 'lyrics_box' => $lyrics_box]) }}', 'lyrics_old', false)"
              @endif
         >{{ $lyrics_box->lyrics_old }}</div>
 
-        @if (!$song->is_complete and $song->isAccessible($request_user_id, 1))
+        @if (!$song->is_complete)
         <div class="dropdown x-lyrics-box-dropdown">
             <div class="dropdown-toggle" id="z_box_dropdown_{{ $lyrics_box->id }}"
                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -34,7 +34,7 @@
         @endif
 
         <!-- Insert button of box-line -->
-        @if (!$song->is_complete and $song->isAccessible($request_user_id, 1))
+        @if (!$song->is_complete)
         <div class="x-lyrics-line-insert"
              onclick="InsertBoxLine('z_box_line_old_{{ $lyrics_box->id }}', '{{ route('lyrics_box_lines.store', ['song' => $song, 'lyrics_box' => $lyrics_box]) }}', -1)"
         >[+]</div>

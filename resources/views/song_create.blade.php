@@ -54,7 +54,6 @@
                     <div class="col-auto">
                         <select name="access_level" class="form-control">
                             <option value="0" selected>{{ __('labels.value_access_level_0') }}</option>
-                            <option value="1">{{ __('labels.value_access_level_1') }}</option>
                             <option value="2">{{ __('labels.value_access_level_2') }}</option>
                             <option value="3">{{ __('labels.value_access_level_3') }}</option>
                         </select>

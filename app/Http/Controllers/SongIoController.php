@@ -18,8 +18,7 @@ class SongIoController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('verify.song.creator:2')->only(['show', 'indexAllLyricsOld', 'indexAllLyricsBoth', 'indexAllLyricsNew', 'indexAll']); // user check for show/index*
-        $this->middleware('verify.song.creator:1')->only(['storeAllLyricsOld', 'storeAllLyricsBoth', 'storeAllLyricsNew', 'storeAll']); // user check for store*
+        $this->middleware('verify.song.creator:1'); // user check
     }
     
     /**
@@ -31,10 +30,7 @@ class SongIoController extends Controller
      */
     public function show(Request $request, Song $song)
     {
-        return view('songio', [
-            'song' => $song,
-            'request_user_id' => $request->user()->id
-        ]);
+        return view('songio', ['song' => $song]);
     }
     
     /**

@@ -15,7 +15,7 @@
                 <!-- access_level -->
                 {{ __('labels.parttitle_access_level') }}
                 <div class="alert alert-light x-alert-small-padding x-alert-light-black">
-                    @for ($lv = 0; $lv <= 3; $lv++)
+                    @foreach ([0, 2, 3] as $lv)
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="access_level"
                                id="access_level_{{ $lv }}" value="{{ $lv }}"
@@ -26,7 +26,7 @@
                         <label class="form-check-label" for="access_level_{{ $lv }}"
                         >{{ __('texts.caption_access_level_'.$lv) }}</label>
                     </div>
-                    @endfor
+                    @endforeach
                 </div>
 
                 <div class="form-group row">

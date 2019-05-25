@@ -25,12 +25,16 @@ class SongIoController extends Controller
     /**
      * Show the i/o pages of the specified song.
      * 
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Song  $song
      * @return \Illuminate\Http\Response
      */
-    public function show(Song $song)
+    public function show(Request $request, Song $song)
     {
-        return view('songio', ['song' => $song]);
+        return view('songio', [
+            'song' => $song,
+            'request_user_id' => $request->user()->id
+        ]);
     }
     
     /**

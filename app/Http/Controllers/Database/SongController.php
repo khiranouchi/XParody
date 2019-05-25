@@ -118,7 +118,9 @@ class SongController extends Controller
      */
     public function edit(Song $song)
     {
-        abort(404);
+        return view('song_edit', [
+            'song' => $song
+        ]);
     }
 
     /**

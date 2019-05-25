@@ -58,7 +58,7 @@
                         </dd>
                         <!-- Buttons -->
                         <dd class="col-sm-12 x-col-ds">
-                            <!-- Set is_complete flag on -->
+                            <!-- Complete / Restart edit -->
                             <form action="{{ route('songs.update', ['id' => $song]) }}" method="post"
                                   @if ($song->is_complete)
                                   onsubmit="ShowCheckDialog(event, '{{ __('labels.dialog_restart_song') }}')"
@@ -82,6 +82,13 @@
                                     @endif
                                 </button>
                             </form>
+                            <!-- Edit song -->
+                            @if (isset($song->creator_user) and $request_user_id === $song->creator_user->id)
+                            <button onclick="location.href='{{ route('songs.edit', ['id' => $song]) }}'"
+                                    class="btn btn-outline-secondary x-btn-small-padding">
+                                {{ __('labels.btn_edit_song') }}
+                            </button>
+                            @endif
                         </dd>
                     </dl>
                 </div>

@@ -27,6 +27,7 @@ return [
      */
     'btn_complete_song' => 'Complete',
     'btn_restart_song' => 'Restart edit',
+    'btn_edit_song' => 'Edit',
     'btn_delete_song' => 'Delete this song',
     'btn_import_and_export' => 'Import and Export',
     'btn_import' => 'Import',

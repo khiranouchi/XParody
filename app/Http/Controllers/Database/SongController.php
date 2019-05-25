@@ -37,7 +37,8 @@ class SongController extends Controller
 
         return view('songlist', [
             'songs' => $songs,
-            'dict_row_visibility' => $dict_row_visibility
+            'dict_row_visibility' => $dict_row_visibility,
+            'request_user_id' => $request->user()->id
         ]);
     }
 

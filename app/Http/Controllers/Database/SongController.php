@@ -17,8 +17,7 @@ class SongController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('verify.song.creator:2')->only(['show']); // user check for show
-        $this->middleware('verify.song.creator:1')->only(['edit', 'update', 'destroy']); // user check for edit/update/destroy
+        $this->middleware('verify.song.creator:1')->only(['show', 'edit', 'update', 'destroy']); // user check for show/edit/update/destroy
     }
     
     /**

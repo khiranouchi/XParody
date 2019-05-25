@@ -18,6 +18,8 @@ class SongIoController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('verify.song.creator:2')->only(['index', 'indexAllLyricsOld', 'indexAllLyricsBoth', 'indexAllLyricsNew', 'indexAll']); // user check for index/index*
+        $this->middleware('verify.song.creator:1')->only(['storeAllLyricsOld', 'storeAllLyricsBoth', 'storeAllLyricsNew', 'storeAll']); // user check for store*
     }
     
     /**

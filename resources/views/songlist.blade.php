@@ -53,13 +53,23 @@
                 </thead>
                 <tbody>
                     @foreach ($songs as $song)
+                    @if ($song->isAccessible($request_user_id, 3))
                     <tr class="z-song-row-{{ $song->is_complete }}"
+                        @if ($song->isAccessible($request_user_id, 2))
                         onclick="window.location.href='{{ route('songs.show', ['id' => $song]) }}'"
+                        @endif
                         @if (($song->is_complete == '0' and $dict_row_visibility['incomplete'] == '0') or ($song->is_complete == '1' and $dict_row_visibility['complete'] == '0'))
                         style="display: none"
                         @endif
                     >
-                        <td class="{sortValue: '{{ $song->name_old_ruby }}' } x-text-word-break">{{ $song->name_old }}</td>
+                        <td class="{sortValue: '{{ $song->name_old_ruby }}' } x-text-word-break"
+                        @if (!isset($song->access_level) or $song->access_level === 0 or !isset($song->creator_user))
+                        >{{ $song->name_old }}</td>
+                        @elseif ($request_user_id === $song->creator_user_id)
+                        >{{ $song->name_old }} <span class="text-primary">({{ $song->access_level }})</span></td>
+                        @else
+                        >{{ $song->name_old }} <span class="text-danger">({{ $song->access_level }})</span></td>
+                        @endif
                         <td class="{sortValue: '{{ $song->name_new_ruby }}' } x-text-word-break">{{ $song->name_new }}</td>
                         <td class="{sortValue: '{{ $song->updated_at }}' }
                                    @if ($song->is_complete)
@@ -67,6 +77,7 @@
                                    @endif
                         ">{{ $song->getUpdatedAtDate() }}</td>
                     </tr>
+                    @endif
                     @endforeach
                 </tbody>
             </table>

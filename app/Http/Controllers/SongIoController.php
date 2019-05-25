@@ -18,15 +18,17 @@ class SongIoController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('verify.song.creator:1'); // user check
     }
     
     /**
      * Show the i/o pages of the specified song.
      * 
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Song  $song
      * @return \Illuminate\Http\Response
      */
-    public function index(Song $song)
+    public function show(Request $request, Song $song)
     {
         return view('songio', ['song' => $song]);
     }

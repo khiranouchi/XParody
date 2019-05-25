@@ -7,6 +7,12 @@ return [
     'subtitle_song_list' => 'Song List',
     
     /*
+     * Part titles
+     */
+    'parttitle_edit_history' => 'Edit History',
+    'parttitle_access_level' => 'Access Level',
+    
+    /*
      * Table columns
      */
     'song_name_old' => 'Base',
@@ -20,12 +26,14 @@ return [
     'form_song_name_old_ruby' => '-- Ruby (Hiragana)',
     'form_song_name_new' => 'Parody song name',
     'form_song_name_new_ruby' => '-- Ruby (Hiragana)',
+    'form_song_access_level' => 'Access level',
     
     /*
      * Button labels
      */
     'btn_complete_song' => 'Complete',
     'btn_restart_song' => 'Restart edit',
+    'btn_edit_song' => 'Edit',
     'btn_delete_song' => 'Delete this song',
     'btn_import_and_export' => 'Import and Export',
     'btn_import' => 'Import',
@@ -52,6 +60,10 @@ return [
     'value_edit_type_lyrics_box' => 'Old',
     'value_edit_type_lyrics_box_line' => 'New',
     'value_edit_type_song_import' => 'Import',
+    'value_access_level_0' => 'Lv0',
+    'value_access_level_1' => 'Lv1',
+    'value_access_level_2' => 'Lv2',
+    'value_access_level_3' => 'Lv3',
     
     /*
      * Messages

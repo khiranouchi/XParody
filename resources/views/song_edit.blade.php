@@ -8,28 +8,25 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <form method="PATCH" action="{{ route('songs.update', ['id' => $song]) }}" id="song_update_form">
+            <form method="post" action="{{ route('songs.update', ['id' => $song]) }}" id="song_update_form">
                 @csrf
+                @method('PATCH')
 
                 <!-- access_level -->
                 {{ __('labels.parttitle_access_level') }}
                 <div class="alert alert-light x-alert-small-padding x-alert-light-black">
+                    @for ($lv = 0; $lv <= 3; $lv++)
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="access_level" id="access_level_0" checked>
-                        <label class="form-check-label" for="access_level_0">{{ __('texts.caption_access_level_0') }}</label>
+                        <input class="form-check-input" type="radio" name="access_level"
+                               id="access_level_{{ $lv }}" value="{{ $lv }}"
+                               @if ($lv === $song->access_level)
+                               checked
+                               @endif
+                        >
+                        <label class="form-check-label" for="access_level_{{ $lv }}"
+                        >{{ __('texts.caption_access_level_'.$lv) }}</label>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="access_level" id="access_level_1" checked>
-                        <label class="form-check-label" for="access_level_1">{{ __('texts.caption_access_level_1') }}</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="access_level" id="access_level_2" checked>
-                        <label class="form-check-label" for="access_level_2">{{ __('texts.caption_access_level_2') }}</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="access_level" id="access_level_3" checked>
-                        <label class="form-check-label" for="access_level_3">{{ __('texts.caption_access_level_3') }}</label>
-                    </div>
+                    @endfor
                 </div>
 
                 <div class="form-group row">

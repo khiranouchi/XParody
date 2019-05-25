@@ -6,6 +6,7 @@ usage(){
     echo "  -g  process about git"
     echo "  -p  process about directory permission"
     echo "  -c  process about code"
+    echo "  -d  process about database"
 }
 
 proc_git(){
@@ -31,6 +32,11 @@ proc_code(){
     fi
 }
 
+proc_database(){
+    php artisan migrate > /dev/null
+    echo "Applied new migration to database"
+}
+
 while [ $# -gt 0 ]
 do
     case "$1" in
@@ -47,6 +53,9 @@ do
             fi
             if [[ "$1" =~ 'c' ]]; then
                 flg_code=1
+            fi
+            if [[ "$1" =~ 'd' ]]; then
+                flg_db=1
             fi
             shift 1
             ;;
@@ -70,6 +79,11 @@ fi
 if [ $flg_code ]; then
     flg_any=1
     proc_code ${param[@]}
+fi
+
+if [ $flg_db ]; then
+    flg_any=1
+    proc_database
 fi
 
 if [ ! $flg_any ]; then

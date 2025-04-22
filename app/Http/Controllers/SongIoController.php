@@ -61,7 +61,7 @@ class SongIoController extends Controller
                 $lyrics_box = new LyricsBox;
                 $lyrics_box->song_id = $song_id;
                 $lyrics_box->box_idx = $box_idx;
-                $lyrics_box->lyrics_old = LyricsBox::filterEmptyLyrics(trim(mb_convert_kana($lyrics_old, "s")));
+                $lyrics_box->lyrics_old = LyricsBox::filterEmptyLyrics(trim(mb_convert_kana($lyrics_old, "s"), " \t\n\r\0\x0B\x0A"));
                 $lyrics_box->save();
 
                 $box_idx++;
@@ -108,7 +108,7 @@ class SongIoController extends Controller
                     break;
                 }
 
-                $lyrics = trim(mb_convert_kana($list_lyrics[$i], "s"));
+                $lyrics = trim(mb_convert_kana($list_lyrics[$i], "s"), " \t\n\r\0\x0B\x0A");
 
                 // create new line in LyricsBox
                 $lyrics_box = new LyricsBox;
@@ -128,7 +128,7 @@ class SongIoController extends Controller
                             break;
                         }
 
-                        $lyrics = trim(mb_convert_kana($list_lyrics[$i], "s"));
+                        $lyrics = trim(mb_convert_kana($list_lyrics[$i], "s"), " \t\n\r\0\x0B\x0A");
 
                         if($lyrics === "") {
                             break;
@@ -213,7 +213,7 @@ class SongIoController extends Controller
                     LyricsBoxLine::where('box_id', $box_id)->delete();
                 }
 
-                $lyrics_new = trim(mb_convert_kana($lyrics_new, "s"));
+                $lyrics_new = trim(mb_convert_kana($lyrics_new, "s"), " \t\n\r\0\x0B\x0A");
                 if ($lyrics_new !== "") {
                     // create new line in LyricsBoxLine
                     $lyrics_box_line = new LyricsBoxLine;

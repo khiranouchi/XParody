@@ -15,5 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SongsTableSeeder::class);
         $this->call(LyricsBoxesTableSeeder::class);
         $this->call(LyricsBoxLinesTableSeeder::class);
+        $this->call(PasswordResetsTableSeeder::class);
+        $this->call(EditHistoriesTableSeeder::class);
     }
 }

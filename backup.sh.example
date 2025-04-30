@@ -1,25 +1,27 @@
 #!/bin/sh
 
 cur_path=/.../XParody/
-drive=/.../drive
-gdrive_folder_id=...
+drive_path=.../
+drive_folder_relative_path=.../xparody_seed/
+drive_folder_path=${drive_path}${drive_folder_relative_path}
 
 tables=("Users" "Songs" "LyricsBoxes" "LyricsBoxLines")
 tables_lower=("users" "songs" "lyrics_boxes" "lyrics_box_lines")
 
-${drive} list --noheader --query "'${gdrive_folder_id}' in parents" | while read ln
-do
-    ${drive} delete --id `echo ${ln} | awk '{print $1}'` > /dev/null
-done
-echo Delete the existing seed files
+google-drive-ocamlfuse ${drive_path}
+
+rm ${drive_folder_path}* -f
+echo Deleted the existing seed files at folder ${drive_folder_path} in google drive
 
 for((i=0; i<${#tables[@]}; i++))
 do
     seeder_path=${cur_path}database/seeds/${tables[i]}TableSeeder.php
     rm ${seeder_path} -f
     php ${cur_path}artisan iseed ${tables_lower[i]}
-    ${drive} upload --parent ${gdrive_folder_id} --file ${seeder_path} > /dev/null
-    echo Saved the seed file at folder ${gdrive_folder_id} of google drive
+    cp ${seeder_path} ${drive_folder_path}
+    echo Saved the seed file of ${tables_lower[i]} at folder ${drive_folder_path} in google drive
 done
+
+fusermount -u ${drive_path}
 
 echo -- done at `date`
